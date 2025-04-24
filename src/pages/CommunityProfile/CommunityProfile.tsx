@@ -8,7 +8,7 @@ const CommunityProfile = () => {
         <>
             <h1>Community Profile</h1>
             <ProfileInfo/>
-            <MainButton/>
+            <MainButton textContent="Follow"/>
             <MiniFeed/>
             <PopUpSettings/>
         </>
