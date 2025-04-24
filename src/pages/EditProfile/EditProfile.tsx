@@ -13,7 +13,6 @@ const EditProfile = () => {
                 imgLeft="arrow-back"/>
             <section
                 className="flex flex-col gap-3 items-center" >
-                    
                 <form
                     onSubmit={editHandler}
                     className="flex flex-col gap-5 items-center w-3/4">
