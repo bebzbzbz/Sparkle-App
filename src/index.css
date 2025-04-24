@@ -1,8 +1,8 @@
 @font-face {
 	font-family: "Urbanist";
-	src: url("/public/fonts/Urbanist.ttf") format("truetype"),
-		url("/public/fonts/Urbanist.woff") format("woff"),
-		url("/public/fonts/Urbanist.woff2") format("woff2");
+	src: url("/fonts/Urbanist.ttf") format("truetype"),
+		url("/fonts/Urbanist.woff") format("woff"),
+		url("/fonts/Urbanist.woff2") format("woff2");
 }
 
 @import "tailwindcss";

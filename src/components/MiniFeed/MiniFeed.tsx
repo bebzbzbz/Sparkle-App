@@ -10,7 +10,7 @@ const MiniFeed = () => {
             <div className="grid gird-col-3">
                 <div className="h-30 w-30 ">
                     {/* hier kommt das map mit den post_images rein */}
-                    <img className="h-full object-fill rounded-2xl transition ease-in-out hover:opacity-80" src="/public/svg/MiniFeed1.png" alt="" />
+                    <img className="h-full object-fill rounded-2xl transition ease-in-out hover:opacity-80" src="/svg/MiniFeed1.png" alt="" />
                 </div>
             </div>
 
