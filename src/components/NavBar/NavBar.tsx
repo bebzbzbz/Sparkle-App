@@ -23,27 +23,27 @@ export const NavLink = ({ linkname, path, img }: NavLinkProps) => {
 }
 
 const NavBar = () => {
-	return (
-		<nav
-			className="flex w-screen justify-evenly border-t-gray-300 border-t-1 py-5 absolute bottom-0 left-0">
-			<NavLink
-				linkname="Home"
-				path="home"
-				img="home" />
-			<NavLink
-				linkname="Search"
-				path="search"
-				img="search" />
-			<NavLink
-				linkname="Upload"
-				path="newpost"
-				img="upload" />
-			<NavLink
-				linkname="Profile"
-				path="profile"
-				img="profile" />
-		</nav>
-	);
+    return (  
+        <nav 
+            className="flex w-screen justify-between border-t-gray-300 border-t-1 pt-5 pb-8 px-20 fixed bottom-0 bg-white">
+            <NavLink 
+                linkname="Home" 
+                path="home" 
+                img="home"/>
+            <NavLink 
+                linkname="Search" 
+                path="search" 
+                img="search"/>
+            <NavLink 
+                linkname="Upload" 
+                path="newpost" 
+                img="upload"/>
+            <NavLink 
+                linkname="Profile" 
+                path="profile" 
+                img="profile"/>
+        </nav>
+    );
 }
 
 export default NavBar
