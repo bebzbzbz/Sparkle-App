@@ -1,5 +1,18 @@
+@font-face {
+	font-family: "Urbanist";
+	src: url("/public/fonts/Urbanist.ttf") format("truetype"),
+		url("/public/fonts/Urbanist.woff") format("woff"),
+		url("/public/fonts/Urbanist.woff2") format("woff2");
+}
+
 @import "tailwindcss";
 
 @theme {
-    --color-main: #EF7272;
+	--color-main: #ef7272;
+}
+
+:root {
+	--color-main: #ef7272;
+	--color-black: #000000;
+	--color-white: #ffffff;
 }
