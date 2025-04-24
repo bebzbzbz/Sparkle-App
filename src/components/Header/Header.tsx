@@ -5,9 +5,9 @@ interface HeaderProps {
     imgLeft: string,
     leftLinkDestination?: string,
     imgRight1?: string,
-    rightAction1?: () => void
+    rightAction1?: () => void,
     imgRight2?: string,
-    rightAction2?: () => void
+    rightAction2?: () => void,
     imgRight3?: string,
     rightAction3?: () => void
 }
