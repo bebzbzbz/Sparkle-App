@@ -6,10 +6,36 @@ interface SinglePost {
 
 const SinglePost = () => {
     return (  
-        <>
-            <h1>Single Post</h1>
+        <article className="flex flex-col gap-2 items-center justify-center mb-10">
             <ProfilePreviewCard/>
-        </>
+            {/* hier muss dann das gefetchte bild rein */}
+            <div className="h-[60vh] w-[80vw] mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer">
+                <img className="h-full w-full object-cover rounded-4xl" src="/public/svg/SinglePostPlaceholder.png" alt="placeholder" />
+            </div>
+            
+            <div className="flex gap-10 self-start px-15 justify-start items-center">
+                <div className="flex justify-between items-center gap-2">
+                    {/* das herz braucht noch eine toggle funktion, die auch mit dem backend verbunden sein muss */}
+                    <div className=" cursor-pointer h-8 w-8 transition ease-in-out hover:drop-shadow-xl">
+                        <img className="h-full object-fill"  src="/public/svg/heart-filled.svg" alt="heart emoji filled" />
+                    </div>
+                    {/* hier müssen die gefetchte anzahl an likes rein */}
+                    <p className="">443</p>
+                </div>
+                
+                <div className="flex justify-between items-center gap-2">
+                    <div className="h-8 w-8 cursor-pointer transition ease-in-out hover:drop-shadow-xl">
+                         <img className="h-full object-fill" src="/public/svg/comment.svg" alt="speechbubble" />
+                    </div>
+                    {/* hier müssen die gefetchte anzahl von comments rein */}
+                    <p>264</p>
+                </div>
+                
+            </div>
+
+        </article>
+            
+        
     );
 }
 
