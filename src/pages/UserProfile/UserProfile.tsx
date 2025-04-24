@@ -7,14 +7,10 @@ import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 const UserProfile = () => {
     const navigate = useNavigate()
     
-
-    const navToEdit = () => {
-        navigate(`/profile/edit`)
-    }
-
-    const navToNewPost = () => {
-        navigate(`/newpost`)
-    }
+    const navToEdit = () => navigate("/profile/edit")
+    
+    const navToNewPost = () => navigate("/newpost")
+    
 
     // noch eine Funktion für das Pop-Up für die Einstellungen
     
@@ -23,9 +19,9 @@ const UserProfile = () => {
             <Header 
             headerTitle={"user_name"} imgLeft="logo" 
             imgRight1="newpost" 
-            rightAction1={() => navToNewPost} 
+            rightAction1={navToNewPost} 
             imgRight2="edit"
-            rightAction2={() => navToEdit}
+            rightAction2={navToEdit}
             imgRight3="options"/>
             <ProfileInfo/>
             <MiniFeed/>
