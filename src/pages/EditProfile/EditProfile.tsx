@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import MainButton from "../../components/MainButton/MainButton";
 
@@ -6,11 +7,18 @@ const EditProfile = () => {
         e.preventDefault()
     }
 
+    const navigate = useNavigate()
+
+    const navigateToProfile = () => {
+        navigate("/profile")
+    }
+
     return (  
         <>
             <Header 
                 headerTitle="Edit Profile" 
-                imgLeft="arrow-back"/>
+                imgLeft="arrow-back"
+                leftLinkDestination="/profile"/>
             <section
                 className="flex flex-col gap-3 items-center" >
                 <form
@@ -20,7 +28,8 @@ const EditProfile = () => {
                         className="relative">
                         <img 
                             src="/svg/pic-empty.svg" 
-                            alt="No Profile Picture" />
+                            alt="No Profile Picture" 
+                            className="w-30"/>
                         <input 
                             type="file" 
                             accept="image/*"
@@ -72,10 +81,11 @@ const EditProfile = () => {
                         type="url" 
                         placeholder="Website"
                         />
-                    <MainButton 
-                        type="submit" 
-                        textContent="Update"/>
                 </form>
+                    <MainButton 
+                        type="button" 
+                        textContent="Update"
+                        />
             </section>
         </>
     );

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 interface HeaderProps {
     headerTitle: string,
     imgLeft: string,
-    leftLinkDestination?: () => {},
+    leftLinkDestination?: string,
     imgRight1?: string,
-    rightAction1?: () => {}
+    rightAction1?: () => void,
     imgRight2?: string,
-    rightAction2?: () => {}
+    rightAction2?: () => void,
     imgRight3?: string,
-    rightAction3?: () => {}
+    rightAction3?: () => void
 }
 
 const Header = ({headerTitle, imgLeft, leftLinkDestination, imgRight1, imgRight2, imgRight3, rightAction1, rightAction2, rightAction3} : HeaderProps) => {
