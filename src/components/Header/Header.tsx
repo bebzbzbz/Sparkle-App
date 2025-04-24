@@ -17,9 +17,9 @@ const Header = ({headerTitle, imgLeft, leftLinkDestination, imgRight1, imgRight2
 
     return (  
         <header 
-            className="flex justify-between px-20">
+            className=" absolute top-0 left-0 p-5 flex justify-between items-center w-full">
             <h1
-                className={`flex items-center gap-3 ${leftLinkDestination && "cursor-pointer"}`}
+                className={`flex items-center gap-3 font-bold text-lg ${leftLinkDestination && "cursor-pointer"}`}
                 onClick={() => {
                     // wenn eine aktion übergeben wurde, wird diese auslöst, ansonsten geschieht nichts
                     if(!!leftLinkDestination) {
@@ -29,7 +29,7 @@ const Header = ({headerTitle, imgLeft, leftLinkDestination, imgRight1, imgRight2
                 <img 
                     src={`/svg/${imgLeft}.svg`} 
                     alt="Logo" 
-                    className="h-8"/>
+                    className="w-6"/>
                 {headerTitle}
             </h1>
             <div
@@ -38,32 +38,20 @@ const Header = ({headerTitle, imgLeft, leftLinkDestination, imgRight1, imgRight2
                 <img 
                 src={`/svg/${imgRight1}.svg`} 
                 alt="Likes" 
-                className={`${rightAction1 && "cursor-pointer"}`}
-                onClick={() => {
-                    if(!!rightAction1) {
-                        rightAction1
-                    }
-                }}/>}
+                className={`${rightAction1 && "cursor-pointer"} w-6`}
+                onClick={rightAction1}/>}
                 {imgRight2 && 
                 <img 
                 src={`/svg/${imgRight2}.svg`} 
                 alt="Likes" 
-                className={`${rightAction2 && "cursor-pointer"}`}
-                onClick={() => {
-                    if(!!rightAction2) {
-                        rightAction2
-                    }
-                }}/>}
+                className={`${rightAction2 && "cursor-pointer"} w-6`}
+                onClick={rightAction2}/>}
                 {imgRight3 && 
                 <img 
                 src={`/svg/${imgRight3}.svg`} 
                 alt="Likes" 
-                className={`${rightAction3 && "cursor-pointer"}`}
-                onClick={() => {
-                    if(!!rightAction3) {
-                        rightAction3
-                    }
-                }}/>}
+                className={`${rightAction3 && "cursor-pointer"} w-6`}
+                onClick={rightAction3}/>}
             </div>
         </header>
     );
