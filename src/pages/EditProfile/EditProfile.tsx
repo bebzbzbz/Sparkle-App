@@ -1,16 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import MainButton from "../../components/MainButton/MainButton";
 
 const EditProfile = () => {
     const editHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-    }
-
-    const navigate = useNavigate()
-
-    const navigateToProfile = () => {
-        navigate("/profile")
     }
 
     return (  

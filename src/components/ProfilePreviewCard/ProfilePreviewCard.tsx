@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MainButton from "../MainButton/MainButton";
 
 const ProfilePreviewCard = () => {
     // bild und name sind klickbar zu profil ✔︎
+    const location = useLocation()
+
     return (  
         <article className="px-10 w-full flex justify-between items-center">
             <Link to="/profile">
@@ -18,8 +20,10 @@ const ProfilePreviewCard = () => {
             </Link>
             
             {/* nur solange der mainbutton noch keine funktion hat, dann gerne löschen */}
-        <p>button</p> 
-            <MainButton/>
+            {location.pathname === "/home" ?
+                <img src="/svg/options.svg"/>
+            : <MainButton textContent="Follow" type="button"/>
+            }
         </article>
         
             

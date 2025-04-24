@@ -5,7 +5,7 @@ const Layout = () => {
     return (  
         <>
             <main
-                className="px-5 pb-10 mb-30 pt-15">
+                className="px-5 pb-10 mb-30 pt-20">
                 <Outlet/>
             </main>
             <NavBar/>
