@@ -1,12 +1,13 @@
 import SignLog from "../../components/SignLog/SignLog";
+import "./SignUp.css";
 
 const SignUp = () => {
-    return ( 
-        <>
-            <h1>Sign Up</h1>
-            <SignLog/>
-        </>
-    );
+	return (
+		<div className="sign-up">
+			<h1>Sign Up</h1>
+			<SignLog />
+		</div>
+	);
 }
 
 export default SignUp;
