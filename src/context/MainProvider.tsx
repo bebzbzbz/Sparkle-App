@@ -1,14 +1,131 @@
-import { createContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
+import { Session, User } from '@supabase/supabase-js';
+import supabase from '../utils/supabase';
 
-export const mainContext = createContext({})
+// Typdefinition für den Context-Wert
+interface AuthContextType {
+	supabase: typeof supabase;
+	session: Session | null;
+	user: User | null;
+	loading: boolean;
+	signInWithPassword: (credentials: { email: string; password: string }) => Promise<any>;
+	signUp: (credentials: { email: string; password: string; options?: any }) => Promise<any>;
+	signOut: () => Promise<any>;
+}
 
-const MainProvider = ({children} : {children:React.ReactNode}) => {
+// Context erstellen mit einem initialen Defaultwert
+export const mainContext = createContext<AuthContextType>({
+	supabase,
+	session: null,
+	user: null,
+	loading: true,
+	signInWithPassword: async () => { },
+	signUp: async () => { },
+	signOut: async () => { },
+});
 
-    return (  
-        <mainContext.Provider value={{}}>
-            {children}
-        </mainContext.Provider>
-    );
+// Hilfsfunktion zum Abrufen des Contexts
+export const useAuth = () => {
+	const context = useContext(mainContext);
+	if (context === undefined) {
+		throw new Error('useAuth must be used within an AuthProvider');
+	}
+	return context;
+};
+
+const MainProvider = ({ children }: { children: React.ReactNode }) => {
+	const [session, setSession] = useState<Session | null>(null);
+	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
+
+	// Aktuelle Session abrufen und auf Änderungen hören
+	useEffect(() => {
+		// Aktuelle Session abrufen
+		supabase.auth.getSession().then(({ data: { session } }) => {
+			setSession(session);
+			setUser(session?.user ?? null);
+			setLoading(false);
+		});
+
+		// Auf Auth-Änderungen hören
+		const { data: authListener } = supabase.auth.onAuthStateChange(
+			async (_event, session) => {
+				setSession(session);
+				setUser(session?.user ?? null);
+				setLoading(false);
+			}
+		);
+
+		// Listener beim Unmount bereinigen
+		return () => {
+			authListener?.subscription.unsubscribe();
+		};
+	}, []);
+
+	// --- Authentifizierungsfunktionen ---
+
+	const signInWithPassword = async (credentials: { email: string; password: string }) => {
+		setLoading(true);
+		try {
+			const { error } = await supabase.auth.signInWithPassword(credentials);
+			if (error) throw error;
+		} catch (error) {
+			console.error("Error signing in:", error);
+			throw error;
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const signUp = async (credentials: { email: string; password: string; options?: any }) => {
+		setLoading(true);
+		try {
+			const { error } = await supabase.auth.signUp({
+				email: credentials.email,
+				password: credentials.password,
+				options: {
+					...credentials.options,
+					emailRedirectTo: null
+				}
+			});
+			if (error) throw error;
+		} catch (error) {
+			console.error("Error signing up:", error);
+			throw error;
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const signOut = async () => {
+		setLoading(true);
+		try {
+			const { error } = await supabase.auth.signOut();
+			if (error) throw error;
+		} catch (error) {
+			console.error("Error signing out:", error);
+			throw error;
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	// Wert für den Context Provider
+	const value = {
+		supabase,
+		session,
+		user,
+		loading,
+		signInWithPassword,
+		signUp,
+		signOut,
+	};
+
+	return (
+		<mainContext.Provider value={value}>
+			{!loading && children}
+		</mainContext.Provider>
+	);
 }
 
 export default MainProvider;

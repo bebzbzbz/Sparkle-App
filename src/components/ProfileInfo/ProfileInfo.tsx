@@ -6,7 +6,7 @@ const ProfileInfo = () => {
         {/* hier kommen username, profession, profile_desc und website rein */}
             <div className="flex flex-col items-center justify-cente gap-2 mb-4">
                 <div className="h-25 w-25 transition ease-in-out hover:drop-shadow-xl hover:opacity-90">
-                    <img className="h-full object-fill rounded-full" src="/public/svg/ProfilePlaceholder.svg" alt="" />
+                    <img className="h-full object-fill rounded-full" src="/svg/ProfilePlaceholder.svg" alt="" />
                 </div>
                 <p className="text-2xl font-bold">username</p>
                 <p className="text-lg font-light">profession</p>
