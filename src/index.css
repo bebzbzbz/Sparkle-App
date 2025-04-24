@@ -11,14 +11,6 @@
 	--color-main: #ef7272;
 	--color-text: #000000;
 	--color-white: #ffffff;
-
-/* hier der font für tailwind */
-	@font-face {
-		font-family: Urbanist;
-		font-style: normal;
-		font-weight: 200 700;
-		src: url("/fonts/Urbanist.ttf") format("woff2");
-	  }
 }
 
 :root {
@@ -26,3 +18,8 @@
 	--color-black: #000000;
 	--color-white: #ffffff;
 }
+
+html{
+	font-family: "Urbanist", sans-serif;
+}
+
