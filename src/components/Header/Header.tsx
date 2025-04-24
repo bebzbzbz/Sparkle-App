@@ -17,7 +17,7 @@ const Header = ({headerTitle, imgLeft, leftLinkDestination, imgRight1, imgRight2
 
     return (  
         <header 
-            className=" absolute top-0 left-0 p-5 flex justify-between items-center w-full">
+            className=" absolute top-0 left-0 p-6 flex justify-between items-center w-full">
             <h1
                 className={`flex items-center gap-3 font-bold text-lg ${leftLinkDestination && "cursor-pointer"}`}
                 onClick={() => {

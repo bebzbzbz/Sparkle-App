@@ -9,8 +9,9 @@ const SinglePost = () => {
         <article className="flex flex-col gap-2 items-center justify-center mb-10">
             <ProfilePreviewCard/>
             {/* hier muss dann das gefetchte bild rein */}
-            <div className="h-[40vh] w-[90vw] mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer">
-                <img className="h-full w-full object-cover rounded-4xl" src="/svg/SinglePostPlaceholder.png" alt="placeholder" />
+            <div className="h-[80vw] w-[80vw] mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer">
+                <img className="h-full w-full object-cover rounded-4xl" src="/public/svg/SinglePostPlaceholder.png" alt="placeholder" />
+
             </div>
             
             <div className="flex gap-10 self-start justify-start items-center">

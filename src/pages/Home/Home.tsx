@@ -4,8 +4,7 @@ import SinglePost from "../../components/SinglePost/SinglePost";
 const Home = () => {
     return (
         <>
-            <h1>Home</h1>
-            <Header/>
+            <Header headerTitle="WhoCares" imgLeft="logo" imgRight1="heart" imgRight2="comment"/>
             <SinglePost/>
         </>
     );
