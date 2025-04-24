@@ -21,14 +21,17 @@ const SignUp = () => {
 		setLoading(true);
 
 		try {
-			// Optional: Übergabe von Optionen (z.B. username)
-			// const options = { data: { username: username } };
-			await signUp({ email, password /*, options */ });
-			setMessage('Account erstellt! Bitte überprüfe deine E-Mails zur Bestätigung.');
-			// Optional: Automatische Weiterleitung nach kurzer Verzögerung oder nach Bestätigung?
-			// setTimeout(() => navigate('/login'), 3000);
+			const { error } = await signUp({
+				email,
+				password
+			});
+
+			if (error) throw error;
+
+			setMessage('Account erfolgreich erstellt!');
+			setTimeout(() => navigate('/login'), 2000);
 		} catch (err: any) {
-			setError(err.message || 'Registrierung fehlgeschlagen.');
+			setError(err.message || 'Registrierung fehlgeschlagen. Bitte überprüfe deine Eingaben.');
 			console.error(err);
 		} finally {
 			setLoading(false);
@@ -46,7 +49,7 @@ const SignUp = () => {
 					</div>
 				</div>
 
-				<h1 className="text-3xl font-bold text-center text-gray-800">Create your Account</h1>
+				<h1 className="text-3xl font-bold text-center text-gray-800">Account erstellen</h1>
 
 				{error && (
 					<div className="p-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
@@ -60,7 +63,7 @@ const SignUp = () => {
 				)}
 
 				<form className="mt-8 space-y-6" onSubmit={handleSignUp}>
-					 {/* Optional: Username Input */}
+					{/* Optional: Username Input */}
 					{/*
 					<div>
 						<input
@@ -103,7 +106,7 @@ const SignUp = () => {
 							required
 							minLength={6} // Supabase erfordert standardmäßig mind. 6 Zeichen
 							className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
-							placeholder="Password (min. 6 characters)"
+							placeholder="Passwort (mind. 6 Zeichen)"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							disabled={loading}
@@ -122,17 +125,17 @@ const SignUp = () => {
 									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 								</svg>
 							) : (
-								'Sign up'
+								'Registrieren'
 							)}
 						</button>
 					</div>
 				</form>
 
-				 <div className="text-sm text-center">
+				<div className="text-sm text-center">
 					<p className="text-gray-600">
-						Already have an account?
+						Bereits registriert?
 						<Link to="/login" className="ml-1 font-medium text-red-600 hover:text-red-500">
-							Sign in
+							Anmelden
 						</Link>
 					</p>
 				</div>
