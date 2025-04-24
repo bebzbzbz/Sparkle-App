@@ -15,7 +15,7 @@ const ProfileInfo = () => {
             </div>
 
         {/* hier kommen anzahl von posts, followers und following rein */}
-            <div className="flex justify-evenly items-center">
+            <div className="grid grid-cols-3 items-center">
                 <div className="flex flex-col gap-1 items-center justify-center">
                     <p className="text-2xl font-bold">1</p>
                     <p className="text-sm font-extralight">Posts</p>

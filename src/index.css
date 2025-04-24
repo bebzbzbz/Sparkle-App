@@ -14,7 +14,7 @@
 }
 
 @layer global {
-	input, select {
+	form input, select {
 		@apply bg-gray-100 rounded-xl px-5 py-4 w-full
 	}
 	form {
