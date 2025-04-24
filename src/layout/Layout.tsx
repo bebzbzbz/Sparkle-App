@@ -4,7 +4,10 @@ import NavBar from "../components/NavBar/NavBar";
 const Layout = () => {
     return (  
         <>
-            <Outlet/>
+            <main
+                className="px-15 py-10 mb-30">
+                <Outlet/>
+            </main>
             <NavBar/>
         </>
     );
