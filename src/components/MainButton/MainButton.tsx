@@ -13,7 +13,7 @@ const MainButton = ({ textContent, linkDestination, action, type }: MainButtonPr
 	return (
 		<button
 			type={type}
-			className="bg-main px-15 py-3 rounded-full text-white font-semibold tracking-[2px] cursor-pointer"
+			className="bg-main px-5 py-2 rounded-full text-white font-semibold tracking-[2px] cursor-pointer"
 			onClick={() => {
                 if (linkDestination) {
                     navigate(`/${linkDestination}`);

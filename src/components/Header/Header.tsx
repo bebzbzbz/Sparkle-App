@@ -4,6 +4,7 @@ interface HeaderProps {
     headerTitle: string,
     imgLeft: string,
     leftLinkDestination?: string,
+    leftAction?: () => void,
     imgRight1?: string,
     rightAction1?: () => void,
     imgRight2?: string,
@@ -12,18 +13,20 @@ interface HeaderProps {
     rightAction3?: () => void
 }
 
-const Header = ({headerTitle, imgLeft, leftLinkDestination, imgRight1, imgRight2, imgRight3, rightAction1, rightAction2, rightAction3} : HeaderProps) => {
+const Header = ({headerTitle, imgLeft, leftLinkDestination, leftAction, imgRight1, imgRight2, imgRight3, rightAction1, rightAction2, rightAction3} : HeaderProps) => {
     const navigate = useNavigate();
 
     return (  
         <header 
-            className=" absolute top-0 left-0 p-6 flex justify-between items-center w-full">
+            className="fixed top-0 left-0 px-5 pt-6 pb-4 flex justify-between items-center w-full bg-white">
             <h1
                 className={`flex items-center gap-3 font-bold text-lg ${leftLinkDestination && "cursor-pointer"}`}
                 onClick={() => {
                     // wenn eine aktion übergeben wurde, wird diese auslöst, ansonsten geschieht nichts
-                    if(!!leftLinkDestination) {
+                    if(leftLinkDestination) {
                         navigate(`/${leftLinkDestination}`)
+                    } else if (leftAction) {
+                        leftAction()
                     }
                 }}>
                 <img 

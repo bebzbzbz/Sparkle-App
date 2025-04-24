@@ -9,7 +9,7 @@ const SearchAll = () => {
                 <input 
                     type="text" 
                     placeholder="Search members..." 
-                    className="bg-gray-100 rounded-xl w-full px-12 py-4" />
+                    className="bg-gray-100 rounded-xl w-full px-10 py-4" />
                     <img 
                         src="/svg/search.svg"
                         alt="Magnifying glass"

@@ -25,7 +25,7 @@ export const NavLink = ({ linkname, path, img }: NavLinkProps) => {
 const NavBar = () => {
     return (  
         <nav 
-            className="flex w-screen justify-between border-t-gray-300 border-t-1 pt-5 pb-8 px-10 fixed bottom-0 bg-white">
+            className="flex w-screen justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-10 fixed bottom-0 bg-white">
             <NavLink 
                 linkname="Home" 
                 path="home" 

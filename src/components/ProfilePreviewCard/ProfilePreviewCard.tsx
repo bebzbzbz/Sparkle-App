@@ -6,7 +6,7 @@ const ProfilePreviewCard = () => {
     const location = useLocation()
 
     return (  
-        <article className="px-10 w-full flex justify-between items-center">
+        <article className="w-full flex justify-between items-center">
             <Link to="/profile">
             <div className="flex items-center justify-center gap-5">
                 <div className="h-10 w-10 transition ease-in-out hover:drop-shadow-xl hover:opacity-90">
@@ -25,10 +25,6 @@ const ProfilePreviewCard = () => {
             : <MainButton textContent="Follow" type="button"/>
             }
         </article>
-        
-            
-            
-        
     );
 }
 
