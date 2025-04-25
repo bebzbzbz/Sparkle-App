@@ -10,7 +10,7 @@ import { mainContext } from "../../context/MainProvider";
 const UserProfile = () => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const navigate = useNavigate()
-  const {loggedInUser} = useContext(mainContext)
+	const {loggedInUser} = useContext(mainContext)
 
 	const handleSettingsClick = () => {
 		setIsSettingsOpen(true);
@@ -23,13 +23,13 @@ const UserProfile = () => {
 	return (
 		<section className="flex flex-col gap-7">
 			<Header 
-        headerTitle={"user_name"} imgLeft="logo" 
-        imgRight1="newpost" 
-        rightAction1={() => navigate("/profile/edit")} 
-        imgRight2="edit"
-        rightAction2={() => navigate("/newpost")}
+				headerTitle={"user_name"} imgLeft="logo" 
+				imgRight1="newpost" 
+				rightAction1={() => navigate("/profile/edit")} 
+				imgRight2="edit"
+				rightAction2={() => navigate("/newpost")}
 				imgRight3="options"
-				onImgRight3Click={handleSettingsClick} />
+				rightAction3={handleSettingsClick} />
 			<ProfileInfo 
                 profilePicUrl={loggedInUser?.profile_image_url || ""} 
                 username={loggedInUser?.username || ""} 

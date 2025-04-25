@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import MainButton from "../../components/MainButton/MainButton";
 import MiniFeed from "../../components/MiniFeed/MiniFeed";
-import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import IUser from "../../interfaces/IUser";
 import Header from "../../components/Header/Header";
@@ -58,7 +57,6 @@ const CommunityProfile = () => {
                     type="button" 
                     icon="follow"/>
                 <MiniFeed/>
-                <PopUpSettings/>
             </section>
         );
     }
