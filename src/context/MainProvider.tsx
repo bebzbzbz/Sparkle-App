@@ -9,7 +9,7 @@ interface AuthContextType {
 	user: User | null;
 	loading: boolean;
 	signInWithPassword: (credentials: { email: string; password: string }) => Promise<any>;
-	signUp: (credentials: { email: string; password: string; options?: any }) => Promise<any>;
+	signUp: (credentials: { email: string; password: string; username: string; options?: any }) => Promise<any>;
 	signOut: () => Promise<any>;
 }
 
@@ -48,7 +48,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		});
 
 		// Auf Auth-Änderungen hören
-		const { data: authListener } = supabase.auth.onAuthStateChange(
+		const { data: { subscription } } = supabase.auth.onAuthStateChange(
 			async (_event, session) => {
 				setSession(session);
 				setUser(session?.user ?? null);
@@ -58,7 +58,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 
 		// Listener beim Unmount bereinigen
 		return () => {
-			authListener?.subscription.unsubscribe();
+			subscription.unsubscribe();
 		};
 	}, []);
 
@@ -67,8 +67,33 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	const signInWithPassword = async (credentials: { email: string; password: string }) => {
 		setLoading(true);
 		try {
-			const { error } = await supabase.auth.signInWithPassword(credentials);
-			if (error) throw error;
+			// Prüfen, ob es sich um eine E-Mail-Adresse handelt
+			const isEmail = credentials.email.includes('@');
+
+			if (isEmail) {
+				const { error } = await supabase.auth.signInWithPassword(credentials);
+				if (error) throw error;
+			} else {
+				// Wenn es kein E-Mail ist, handelt es sich um einen Benutzernamen
+				// Hole die E-Mail-Adresse aus der profiles-Tabelle
+				const { data: profile, error: profileError } = await supabase
+					.from('profiles')
+					.select('email')
+					.eq('username', credentials.email)
+					.single();
+
+				if (profileError || !profile) {
+					throw new Error('Benutzername nicht gefunden');
+				}
+
+				// Führe die Anmeldung mit der gefundenen E-Mail durch
+				const { error: signInError } = await supabase.auth.signInWithPassword({
+					email: profile.email,
+					password: credentials.password
+				});
+
+				if (signInError) throw signInError;
+			}
 		} catch (error) {
 			console.error("Error signing in:", error);
 			throw error;
@@ -77,18 +102,46 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 
-	const signUp = async (credentials: { email: string; password: string; options?: any }) => {
+	const signUp = async (credentials: { email: string; password: string; username: string; options?: any }) => {
 		setLoading(true);
 		try {
-			const { error } = await supabase.auth.signUp({
+			// 1. Benutzer in auth.users registrieren
+			const { data, error } = await supabase.auth.signUp({
 				email: credentials.email,
 				password: credentials.password,
 				options: {
 					...credentials.options,
-					emailRedirectTo: null
+					emailRedirectTo: `${window.location.origin}/login`,
+					data: {
+						username: credentials.username
+					}
 				}
 			});
+
 			if (error) throw error;
+
+			// 2. Warte auf die erfolgreiche Erstellung des Benutzers
+			if (data.user) {
+				// 3. Profil in der profiles-Tabelle erstellen
+				const { error: profileError } = await supabase
+					.from('profiles')
+					.insert([
+						{
+							id: data.user.id,
+							username: credentials.username,
+							email: credentials.email,
+							updated_at: new Date().toISOString()
+						}
+					]);
+
+				if (profileError) {
+					// Wenn das Profil nicht erstellt werden kann, lösche den Benutzer
+					await supabase.auth.admin.deleteUser(data.user.id);
+					throw profileError;
+				}
+			} else {
+				throw new Error('Benutzer konnte nicht erstellt werden');
+			}
 		} catch (error) {
 			console.error("Error signing up:", error);
 			throw error;

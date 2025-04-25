@@ -6,7 +6,7 @@ const SignUp = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	// Optional: Füge ein Feld für einen Benutzernamen hinzu, falls gewünscht
-	// const [username, setUsername] = useState('');
+	const [username, setUsername] = useState('');
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [message, setMessage] = useState<string | null>(null); // Für Erfolgsmeldungen (z.B. E-Mail-Bestätigung)
@@ -14,25 +14,20 @@ const SignUp = () => {
 	const { signUp } = useAuth();
 	const navigate = useNavigate();
 
-	const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSignUp = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setError(null);
-		setMessage(null);
+		setError('');
+		setMessage('');
 		setLoading(true);
 
 		try {
-			const { error } = await signUp({
-				email,
-				password
-			});
-
-			if (error) throw error;
-
-			setMessage('Account erfolgreich erstellt!');
-			setTimeout(() => navigate('/login'), 2000);
-		} catch (err: any) {
-			setError(err.message || 'Registrierung fehlgeschlagen. Bitte überprüfe deine Eingaben.');
-			console.error(err);
+			await signUp({ email, password, username });
+			setMessage('Registrierung erfolgreich! Sie werden zur Login-Seite weitergeleitet...');
+			setTimeout(() => {
+				navigate('/login');
+			}, 2000);
+		} catch (error: any) {
+			setError(error.message || 'Ein Fehler ist aufgetreten');
 		} finally {
 			setLoading(false);
 		}
@@ -64,7 +59,7 @@ const SignUp = () => {
 
 				<form className="mt-8 space-y-6" onSubmit={handleSignUp}>
 					{/* Optional: Username Input */}
-					{/*
+
 					<div>
 						<input
 							id="username"
@@ -78,7 +73,7 @@ const SignUp = () => {
 							disabled={loading}
 						/>
 					</div>
-					*/}
+
 
 					{/* Email Input */}
 					<div>
