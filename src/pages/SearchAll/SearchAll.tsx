@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import ProfilePreviewCard from "../../components/ProfilePreviewCard/ProfilePreviewCard";
 import supabase from "../../utils/supabase";
 import IUser from "../../interfaces/IUser";
+import { mainContext } from "../../context/MainProvider";
 
 const SearchAll = () => {
-    const [allSearchedProfiles, setAllSearchedProfiles] = useState<IUser[] | null>(null)
-
+    const {allSearchedProfiles, setAllSearchedProfiles} = useContext(mainContext)
     const searchUserRef = useRef<HTMLInputElement>(null)
 
     const handleInput = (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -55,14 +55,15 @@ const SearchAll = () => {
             </div>
             <article 
                 className="flex flex-col gap-4">
-                {allSearchedProfiles && allSearchedProfiles.map((profile: IUser) => (
-                <ProfilePreviewCard
+                {allSearchedProfiles && allSearchedProfiles.map((profile: IUser) => {
+                
+                return (<ProfilePreviewCard
                     profileId={profile.id}
                     username={profile.username}
                     profilePicUrl={profile.profile_image_url}
                     profession={profile.profession || ""}
                     />
-                ))}
+                )})}
             </article>
         </section>
     );

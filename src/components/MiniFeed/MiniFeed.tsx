@@ -24,28 +24,41 @@ const MiniFeed = () => {
         fetchData()
     }, [])
 
-    console.log(profilePosts)
-
-    return (  
-        <article className="mb-20">
-            <div className="grid grid-cols-3 justify-items-center gap-3 mb-5">
+    if(profilePosts === null) {
+        return (
+            <article className="mb-20">
+                <div className="grid grid-cols-3 justify-items-center gap-3 mb-5">
                 <div className="flex gap-2">
                     <img className="h-5 object-fill" src="/public/svg/feed-filled.svg" alt="four rectangles" />
                     <p>Feeds</p>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-2">
-                {profilePosts ? profilePosts.map((post) => (
-                    <img 
-                        className="w-full aspect-square object-cover rounded-2xl transition ease-in-out wover:opacity-80" 
-                        src={post.post_image_url} 
-                        alt="Miniature Post" 
-                        key={crypto.randomUUID()}/>
-                )) : <></>}
-            </div>
-
+            <h2 className="text-center">Loading posts...</h2>
         </article>
-    );
+        )
+    } else {
+        return (  
+            <article className="mb-20">
+                <div className="grid grid-cols-3 justify-items-center gap-3 mb-5">
+                    <div className="flex gap-2">
+                        <img className="h-5 object-fill" src="/public/svg/feed-filled.svg" alt="four rectangles" />
+                        <p>Feeds</p>
+                    </div>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                    {profilePosts.map((post) => (
+                        <img 
+                            className="w-full aspect-square object-cover rounded-2xl transition ease-in-out wover:opacity-80" 
+                            src={post.post_image_url} 
+                            alt="Miniature Post" 
+                            key={crypto.randomUUID()}/>
+                    ))}
+                </div>
+    
+            </article>
+        );
+    }
+
 }
 
 export default MiniFeed;

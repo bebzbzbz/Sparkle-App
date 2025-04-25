@@ -18,7 +18,7 @@ const ProfilePreviewCard = ({profileId, profilePicUrl, username, profession} : P
                 <div className="flex items-center gap-5">
                         <img 
                             className="h-10 aspect-square object-cover rounded-full transition ease-in-out hover:drop-shadow-xl hover:opacity-90" 
-                            src={profilePicUrl} 
+                            src={profilePicUrl || "/svg/pic-empty.svg"} 
                             alt="profilepicture placeholder" />
                     <div className="flex flex-col ">
                         <p className="font-bold transition ease-in-out hover:drop-shadow-xl hover:opacity-90">{username}</p>

@@ -18,7 +18,7 @@ const ProfileInfo = ({profilePicUrl, username, name, profession, profile_desc, w
                     alt={username} />
                 <p className="text-2xl font-bold">{name}</p>
                 <p className="text-lg font-light">{profession || ""}</p>
-                <p className="text-sm font-extralight">{profile_desc}</p>
+                <p className="text-sm font-extralight text-center">{profile_desc}</p>
                 <a className="cursor-pointer text-sm text-blue-500 font-bold" href="">{website || ""}</a>
             </div>
 

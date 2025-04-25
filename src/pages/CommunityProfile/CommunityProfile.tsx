@@ -32,28 +32,36 @@ const CommunityProfile = () => {
 
     const navigate = useNavigate()
 
-    return (  
-        <section className="flex flex-col gap-5">
-            <Header 
-            headerTitle={communityProfile?.username || ""} 
-            imgLeft="arrow-back"
-            leftAction={() => navigate(-1)}
-            imgRight1="options"/>
-            <ProfileInfo 
-                profilePicUrl={communityProfile?.profile_image_url} 
-                username={communityProfile?.username || ""} 
-                name={communityProfile?.profile_name || ""}
-                profession={communityProfile?.profession || ""} 
-                profile_desc={communityProfile?.profile_desc || ""} 
-                website={communityProfile?.website || ""}/>
-            <MainButton 
-                textContent="Follow" 
-                type="button" 
-                icon="follow"/>
-            <MiniFeed/>
-            <PopUpSettings/>
-        </section>
-    );
+    if(communityProfile === null) {
+        return (
+            <section>
+                <h2 className="text-center">Loading profile...</h2>
+            </section>
+        )
+    } else {
+        return (  
+            <section className="flex flex-col gap-5">
+                <Header 
+                headerTitle={communityProfile?.username || ""} 
+                imgLeft="arrow-back"
+                leftAction={() => navigate(-1)}
+                imgRight1="options"/>
+                <ProfileInfo 
+                    profilePicUrl={communityProfile?.profile_image_url} 
+                    username={communityProfile?.username || ""} 
+                    name={communityProfile?.profile_name || ""}
+                    profession={communityProfile?.profession || ""} 
+                    profile_desc={communityProfile?.profile_desc || ""} 
+                    website={communityProfile?.website || ""}/>
+                <MainButton 
+                    textContent="Follow" 
+                    type="button" 
+                    icon="follow"/>
+                <MiniFeed/>
+                <PopUpSettings/>
+            </section>
+        );
+    }
 }
 
 export default CommunityProfile;
