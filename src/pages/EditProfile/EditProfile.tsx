@@ -62,7 +62,7 @@ const EditProfile = () => {
                     <select>
                         <option value="">Select a gender</option>
                         <option 
-                            value="Nonbinary">Nonbinary</option>
+                            value="Genderqueer">Genderqueer</option>
                         <option 
                             value="Female">Female</option>
                         <option 
