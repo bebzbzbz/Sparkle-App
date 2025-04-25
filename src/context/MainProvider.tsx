@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { Session, User } from '@supabase/supabase-js';
 import supabase from '../utils/supabase';
+import IUser from "../interfaces/IUser";
 
 // Typdefinition für den Context-Wert
 interface AuthContextType {
@@ -11,6 +12,10 @@ interface AuthContextType {
 	signInWithPassword: (credentials: { email: string; password: string }) => Promise<any>;
 	signUp: (credentials: { email: string; password: string; options?: any }) => Promise<any>;
 	signOut: () => Promise<any>;
+	allSearchedProfiles: IUser[] | null,
+	setAllSearchedProfiles: (allSearchedProfiles: IUser[] | null) => void,
+	loggedInUser: IUser | null,
+	setLoggedInUser: (loggedInUser: IUser | null) => void
 }
 
 // Context erstellen mit einem initialen Defaultwert
@@ -22,6 +27,10 @@ export const mainContext = createContext<AuthContextType>({
 	signInWithPassword: async () => { },
 	signUp: async () => { },
 	signOut: async () => { },
+	allSearchedProfiles: null,
+	setAllSearchedProfiles: () => {},
+	loggedInUser: null,
+	setLoggedInUser: () => {}
 });
 
 // Hilfsfunktion zum Abrufen des Contexts
@@ -110,6 +119,9 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 
+	const [allSearchedProfiles, setAllSearchedProfiles] = useState<IUser[] | null>(null)
+	const [loggedInUser, setLoggedInUser] = useState<IUser | null>(null)
+
 	// Wert für den Context Provider
 	const value = {
 		supabase,
@@ -119,6 +131,10 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		signInWithPassword,
 		signUp,
 		signOut,
+		allSearchedProfiles,
+		setAllSearchedProfiles,
+		loggedInUser,
+		setLoggedInUser
 	};
 
 	return (

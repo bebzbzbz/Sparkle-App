@@ -38,23 +38,23 @@ const Header = ({headerTitle, imgLeft, leftLinkDestination, leftAction, imgRight
             <div
                 className="flex gap-5">
                 {imgRight1 && 
-                <img 
-                src={`/svg/${imgRight1}.svg`} 
-                alt="Likes" 
-                className={`${rightAction1 && "cursor-pointer"} w-6`}
-                onClick={rightAction1}/>}
+                    <img 
+                    src={`/svg/${imgRight1}.svg`} 
+                    alt="Likes" 
+                    className={`${rightAction1 && "cursor-pointer"} w-6`}
+                    onClick={rightAction1}/>}
                 {imgRight2 && 
-                <img 
-                src={`/svg/${imgRight2}.svg`} 
-                alt="Likes" 
-                className={`${rightAction2 && "cursor-pointer"} w-6`}
-                onClick={rightAction2}/>}
+                    <img 
+                    src={`/svg/${imgRight2}.svg`} 
+                    alt="Likes" 
+                    className={`${rightAction2 && "cursor-pointer"} w-6`}
+                    onClick={rightAction2}/>}
                 {imgRight3 && 
-                <img 
-                src={`/svg/${imgRight3}.svg`} 
-                alt="Likes" 
-                className={`${rightAction3 && "cursor-pointer"} w-6`}
-                onClick={rightAction3}/>}
+                    <img 
+                    src={`/svg/${imgRight3}.svg`} 
+                    alt="Likes" 
+                    className={`${rightAction3 && "cursor-pointer"} w-6`}
+                    onClick={rightAction3}/>}
             </div>
         </header>
     );
