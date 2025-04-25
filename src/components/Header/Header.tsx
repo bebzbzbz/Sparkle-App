@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
-    headerTitle: string,
-    imgLeft: string,
-    leftLinkDestination?: string,
-    leftAction?: () => void,
-    imgRight1?: string,
-    rightAction1?: () => void,
-    imgRight2?: string,
-    rightAction2?: () => void,
-    imgRight3?: string,
-    rightAction3?: () => void
+	headerTitle: string,
+	imgLeft: string,
+	leftLinkDestination?: string,
+	leftAction?: () => void,
+	imgRight1?: string,
+	rightAction1?: () => void,
+	imgRight2?: string,
+	rightAction2?: () => void,
+	imgRight3?: string,
+	rightAction3?: () => void,
 }
 
-const Header = ({headerTitle, imgLeft, leftLinkDestination, leftAction, imgRight1, imgRight2, imgRight3, rightAction1, rightAction2, rightAction3} : HeaderProps) => {
-    const navigate = useNavigate();
+const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, imgRight1, imgRight2, imgRight3, rightAction1, rightAction2, rightAction3 }: HeaderProps) => {
+	const navigate = useNavigate();
 
     return (  
         <header 
