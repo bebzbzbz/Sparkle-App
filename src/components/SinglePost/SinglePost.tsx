@@ -1,43 +1,70 @@
+import {useEffect, useState } from "react";
 import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
+import supabase from "../../utils/supabase";
+import { ISinglePost } from "../../pages/Home/Home";
 
-interface SinglePost {
-    
+interface IPostProps{
+    post: ISinglePost,
+    postId: string,
 }
 
-const SinglePost = () => {
+interface ILikes {
+    userId: string,
+    postId: string,
+}
+
+const SinglePost = ({post,postId}: IPostProps) => {
+
+    const [likes,setLikes] = useState<ILikes[]>()
+
+    // fetch likes
+    const fetchLikesData = async () => {
+        try {
+            const {data: likesData} = await supabase.from("likes").select("*").eq("post_id",postId )
+            console.log("likesData:",likesData)
+            setLikes(likesData as ILikes[])
+            
+        } catch (error) {
+            console.warn("Error while fetching LikesData", error)
+        }
+    }
+    useEffect(()=>{
+        fetchLikesData()
+    },[])
+
+    // console.log("LikesData",likes)
+
+
     return (  
         <article className="flex flex-col gap-4 items-center justify-center mb-10">
             <ProfilePreviewCard/>
-            {/* hier muss dann das gefetchte bild rein */}
-            <div className="h-[100vw - 10px] w-[100vw - 10px] mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer">
-                <img className="h-full w-full object-cover rounded-4xl" src="/public/svg/SinglePostPlaceholder.png" alt="placeholder" />
-
-            </div>
-            
-            <div className="flex gap-6 self-start justify-start items-center">
-                <div className="flex justify-between items-center gap-2">
-                    {/* das herz braucht noch eine toggle funktion, die auch mit dem backend verbunden sein muss */}
-                    <div className="cursor-pointer h-6 w-6 transition ease-in-out hover:drop-shadow-xl">
+        
+                <div key={post.id}>
+                        <img className="h-full w-full object-cover rounded-4xl aspect-square mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer" src={post.post_image_url} alt={post.post_desc} />
+                    
+                    <div className="flex gap-6 self-start justify-start items-center">
+                        <div className="flex justify-between items-center gap-2">
+                        {/* das herz braucht noch eine toggle funktion, die auch mit dem backend verbunden sein muss */}
+                        <div className="cursor-pointer h-6 w-6 transition ease-in-out hover:drop-shadow-xl">
                         <img className="h-full object-fill"  src="/svg/heart-filled.svg" alt="heart emoji filled" />
                     </div>
-                    {/* hier müssen die gefetchte anzahl an likes rein */}
-                    <p>443</p>
-                </div>
-                
-                <div className="flex justify-between items-center gap-2">
-                    <div className="h-6 w-6 cursor-pointer transition ease-in-out hover:drop-shadow-xl">
-                        <img className="h-full object-fill" src="/svg/comment.svg" alt="speechbubble" />
+                        {/* über likes kann die length genutzt werden, weil die data ein Array ist */}
+                                <p>{likes?.length}</p>
                     </div>
-                    {/* hier müssen die gefetchte anzahl von comments rein */}
-                    <p>264</p>
-                </div>
                 
-                <img src="/svg/message.svg" alt="" />
-            </div>
-
-        </article>
+                    <div className="flex justify-between items-center gap-2">
+                        <div className="h-6 w-6 cursor-pointer transition ease-in-out hover:drop-shadow-xl">
+                            <img className="h-full object-fill" src="/svg/comment.svg" alt="speechbubble" />
+                        </div>
+                        {/* hier müssen die gefetchte anzahl von comments rein */}
+                        <p>264</p>
+                    </div>
             
-        
+                    <img src="/svg/message.svg" alt="" />
+                        </div>
+                </div>
+        </article>
+
     );
 }
 
