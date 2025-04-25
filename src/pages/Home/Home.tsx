@@ -2,23 +2,17 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import SinglePost from "../../components/SinglePost/SinglePost";
 import supabase from "../../utils/supabase";
-
-export interface ISinglePost {
-    id:string,
-    user_id:string,
-    post_desc:string,
-    post_image_url: string,
-}
+import IPost from "../../interfaces/IPost";
 
 const Home = () => {
-    const [posts,setPosts] = useState<ISinglePost[]>()
+    const [posts,setPosts] = useState<IPost[]>()
 
     // fetch posts
     const fetchPostsData = async () => {
         try{
-            const {data} = await supabase.from("posts").select("*")
+            const {data} = await supabase.from("posts").select("*").order("created_at", { ascending: false })
             // console.log("postData:",data)
-            setPosts(data as ISinglePost[])
+            setPosts(data as IPost[])
         }catch(error){
             console.warn("error while fetching PostsData",error)
         }
@@ -34,10 +28,10 @@ const Home = () => {
         <>
         <Header headerTitle="WhoCares" imgLeft="logo" imgRight1="heart" imgRight2="comment"/>
 
-        {posts?.map((post: ISinglePost)=>{
+        {posts?.map((post: IPost)=>{
             return(
                 <div key={post.id}>
-                     <SinglePost post={post} postId={post.id}/>
+                    <SinglePost post={post}/>
                 </div>
             )})}
         </>

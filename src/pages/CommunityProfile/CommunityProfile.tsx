@@ -16,14 +16,14 @@ const CommunityProfile = () => {
         const fetchData = async () => {
             try {
                 // fetch der profile, die mit der id des users/des params übereinstimmen
-                const {data: profile} = await supabase.from("profiles").select("*").eq("id", userParam)
+                const {data: profiles} = await supabase.from("profiles").select("*").eq("id", userParam)
 
-                if(profile) {
+                if(profiles) {
                     // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
-                    setCommunityProfile(profile[0] as unknown as IUser)
+                    setCommunityProfile(profiles[0])
                 }
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
         } 
         fetchData()
@@ -46,17 +46,12 @@ const CommunityProfile = () => {
                 leftAction={() => navigate(-1)}
                 imgRight1="options"/>
                 <ProfileInfo 
-                    profilePicUrl={communityProfile?.profile_image_url} 
-                    username={communityProfile?.username || ""} 
-                    name={communityProfile?.profile_name || ""}
-                    profession={communityProfile?.profession || ""} 
-                    profile_desc={communityProfile?.profile_desc || ""} 
-                    website={communityProfile?.website || ""}/>
+                    profile={communityProfile}/>
                 <MainButton 
                     textContent="Follow" 
                     type="button" 
                     icon="follow"/>
-                <MiniFeed/>
+                <MiniFeed profile={communityProfile}/>
             </section>
         );
     }

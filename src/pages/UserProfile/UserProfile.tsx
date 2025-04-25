@@ -23,21 +23,21 @@ const UserProfile = () => {
 	return (
 		<section className="flex flex-col gap-7">
 			<Header 
-				headerTitle={"user_name"} imgLeft="logo" 
+				headerTitle={loggedInUser?.username || ""} imgLeft="logo" 
 				imgRight1="newpost" 
-				rightAction1={() => navigate("/profile/edit")} 
+				rightAction1={() => navigate("/newpost")} 
 				imgRight2="edit"
-				rightAction2={() => navigate("/newpost")}
+				rightAction2={() => navigate("/profile/edit")}
 				imgRight3="options"
 				rightAction3={handleSettingsClick} />
-			<ProfileInfo 
-                profilePicUrl={loggedInUser?.profile_image_url || ""} 
-                username={loggedInUser?.username || ""} 
-                name={loggedInUser?.profile_name || ""}
-                profession={loggedInUser?.profession || ""} 
-                profile_desc={loggedInUser?.profile_desc || ""} 
-                website={loggedInUser?.website || ""}/>
-			<MiniFeed />
+			{loggedInUser && (
+				<>
+					<ProfileInfo 
+					profile={loggedInUser}/>
+					<MiniFeed 
+					profile={loggedInUser}/>
+				</>
+			)}			
 			<PopUpSettings
 				isOpen={isSettingsOpen}
 				onClose={handleCloseSettings}

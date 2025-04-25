@@ -58,10 +58,8 @@ const SearchAll = () => {
                 {allSearchedProfiles && allSearchedProfiles.map((profile: IUser) => {
                 
                 return (<ProfilePreviewCard
-                    profileId={profile.id}
-                    username={profile.username}
-                    profilePicUrl={profile.profile_image_url}
-                    profession={profile.profession || ""}
+                    profile={profile}
+                    key={crypto.randomUUID()}
                     />
                 )})}
             </article>

@@ -46,6 +46,8 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	const [session, setSession] = useState<Session | null>(null);
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [allSearchedProfiles, setAllSearchedProfiles] = useState<IUser[] | null>(null)
+	const [loggedInUser, setLoggedInUser] = useState<IUser | null>(null)
 
 	// Aktuelle Session abrufen und auf Änderungen hören
 	useEffect(() => {
@@ -70,6 +72,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 			subscription.unsubscribe();
 		};
 	}, []);
+
 
 	// --- Authentifizierungsfunktionen ---
 
@@ -172,8 +175,22 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	};
 
-	const [allSearchedProfiles, setAllSearchedProfiles] = useState<IUser[] | null>(null)
-	const [loggedInUser, setLoggedInUser] = useState<IUser | null>(null)
+	useEffect(() => {
+		if(session) {
+			const fetchLoggedInUser = async () => {
+				try {
+					const {data: profiles} = await supabase.from("profiles").select("*").eq("id", session.user.id)
+		
+					if(profiles) {
+						setLoggedInUser(profiles[0])
+					}
+				} catch (error) {
+					console.error(error)
+				}
+			}
+			fetchLoggedInUser()
+		}
+	}, [session])
 
 	// Wert für den Context Provider
 	const value = {

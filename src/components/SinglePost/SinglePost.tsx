@@ -1,27 +1,27 @@
 import {useEffect, useState } from "react";
 import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
 import supabase from "../../utils/supabase";
-import { ISinglePost } from "../../pages/Home/Home";
+import IPost from "../../interfaces/IPost";
+import { useLocation } from "react-router-dom";
 
 interface IPostProps{
-    post: ISinglePost,
-    postId: string,
+    post: IPost,
 }
 
 interface ILikes {
     userId: string,
-    postId: string,
 }
 
-const SinglePost = ({post,postId}: IPostProps) => {
+const SinglePost = ({post}: IPostProps) => {
+    const location = useLocation()
 
     const [likes,setLikes] = useState<ILikes[]>()
 
     // fetch likes
     const fetchLikesData = async () => {
         try {
-            const {data: likesData} = await supabase.from("likes").select("*").eq("post_id",postId )
-            console.log("likesData:",likesData)
+            const {data: likesData} = await supabase.from("likes").select("*").eq("post_id", post?.id )
+            // console.log("likesData:",likesData)
             setLikes(likesData as ILikes[])
             
         } catch (error) {
@@ -37,10 +37,11 @@ const SinglePost = ({post,postId}: IPostProps) => {
 
     return (  
         <article className="flex flex-col gap-4 items-center justify-center mb-10">
-            <ProfilePreviewCard/>
+            {/* soll nicht auf der profile timeline auftauchen */}
+            {!location.pathname.includes("users") && <ProfilePreviewCard />}
         
-                <div key={post.id}>
-                        <img className="h-full w-full object-cover rounded-4xl aspect-square mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer" src={post.post_image_url} alt={post.post_desc} />
+                <div>
+                    <img className="object-cover rounded-4xl aspect-square mb-2 transition ease-in-out hover:opacity-80 hover:drop-shadow-xl cursor-pointer" src={post.post_image_url} alt={post.post_desc} />
                     
                     <div className="flex gap-6 self-start justify-start items-center">
                         <div className="flex justify-between items-center gap-2">
@@ -49,7 +50,7 @@ const SinglePost = ({post,postId}: IPostProps) => {
                         <img className="h-full object-fill"  src="/svg/heart-filled.svg" alt="heart emoji filled" />
                     </div>
                         {/* über likes kann die length genutzt werden, weil die data ein Array ist */}
-                                <p>{likes?.length}</p>
+                        <p>{likes?.length}</p>
                     </div>
                 
                     <div className="flex justify-between items-center gap-2">

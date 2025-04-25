@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/MainProvider';
 
 const NewPostImg = () => {
@@ -123,7 +123,7 @@ const NewPostImg = () => {
     return (
         <div className="flex flex-col min-h-screen">
             {/* Header */}
-            <header className="bg-white border-b border-gray-200 p-4 flex items-center">
+            <header className="bg-white border-b border-gray-200 pb-4 flex items-center">
                 <button 
                     onClick={() => navigate(-1)} 
                     className="mr-4"
