@@ -1,3 +1,5 @@
+import FeedImage from "../FeedImage/FeedImage";
+
 interface ProfileInfoProps {
     profilePicUrl?: string
     username: string,
@@ -12,10 +14,13 @@ const ProfileInfo = ({profilePicUrl, username, name, profession, profile_desc, w
         <article>
         {/* hier kommen username, profession, profile_desc und website rein */}
             <div className="flex flex-col items-center gap-2 mb-4">
-                <img 
-                    className="h-25 aspect-square object-cover rounded-full transition ease-in-out hover:drop-shadow-xl hover:opacity-90" 
+                <FeedImage 
                     src={profilePicUrl || `/svg/pic-empty.svg`} 
-                    alt={username} />
+                    alt={username} 
+                    aspect="square"
+                    maxSize={120}
+                    className="h-25 rounded-full transition ease-in-out hover:drop-shadow-xl hover:opacity-90" 
+                />
                 <p className="text-2xl font-bold">{name}</p>
                 <p className="text-lg font-light">{profession || ""}</p>
                 <p className="text-sm font-extralight text-center">{profile_desc}</p>

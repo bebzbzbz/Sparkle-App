@@ -1,7 +1,9 @@
 import Header from "../../components/Header/Header";
 import MainButton from "../../components/MainButton/MainButton";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
+    const navigate = useNavigate();
     const editHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
@@ -11,7 +13,9 @@ const EditProfile = () => {
             <Header 
                 headerTitle="Edit Profile" 
                 imgLeft="arrow-back"
-                leftLinkDestination="/profile"/>
+                leftAction={() => navigate(-1)}
+                iconsRight={[]}
+            />
             <section
                 className="flex flex-col gap-3 items-center" >
                 <form
@@ -68,7 +72,7 @@ const EditProfile = () => {
                         <option 
                             value="Male">Male</option>
                         <option 
-                            value="None">Prefer not to disclose</option>
+                            value="None">time to feel</option>
                     </select>
                     <input 
                         type="url" 

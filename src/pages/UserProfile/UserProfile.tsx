@@ -23,13 +23,13 @@ const UserProfile = () => {
 	return (
 		<section className="flex flex-col gap-7">
 			<Header 
-				headerTitle={"user_name"} imgLeft="logo" 
-				imgRight1="newpost" 
-				rightAction1={() => navigate("/profile/edit")} 
-				imgRight2="edit"
-				rightAction2={() => navigate("/newpost")}
-				imgRight3="options"
-				rightAction3={handleSettingsClick} />
+				headerTitle={loggedInUser?.username || ""} 
+				imgLeft="logo" 
+				iconsRight={[
+					{ name: "edit", onClick: () => navigate("/profile/edit"), alt: "Profil bearbeiten" },
+					{ name: "options", onClick: handleSettingsClick, alt: "Einstellungen" }
+				]}
+			/>
 			<ProfileInfo 
                 profilePicUrl={loggedInUser?.profile_image_url || ""} 
                 username={loggedInUser?.username || ""} 

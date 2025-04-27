@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import supabase from "../../utils/supabase";
 import IPost from "../../interfaces/IPost";
+import FeedImage from "../FeedImage/FeedImage";
 
 const MiniFeed = () => {
     const [profilePosts, setProfilePosts] = useState<IPost[] | null>(null)
@@ -47,11 +48,22 @@ const MiniFeed = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                     {profilePosts.map((post) => (
-                        <img 
-                            className="w-full aspect-square object-cover rounded-2xl transition ease-in-out wover:opacity-80" 
-                            src={post.post_image_url} 
-                            alt="Miniature Post" 
-                            key={crypto.randomUUID()}/>
+                        post.media_type === 'image' ? (
+                            <FeedImage
+                                src={post.post_media_url || ''}
+                                alt="Miniature Post" 
+                                aspect="square"
+                                maxSize={400}
+                                key={post.id}
+                            />
+                        ) : post.media_type === 'video' ? (
+                            <video
+                                className="w-full aspect-square object-cover rounded-2xl transition ease-in-out hover:opacity-80"
+                                src={post.post_media_url}
+                                key={post.id}
+                                controls
+                            />
+                        ) : null
                     ))}
                 </div>
     

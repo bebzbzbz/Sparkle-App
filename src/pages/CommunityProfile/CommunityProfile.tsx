@@ -44,7 +44,10 @@ const CommunityProfile = () => {
                 headerTitle={communityProfile?.username || ""} 
                 imgLeft="arrow-back"
                 leftAction={() => navigate(-1)}
-                imgRight1="options"/>
+                iconsRight={[
+                    { name: "options", onClick: () => {}, alt: "Optionen" }
+                ]}
+                />
                 <ProfileInfo 
                     profilePicUrl={communityProfile?.profile_image_url} 
                     username={communityProfile?.username || ""} 

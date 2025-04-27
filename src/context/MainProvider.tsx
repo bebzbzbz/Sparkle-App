@@ -71,6 +71,21 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		};
 	}, []);
 
+	// User-Profil laden, wenn Session existiert
+	useEffect(() => {
+		const fetchProfile = async () => {
+			if (session?.user) {
+				const { data } = await supabase
+					.from('profiles')
+					.select('*')
+					.eq('id', session.user.id)
+					.single();
+				if (data) setLoggedInUser(data);
+			}
+		};
+		fetchProfile();
+	}, [session]);
+
 	// --- Authentifizierungsfunktionen ---
 
 	const signInWithPassword = async (credentials: { email: string; password: string }) => {

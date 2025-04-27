@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import MainButton from "../MainButton/MainButton";
+import FeedImage from "../FeedImage/FeedImage";
 
 interface ProfilePreviewCardProps {
     profileId: string,
@@ -16,10 +17,13 @@ const ProfilePreviewCard = ({profileId, profilePicUrl, username, profession} : P
         <article className="w-full flex justify-between items-center">
             <Link to={`/users/${profileId}`}>
                 <div className="flex items-center gap-5">
-                        <img 
-                            className="h-10 aspect-square object-cover rounded-full transition ease-in-out hover:drop-shadow-xl hover:opacity-90" 
+                        <FeedImage 
                             src={profilePicUrl || "/svg/pic-empty.svg"} 
-                            alt="profilepicture placeholder" />
+                            alt="profilepicture placeholder" 
+                            aspect="square"
+                            maxSize={80}
+                            className="h-10 rounded-full transition ease-in-out hover:drop-shadow-xl hover:opacity-90" 
+                        />
                     <div className="flex flex-col ">
                         <p className="font-bold transition ease-in-out hover:drop-shadow-xl hover:opacity-90">{username}</p>
                         <p className=" text-[0.8rem] font-extralight opacity-70">{profession}</p>
