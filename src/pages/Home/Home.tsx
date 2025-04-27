@@ -69,7 +69,7 @@ const Home = () => {
             alt: "Neuer Post",
           },
           {
-            name: "comment",
+            name: "options",
             onClick: () => setIsSettingsOpen(true),
             alt: "Settings",
           },
