@@ -8,6 +8,7 @@ interface AuthContextType {
 	supabase: typeof supabase;
 	session: Session | null;
 	user: User | null;
+	setUser: (user: User | null) => void; // Hinzugefügt
 	loading: boolean;
 	signInWithPassword: (credentials: { email: string; password: string }) => Promise<any>;
 	signUp: (credentials: { email: string; password: string; username: string; options?: any }) => Promise<any>;
@@ -23,14 +24,15 @@ export const mainContext = createContext<AuthContextType>({
 	supabase,
 	session: null,
 	user: null,
+	setUser: () => { },
 	loading: true,
 	signInWithPassword: async () => { },
 	signUp: async () => { },
 	signOut: async () => { },
 	allSearchedProfiles: null,
-	setAllSearchedProfiles: () => {},
+	setAllSearchedProfiles: () => { },
 	loggedInUser: null,
-	setLoggedInUser: () => {}
+	setLoggedInUser: () => { }
 });
 
 // Hilfsfunktion zum Abrufen des Contexts
@@ -195,6 +197,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		supabase,
 		session,
 		user,
+		setUser,
 		loading,
 		signInWithPassword,
 		signUp,
