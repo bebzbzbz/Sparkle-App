@@ -28,6 +28,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
         } 
         fetchData()
     }, [])
+    console.log(profilePosts)
 
     if(profilePosts === null) {
         return (
@@ -64,7 +65,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
                         :
                             <img 
                                 className="w-full aspect-square object-cover rounded-2xl transition ease-in-out hover:opacity-80" 
-                                src={post.post_image_url} 
+                                src={post.post_media_url} 
                                 alt="Miniature Post" 
                                 key={post.id} />
                     )) : <p className="col-span-3 text-center">No posts yet!</p>}

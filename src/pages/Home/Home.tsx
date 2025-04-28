@@ -22,7 +22,7 @@ const Home = () => {
   // fetch posts
   const fetchPostsData = async () => {
     try {
-      const { data } = await supabase.from("posts").select("*");
+      const { data } = await supabase.from("posts").select("*").order('created_at', { ascending: false });
       // Fallback-Logik für alte Daten
       const postsWithFallback = (data as any[])
         .map((post) => {
