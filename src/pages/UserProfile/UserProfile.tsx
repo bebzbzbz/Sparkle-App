@@ -30,14 +30,12 @@ const UserProfile = () => {
 					{ name: "options", onClick: handleSettingsClick, alt: "Einstellungen" }
 				]}
 			/>
-			<ProfileInfo 
-                profilePicUrl={loggedInUser?.profile_image_url || ""} 
-                username={loggedInUser?.username || ""} 
-                name={loggedInUser?.profile_name || ""}
-                profession={loggedInUser?.profession || ""} 
-                profile_desc={loggedInUser?.profile_desc || ""} 
-                website={loggedInUser?.website || ""}/>
-			<MiniFeed />
+			{loggedInUser && <>
+				<ProfileInfo 
+                profile={loggedInUser}/>
+				<MiniFeed profile={loggedInUser}/>
+			</>}
+			
 			<PopUpSettings
 				isOpen={isSettingsOpen}
 				onClose={handleCloseSettings}

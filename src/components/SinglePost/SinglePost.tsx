@@ -1,25 +1,23 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/MainProvider";
-// import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard"; // Entfernt
 import supabase from "../../utils/supabase";
-import { ISinglePost } from "../../pages/Home/Home";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import FeedImage from "../FeedImage/FeedImage";
+import IPost from "../../interfaces/IPost";
+import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
 dayjs.extend(relativeTime);
 
 interface IPostProps {
-  post: ISinglePost;
-  postId: string;
+  post: IPost;
 }
 
 // interface ILikes {
 //     userId: string,
-//     postId: string,
 // }
 
-const SinglePost = ({ post, postId }: IPostProps) => {
+const SinglePost = ({ post }: IPostProps) => {
   const { user } = useAuth();
   const [likesCount, setLikesCount] = useState(0);
   const [likedByMe, setLikedByMe] = useState(false);
@@ -38,13 +36,13 @@ const SinglePost = ({ post, postId }: IPostProps) => {
     const { count } = await supabase
       .from("likes")
       .select("*", { count: "exact", head: true })
-      .eq("post_id", postId);
+      .eq("post_id", post.id);
     setLikesCount(count || 0);
     if (user) {
       const { data: likeData } = await supabase
         .from("likes")
         .select("*")
-        .eq("post_id", postId)
+        .eq("post_id", post.id)
         .eq("user_id", user.id)
         .single();
       setLikedByMe(!!likeData);
@@ -56,12 +54,12 @@ const SinglePost = ({ post, postId }: IPostProps) => {
     const { count } = await supabase
       .from("comments")
       .select("*", { count: "exact", head: true })
-      .eq("post_id", postId);
+      .eq("post_id", post.id);
     setCommentsCount(count || 0);
     const { data: commentData } = await supabase
       .from("comments")
       .select("*")
-      .eq("post_id", postId)
+      .eq("post_id", post.id)
       .order("created_at", { ascending: false })
       .limit(2);
     const enriched = await enrichCommentsWithUsernames(commentData || []);
@@ -73,7 +71,7 @@ const SinglePost = ({ post, postId }: IPostProps) => {
     const { data: all } = await supabase
       .from("comments")
       .select("*")
-      .eq("post_id", postId)
+      .eq("post_id", post.id)
       .order("created_at", { ascending: false });
     const enriched = await enrichCommentsWithUsernames(all || []);
     setAllComments(enriched);
@@ -94,7 +92,7 @@ const SinglePost = ({ post, postId }: IPostProps) => {
     fetchComments();
     fetchUserInfo();
     // eslint-disable-next-line
-  }, [postId]);
+  }, [post.id]);
 
   const handleLike = async () => {
     if (!user) return;
@@ -102,12 +100,12 @@ const SinglePost = ({ post, postId }: IPostProps) => {
       await supabase
         .from("likes")
         .delete()
-        .eq("post_id", postId)
+        .eq("post_id", post.id)
         .eq("user_id", user.id);
     } else {
       await supabase
         .from("likes")
-        .insert({ post_id: postId, user_id: user.id });
+        .insert({ post_id: post.id, user_id: user.id });
     }
     fetchLikes();
   };
@@ -123,11 +121,11 @@ const SinglePost = ({ post, postId }: IPostProps) => {
 
   const handleEdit = () => {
     // Navigiere zur Edit-Seite oder öffne ein Edit-Modal
-    // Beispiel: navigate(`/editpost/${postId}`)
+    // Beispiel: navigate(`/editpost/${post.id}`)
   };
   const handleDelete = async () => {
     // Lösche den Post aus der Datenbank
-    await supabase.from("posts").delete().eq("id", postId);
+    await supabase.from("posts").delete().eq("id", post.id);
     // Optional: Seite neu laden oder Post aus dem State entfernen
   };
 
@@ -138,7 +136,7 @@ const SinglePost = ({ post, postId }: IPostProps) => {
     setCommentLoading(true);
     try {
       await supabase.from("comments").insert({
-        post_id: postId,
+        post_id: post.id,
         user_id: user.id,
         text_content: commentInput.trim(),
         created_at: new Date().toISOString(),
@@ -184,9 +182,13 @@ const SinglePost = ({ post, postId }: IPostProps) => {
   };
 
   return (
-    <article className="flex flex-col gap-4 items-center justify-center m-8 md:ml-30 md:mr-30 mt-0">
-      <div className="flex items-center gap-2 mb-2">
-        {userInfo && (
+    <article className="flex flex-col gap-4 items-center justify-center md:ml-30 md:mr-30 mt-0">
+        <ProfilePreviewCard profile={userInfo}/>
+        {post.location && (
+            <span className="text-xs text-gray-500">{post.location}</span>
+          )}
+      {/* <div className="flex items-center gap-2 mb-2"> */}
+        {/* {userInfo && (
           <Link
             to={`/users/${post.user_id}`}
             className="flex items-center gap-2"
@@ -200,11 +202,9 @@ const SinglePost = ({ post, postId }: IPostProps) => {
               {userInfo.username}
             </span>
           </Link>
-        )}
-        <span className="text-xs text-gray-500 ml-2">
-          {dayjs(post.created_at).fromNow()}
-        </span>
-      </div>
+        )} */}
+        
+      {/* </div> */}
       <div key={post.id}>
         {post.media_type === "image" ? (
           <FeedImage
@@ -221,7 +221,7 @@ const SinglePost = ({ post, postId }: IPostProps) => {
           />
         ) : null}
 
-        <div className="flex gap-4 self-start justify-start items-center mt-2">
+        <div className="flex gap-4">
           <div className="flex items-center gap-2">
             <button
               onClick={handleLike}
@@ -246,9 +246,13 @@ const SinglePost = ({ post, postId }: IPostProps) => {
           </div>
 
           <img src="/svg/message.svg" alt="" />
-          {post.location && (
-            <span className="text-xs text-gray-500">{post.location}</span>
-          )}
+        </div>
+        <div>
+          <span className="text-xs text-gray-500 ml-2">
+            {dayjs(post.created_at).fromNow()}
+          </span>
+        </div>
+          
           {user && user.id === post.user_id && (
             <>
               <button
@@ -315,7 +319,7 @@ const SinglePost = ({ post, postId }: IPostProps) => {
           </div>
         )}
         {/* Kommentar-Formular */}
-        {user && (
+        {/* {user && (
           <form onSubmit={handleCommentSubmit} className="flex gap-2 mt-2">
             <input
               type="text"
@@ -333,8 +337,8 @@ const SinglePost = ({ post, postId }: IPostProps) => {
               Posten
             </button>
           </form>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
     </article>
   );
 };

@@ -49,17 +49,12 @@ const CommunityProfile = () => {
                 ]}
                 />
                 <ProfileInfo 
-                    profilePicUrl={communityProfile?.profile_image_url} 
-                    username={communityProfile?.username || ""} 
-                    name={communityProfile?.profile_name || ""}
-                    profession={communityProfile?.profession || ""} 
-                    profile_desc={communityProfile?.profile_desc || ""} 
-                    website={communityProfile?.website || ""}/>
+                    profile={communityProfile}/>
                 <MainButton 
                     textContent="Follow" 
                     type="button" 
                     icon="follow"/>
-                <MiniFeed/>
+                <MiniFeed profile={communityProfile}/>
             </section>
         );
     }
