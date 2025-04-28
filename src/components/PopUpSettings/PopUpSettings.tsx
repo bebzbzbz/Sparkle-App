@@ -21,13 +21,13 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 	};
 
 	const menuItems = [
-		{ title: 'Settings', icon: 'options' },
+		{ title: 'Settings', icon: 'settings' },
 		{ title: 'Archive', icon: 'archive' },
 		{ title: 'Your Activity', icon: 'activity' },
 		{ title: 'QR Code', icon: 'qr-code' },
 		{ title: 'Saved', icon: 'saved' },
 		{ title: 'Close Friends', icon: 'friends' },
-		{ title: 'Favorites', icon: 'favorites' },
+		{ title: 'Favorites', icon: 'heart' },
 		{ title: 'Information Center', icon: 'information' }
 	];
 
@@ -37,7 +37,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 		<>
 			{/* Overlay */}
 			<div
-				className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+				className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
 				onClick={onClose}
 			/>
 
@@ -53,7 +53,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 				<div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4" />
 
 				{/* Menu Items */}
-				<div className="space-y-4 mb-8">
+				<div className="space-y-1 mb-8">
 					{menuItems.map((item, index) => (
 						<button
 							key={index}

@@ -44,9 +44,9 @@ const ProfileInfo = ({profile} : ProfileInfoProps) => {
                     src={profile?.profile_image_url || `/svg/pic-empty.svg`} 
                     alt={profile?.username} />
                 <p className="text-2xl font-bold">{profile?.profile_name || "Anonymous"}</p>
-                {profile?.profession && <p className="text-lg font-light">{profile?.profession || ""}</p>}
+                {profile?.profession && <p className="text-lg font-light">{profile?.profession}</p>}
                 {profile?.profile_desc && <p className="text-sm font-extralight text-center">{profile?.profile_desc}</p>}
-                {profile?.website && <a className="cursor-pointer text-sm text-blue-500 font-bold" href="">{profile?.website || ""}</a>}
+                {profile?.website && <a className="cursor-pointer text-sm text-blue-500 font-bold" href={profile?.website} target="_blank">{profile?.website}</a>}
             </div>
 
         {/* hier kommen anzahl von posts, followers und following rein */}
