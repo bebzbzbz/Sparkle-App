@@ -6,11 +6,13 @@ import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import { useContext } from "react";
 import { mainContext } from "../../context/MainProvider";
+import PostDetails from "../../components/PostDetails/PostDetails";
 
 const UserProfile = () => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
 	const navigate = useNavigate()
-	const {loggedInUser} = useContext(mainContext)
+	const {loggedInUser, openModal} = useContext(mainContext)
 
 	const handleSettingsClick = () => {
 		setIsSettingsOpen(true);
@@ -34,8 +36,11 @@ const UserProfile = () => {
 				<ProfileInfo 
                 profile={loggedInUser}/>
 				<MiniFeed profile={loggedInUser}/>
+				{/* modalfenster hier */}
 			</>}
-			
+			{/* wenn openModal true ist, dann zeig das Modalfenster an */}
+			{openModal && <PostDetails/>}
+
 			<PopUpSettings
 				isOpen={isSettingsOpen}
 				onClose={handleCloseSettings}
