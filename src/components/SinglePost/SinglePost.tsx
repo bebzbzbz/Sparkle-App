@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/MainProvider";
 import supabase from "../../utils/supabase";
-import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import FeedImage from "../FeedImage/FeedImage";
 import IPost from "../../interfaces/IPost";
 import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
+import IUser from "../../interfaces/IUser";
 dayjs.extend(relativeTime);
 
 interface IPostProps {
   post: IPost;
 }
-
-// interface ILikes {
-//     userId: string,
-// }
 
 const SinglePost = ({ post }: IPostProps) => {
   const { user } = useAuth();
@@ -23,11 +19,11 @@ const SinglePost = ({ post }: IPostProps) => {
   const [likedByMe, setLikedByMe] = useState(false);
   const [commentsCount, setCommentsCount] = useState(0);
   const [comments, setComments] = useState<any[]>([]);
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [userInfo, setUserInfo] = useState<IUser | null>(null);
   const [showAllComments, setShowAllComments] = useState(false);
   const [allComments, setAllComments] = useState<any[]>([]);
-  const [commentInput, setCommentInput] = useState("");
-  const [commentLoading, setCommentLoading] = useState(false);
+  // const [commentInput, setCommentInput] = useState("");
+  // const [commentLoading, setCommentLoading] = useState(false);
   // Hilfsfunktion: Usernamen zu user_id cachen
   const [userCache, setUserCache] = useState<{ [key: string]: string }>({});
 
@@ -81,7 +77,7 @@ const SinglePost = ({ post }: IPostProps) => {
   const fetchUserInfo = async () => {
     const { data } = await supabase
       .from("profiles")
-      .select("username, profile_image_url")
+      .select("*")
       .eq("id", post.user_id)
       .single();
     setUserInfo(data);
@@ -130,27 +126,27 @@ const SinglePost = ({ post }: IPostProps) => {
   };
 
   // Kommentar absenden
-  const handleCommentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !commentInput.trim()) return;
-    setCommentLoading(true);
-    try {
-      await supabase.from("comments").insert({
-        post_id: post.id,
-        user_id: user.id,
-        text_content: commentInput.trim(),
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
-      setCommentInput("");
-      fetchComments();
-      if (showAllComments) fetchAllComments();
-    } catch (err) {
-      // Fehlerbehandlung (optional)
-    } finally {
-      setCommentLoading(false);
-    }
-  };
+  // const handleCommentSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!user || !commentInput.trim()) return;
+  //   setCommentLoading(true);
+  //   try {
+  //     await supabase.from("comments").insert({
+  //       post_id: post.id,
+  //       user_id: user.id,
+  //       text_content: commentInput.trim(),
+  //       created_at: new Date().toISOString(),
+  //       updated_at: new Date().toISOString(),
+  //     });
+  //     setCommentInput("");
+  //     fetchComments();
+  //     if (showAllComments) fetchAllComments();
+  //   } catch (err) {
+  //     // Fehlerbehandlung (optional)
+  //   } finally {
+  //     setCommentLoading(false);
+  //   }
+  // };
 
   // Hilfsfunktion: Usernamen zu user_id cachen
   const getUsername = async (userId: string) => {
@@ -182,30 +178,9 @@ const SinglePost = ({ post }: IPostProps) => {
   };
 
   return (
-    <article className="flex flex-col gap-4 items-center justify-center md:ml-30 md:mr-30 mt-0">
-        <ProfilePreviewCard profile={userInfo}/>
-        {post.location && (
-            <span className="text-xs text-gray-500">{post.location}</span>
-          )}
-      {/* <div className="flex items-center gap-2 mb-2"> */}
-        {/* {userInfo && (
-          <Link
-            to={`/users/${post.user_id}`}
-            className="flex items-center gap-2"
-          >
-            <img
-              src={userInfo?.profile_image_url || "/svg/pic-empty.svg"}
-              alt="Profil"
-              className="w-8 h-8 rounded-full object-cover"
-            />
-            <span className="font-semibold hover:underline">
-              {userInfo.username}
-            </span>
-          </Link>
-        )} */}
-        
-      {/* </div> */}
-      <div key={post.id}>
+    <article className="flex flex-col gap-4">
+      {userInfo && <ProfilePreviewCard profile={userInfo} geoTag={post.location}/>}
+      <div>
         {post.media_type === "image" ? (
           <FeedImage
             src={post.post_media_url}
@@ -220,7 +195,29 @@ const SinglePost = ({ post }: IPostProps) => {
             controls
           />
         ) : null}
+      </div>
 
+      {post.post_desc &&
+        <p>{post.post_desc}</p>}
+
+      {user && user.id === post.user_id && (
+        <div className="flex gap-3">
+          <button
+            onClick={handleEdit}
+            className="text-xs text-blue-500 hover:underline"
+          >
+            Bearbeiten
+          </button>
+          <button
+            onClick={handleDelete}
+            className="text-xs text-red-500 hover:underline"
+          >
+            Löschen
+          </button>
+        </div>
+      )}
+
+      <div className="flex items-center justify-between">
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
             <button
@@ -247,31 +244,12 @@ const SinglePost = ({ post }: IPostProps) => {
 
           <img src="/svg/message.svg" alt="" />
         </div>
-        <div>
-          <span className="text-xs text-gray-500 ml-2">
-            {dayjs(post.created_at).fromNow()}
-          </span>
-        </div>
-          
-          {user && user.id === post.user_id && (
-            <>
-              <button
-                onClick={handleEdit}
-                className="ml-2 text-xs text-blue-500 hover:underline"
-              >
-                Bearbeiten
-              </button>
-              <button
-                onClick={handleDelete}
-                className="ml-2 text-xs text-red-500 hover:underline"
-              >
-                Löschen
-              </button>
-            </>
-          )}
+        <span className="text-xs text-gray-500 ml-2">
+          {dayjs(post.created_at).fromNow()}
+        </span>
         </div>
         {/* Kommentar-Vorschau */}
-        {comments.length > 0 && (
+        {/* {comments.length > 0 && (
           <div className="mt-2 text-sm text-gray-700">
             {comments.map((c) => (
               <div key={c.id} className="mb-1">
@@ -290,9 +268,9 @@ const SinglePost = ({ post }: IPostProps) => {
               </button>
             )}
           </div>
-        )}
+        )} */}
         {/* Modal für alle Kommentare */}
-        {showAllComments && (
+        {/* {showAllComments && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
               <button
@@ -317,7 +295,7 @@ const SinglePost = ({ post }: IPostProps) => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
         {/* Kommentar-Formular */}
         {/* {user && (
           <form onSubmit={handleCommentSubmit} className="flex gap-2 mt-2">

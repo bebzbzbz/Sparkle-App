@@ -3,20 +3,10 @@ import Header from "../../components/Header/Header";
 import SinglePost from "../../components/SinglePost/SinglePost";
 import supabase from "../../utils/supabase";
 import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
-
-export interface ISinglePost {
-  id: string;
-  user_id: string;
-  post_desc: string;
-  post_media_url: string;
-  media_type: string;
-  location?: string;
-  created_at?: string;
-  social_sharing?: object;
-}
+import IPost from "../../interfaces/IPost";
 
 const Home = () => {
-  const [posts, setPosts] = useState<ISinglePost[]>();
+  const [posts, setPosts] = useState<IPost[]>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // fetch posts
@@ -26,7 +16,7 @@ const Home = () => {
       // Fallback-Logik für alte Daten
       const postsWithFallback = (data as any[])
         .map((post) => {
-          let mediaUrl = post.post_media_url || post.post_image_url || "";
+          let mediaUrl = post.post_media_url || "";
           let mediaType = post.media_type;
           if (!mediaType && mediaUrl) {
             if (mediaUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i))
@@ -79,13 +69,15 @@ const Home = () => {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
       />
-      {posts?.map((post: ISinglePost) => {
-        return (
-          <div key={post.id}>
-            <SinglePost post={post} postId={post.id} />
-          </div>
-        );
-      })}
+      <section className="flex flex-col gap-11">
+        {posts?.map((post: IPost) => {
+          return (
+            <div key={post.id}>
+              <SinglePost post={post} />
+            </div>
+          );
+        })}
+      </section>
     </>
   );
 };

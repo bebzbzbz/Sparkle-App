@@ -15,7 +15,7 @@ const FeedImage = ({ src, alt, aspect = "square", maxSize = 600, className = "" 
     <img
       src={src}
       alt={alt}
-      className={`w-full h-auto object-cover rounded-4xl max-w-[${maxSize}px] max-h-[${maxSize}px] ${aspectClass} ${className}`}
+      className={`w-full h-auto object-cover rounded-3xl max-w-[${maxSize}px] max-h-[${maxSize}px] ${aspectClass} ${className}`}
       loading="lazy"
     />
   );

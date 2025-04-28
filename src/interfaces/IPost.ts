@@ -5,7 +5,7 @@ interface IPost {
     created_at: string,
     updated_at: string,
     location?: string,
-    post_media_url?: string,
+    post_media_url: string,
     media_type?: string
 }
 
