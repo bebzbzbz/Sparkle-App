@@ -37,10 +37,10 @@ const SinglePost = ({ post }: IPostProps) => {
     if (user) {
       const { data: likeData } = await supabase
         .from("likes")
-        .select("*")
+        .select("id")
         .eq("post_id", post.id)
         .eq("user_id", user.id)
-        .single();
+        .maybeSingle();
       setLikedByMe(!!likeData);
     }
   };
@@ -179,7 +179,9 @@ const SinglePost = ({ post }: IPostProps) => {
 
   return (
     <article className="flex flex-col gap-4">
-      {userInfo && <ProfilePreviewCard profile={userInfo} geoTag={post.location}/>}
+      {userInfo && (
+        <ProfilePreviewCard profile={userInfo} geoTag={post.location} />
+      )}
       <div>
         {post.media_type === "image" ? (
           <FeedImage
@@ -197,8 +199,7 @@ const SinglePost = ({ post }: IPostProps) => {
         ) : null}
       </div>
 
-      {post.post_desc &&
-        <p>{post.post_desc}</p>}
+      {post.post_desc && <p>{post.post_desc}</p>}
 
       {user && user.id === post.user_id && (
         <div className="flex gap-3">
@@ -247,9 +248,9 @@ const SinglePost = ({ post }: IPostProps) => {
         <span className="text-xs text-gray-500 ml-2">
           {dayjs(post.created_at).fromNow()}
         </span>
-        </div>
-        {/* Kommentar-Vorschau */}
-        {/* {comments.length > 0 && (
+      </div>
+      {/* Kommentar-Vorschau */}
+      {/* {comments.length > 0 && (
           <div className="mt-2 text-sm text-gray-700">
             {comments.map((c) => (
               <div key={c.id} className="mb-1">
@@ -269,8 +270,8 @@ const SinglePost = ({ post }: IPostProps) => {
             )}
           </div>
         )} */}
-        {/* Modal für alle Kommentare */}
-        {/* {showAllComments && (
+      {/* Modal für alle Kommentare */}
+      {/* {showAllComments && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
               <button
@@ -296,8 +297,8 @@ const SinglePost = ({ post }: IPostProps) => {
             </div>
           </div>
         )} */}
-        {/* Kommentar-Formular */}
-        {/* {user && (
+      {/* Kommentar-Formular */}
+      {/* {user && (
           <form onSubmit={handleCommentSubmit} className="flex gap-2 mt-2">
             <input
               type="text"
