@@ -19,7 +19,7 @@ const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRi
 
 	return (  
 		<header 
-			className="fixed top-0 left-0 px-5 pt-6 pb-4 flex justify-between items-center w-full bg-white">
+			className="absolute top-0 left-0 px-7 pt-6 pb-4 flex justify-between items-center w-full bg-white">
 			<h1
 				className={`flex items-center gap-3 font-bold text-lg ${leftLinkDestination && "cursor-pointer"}`}
 				onClick={() => {
