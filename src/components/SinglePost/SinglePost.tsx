@@ -13,10 +13,6 @@ interface IPostProps {
   post: IPost;
 }
 
-// interface ILikes {
-//     userId: string,
-// }
-
 const SinglePost = ({ post }: IPostProps) => {
   const { user } = useAuth();
   const [likesCount, setLikesCount] = useState(0);
@@ -87,8 +83,6 @@ const SinglePost = ({ post }: IPostProps) => {
     setUserInfo(data);
   };
 
-  console.log(userInfo)
-
   useEffect(() => {
     fetchLikes();
     fetchComments();
@@ -112,14 +106,14 @@ const SinglePost = ({ post }: IPostProps) => {
     fetchLikes();
   };
 
-  // const handleShowAllComments = async () => {
-  //   await fetchAllComments();
-  //   setShowAllComments(true);
-  // };
+  const handleShowAllComments = async () => {
+    await fetchAllComments();
+    setShowAllComments(true);
+  };
 
-  // const handleCloseModal = () => {
-  //   setShowAllComments(false);
-  // };
+  const handleCloseModal = () => {
+    setShowAllComments(false);
+  };
 
   const handleEdit = () => {
     // Navigiere zur Edit-Seite oder öffne ein Edit-Modal

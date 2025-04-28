@@ -56,7 +56,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
                         alt="timeline icon: three bars on top of each other" 
                         onClick={() => setTimelineFeed(true)}/>
                 </div>
-                <div className={`grid ${timelineFeed ? "grid-cols-1" : "grid-cols-3"} gap-2`}>
+                <div className={`grid ${timelineFeed ? "grid-cols-1 gap-11" : "grid-cols-3 gap-2"}`}>
                     {/* sollte der user keine posts haben, wird stattdessen ein text angezeigt */}
                     {profilePosts.length > 0 ? profilePosts.map((post) => (
                         // je nach zustand des timelineFeed states wird entweder die grid- oder timelineansicht angzeigt

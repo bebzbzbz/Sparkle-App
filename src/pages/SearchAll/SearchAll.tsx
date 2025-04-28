@@ -13,7 +13,7 @@ const SearchAll = () => {
 
         const fetchData = async () => {
             try {
-                const {data: profiles} = await supabase.from("profiles").select().ilike("username", `%${searchUserRef.current?.value}%`)
+                const {data: profiles} = await supabase.from("profiles").select().ilike("username", `%${searchUserRef.current?.value}%`).order("created_at", { ascending: false })
 
                 if(profiles) {
                     setAllSearchedProfiles(profiles || [])
