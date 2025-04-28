@@ -2,10 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import IPost from "../../interfaces/IPost";
 import supabase from "../../utils/supabase";
 import { mainContext } from "../../context/MainProvider";
+import MainButton from "../MainButton/MainButton";
 
 
 
 const PostDetails = () => {
+    const {setOpenModal} = useContext(mainContext)
+
+    const closeModal = () => {
+        setOpenModal(false)
+    }
     
     const {modalId, openModal} = useContext(mainContext)
     
@@ -28,13 +34,14 @@ const PostDetails = () => {
     },[openModal])
 
     console.log(postDetails)
-    console.log("hhaha")
+
 
     
     // styling von dem modalfenster
     return ( 
-    <section className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen bg-black">
-        <h1 className="bg-amber-300">hallo</h1>
+    <section onClick={() => closeModal()} className="fixed top-5 left-5  w-screen h-screen">
+        <img className="h-[70%] w-[70%] opacity-95 rounded-2xl" src={postDetails?.post_media_url} alt="" />
+        
     </section> );
 }
 
