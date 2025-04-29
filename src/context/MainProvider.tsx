@@ -16,7 +16,11 @@ interface AuthContextType {
 	allSearchedProfiles: IUser[] | null,
 	setAllSearchedProfiles: (allSearchedProfiles: IUser[] | null) => void,
 	loggedInUser: IUser | null,
-	setLoggedInUser: (loggedInUser: IUser | null) => void
+	setLoggedInUser: (loggedInUser: IUser | null) => void,
+	openModal: boolean,
+	setOpenModal: (openModal: boolean) => void,
+	modalId: string,
+	setModalId: (modalId : string) => void,
 }
 
 // Context erstellen mit einem initialen Defaultwert
@@ -32,7 +36,11 @@ export const mainContext = createContext<AuthContextType>({
 	allSearchedProfiles: null,
 	setAllSearchedProfiles: () => { },
 	loggedInUser: null,
-	setLoggedInUser: () => { }
+	setLoggedInUser: () => { },
+	openModal: false,
+	setOpenModal: () => {},
+	modalId: "",
+	setModalId: () => {},
 });
 
 // Hilfsfunktion zum Abrufen des Contexts
@@ -48,6 +56,8 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	const [session, setSession] = useState<Session | null>(null);
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [openModal,setOpenModal] = useState<boolean>(false)
+	const [modalId, setModalId] = useState<string>("")
 
 	// Aktuelle Session abrufen und auf Änderungen hören
 	useEffect(() => {
@@ -205,7 +215,11 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		allSearchedProfiles,
 		setAllSearchedProfiles,
 		loggedInUser,
-		setLoggedInUser
+		setLoggedInUser,
+		setModalId,
+		modalId,
+		setOpenModal,
+		openModal
 	};
 
 	return (

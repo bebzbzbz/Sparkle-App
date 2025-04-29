@@ -36,10 +36,10 @@ const SinglePost = ({ post }: IPostProps) => {
     if (user) {
       const { data: likeData } = await supabase
         .from("likes")
-        .select("*")
+        .select("id")
         .eq("post_id", post.id)
         .eq("user_id", user.id)
-        .single();
+        .maybeSingle();
       setLikedByMe(!!likeData);
     }
   };
@@ -193,7 +193,9 @@ const SinglePost = ({ post }: IPostProps) => {
 
   return (
     <article className="flex flex-col gap-4">
-      {userInfo && <ProfilePreviewCard profile={userInfo} geoTag={post.location}/>}
+      {userInfo && (
+        <ProfilePreviewCard profile={userInfo} geoTag={post.location} />
+      )}
       <div>
         {post.media_type === "image" ? (
           <FeedImage
@@ -211,8 +213,7 @@ const SinglePost = ({ post }: IPostProps) => {
         ) : null}
       </div>
 
-      {post.post_desc &&
-        <p>{post.post_desc}</p>}
+      {post.post_desc && <p>{post.post_desc}</p>}
 
       {user && user.id === post.user_id && (
         <div className="flex gap-3">
@@ -262,8 +263,7 @@ const SinglePost = ({ post }: IPostProps) => {
         <span className="text-xs text-gray-500 ml-2">
           {dayjs(post.created_at).fromNow()}
         </span>
-      </div>
-        
+      </div>        
         {/* Modal für alle Kommentare */}
         {showCommentModal && (
           <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
