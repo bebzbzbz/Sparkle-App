@@ -13,7 +13,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
     const [profilePosts, setProfilePosts] = useState<IPost[] | null>(null)
     const [timelineFeed, setTimelineFeed] = useState<boolean>(false)
     
-    const {openModal, setModalId, setOpenModal} = useContext(mainContext)
+    const {setModalId, setOpenModal} = useContext(mainContext)
 
     // funktion für das modalfenster
     const showPostDetails = (id: string) => {

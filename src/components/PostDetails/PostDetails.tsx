@@ -98,7 +98,9 @@ const PostDetails = () => {
                     <p>{postDetails?.location}</p>
                 </div>} */}
                 {/* Date */}
+
                 {/* <p>{postDetails?.created_at.slice(0,10).split("-").join(".")}</p>
+
             </div>
         </div> */}
 
