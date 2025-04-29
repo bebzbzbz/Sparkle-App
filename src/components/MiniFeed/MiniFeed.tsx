@@ -1,16 +1,27 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import supabase from "../../utils/supabase";
 import IPost from "../../interfaces/IPost";
 import IUser from "../../interfaces/IUser";
 import SinglePost from "../SinglePost/SinglePost";
+import { mainContext } from "../../context/MainProvider";
 
 interface MiniFeedProps {
-    profile: IUser
+    profile: IUser,
 }
 
 const MiniFeed = ({profile} : MiniFeedProps) => {
     const [profilePosts, setProfilePosts] = useState<IPost[] | null>(null)
     const [timelineFeed, setTimelineFeed] = useState<boolean>(false)
+    
+    const {openModal, setModalId, setOpenModal} = useContext(mainContext)
+
+    // funktion für das modalfenster
+    const showPostDetails = (id: string) => {
+        setModalId(id)
+        setOpenModal(true)
+        console.log("wurde geklickt")
+        console.log(openModal)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +39,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
         } 
         fetchData()
     }, [])
-    console.log(profilePosts)
+    // console.log(profilePosts)
 
     if(profilePosts === null) {
         return (
@@ -63,8 +74,11 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
                         timelineFeed ? 
                             <SinglePost post={post} key={post.id} /> 
                         :
+                        // onClick mit Funktion, Modalfenster status wird dann angezeigt, Componente anzeigen lassen, wenn geglickt
+
                             <img 
                                 className="w-full aspect-square object-cover rounded-2xl transition ease-in-out hover:opacity-80" 
+                                onClick={() => showPostDetails(post.id)}
                                 src={post.post_media_url} 
                                 alt="Miniature Post" 
                                 key={post.id} />
