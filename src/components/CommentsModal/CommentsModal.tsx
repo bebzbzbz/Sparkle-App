@@ -67,7 +67,7 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
               <p className="text-gray-500">No comments yet. Be the first!</p>
             )}
             {allComments.map((c) => (
-              <div key={c.id} className="flex gap-2">
+              <div key={crypto.randomUUID()} className="flex gap-2">
                 <img src={c.profile_image_url} alt="" className="object-cover rounded-full h-8 w-8" />
 
                 <div className="w-full">
