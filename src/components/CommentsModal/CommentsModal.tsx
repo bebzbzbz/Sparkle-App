@@ -17,25 +17,30 @@ interface CommentsModalProps {
 const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
     const { user } = useAuth();
 
-    const [areYouSure, setAreYouSure] = useState<boolean>(false)
+    const [areYouSure, setAreYouSure] = useState<string | null>(null)
 
     const handleDelete = async (comment_id: string) => {
       // Lösche den Comment aus der Datenbank
-      if(!areYouSure) {
-        setAreYouSure(true)
-      }
-      if(areYouSure) {
+      if(areYouSure !== comment_id) {
+        setAreYouSure(comment_id)
+        console.log(areYouSure)
+      } else {
         await supabase.from("comments").delete().eq("id", comment_id);
-        setAreYouSure(false)
+        setAreYouSure(null)
+        fetchComments()
       }
-      fetchComments()
     };
+
+    const handleCloseModal = () => {
+      setAreYouSure(null)
+      setShowCommentModal(false)
+    }
   
     return (  
       <div className="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg p-6 mx-3 max-w-md w-full relative flex flex-col gap-5">
             <button
-              onClick={() => setShowCommentModal(false)}
+              onClick={handleCloseModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-black">✕</button>
             <h2 className="text-lg font-semibold">Comments</h2>
             {user && (
@@ -64,26 +69,29 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
             {allComments.map((c) => (
               <div key={c.id} className="flex gap-2">
                 <img src={c.profile_image_url} alt="" className="object-cover rounded-full h-8 w-8" />
-                <div>
+
+                <div className="w-full">
+
                   <span className="font-semibold">
                     {c.username || c.user_id}{" "}
                   </span>
+
                   {c.text_content} 
-                  <div>
+
+                  <div className="flex justify-between">
                     <span className="text-xs text-gray-500 block">
                       {dayjs(c.created_at).fromNow()}
                     </span>
                     {user && user.id === c.user_id && (
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => handleDelete(c.id)}
-                        className="text-xs text-red-500 hover:underline"
-                      >
-                        {!areYouSure ? "Delete" : "Are you sure to delete?"}
-                      </button>
-                    </div>
-                  )}
+                    <button
+                      onClick={() => handleDelete(c.id)}
+                      className="text-xs text-red-500 hover:underline"
+                    >
+                      {areYouSure === c.id ? "Are you sure to delete?" : "Delete"}
+                    </button>
+                    )}
                   </div>
+
                 </div>
               </div>
             ))}
