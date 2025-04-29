@@ -4,15 +4,17 @@ import SinglePost from "../../components/SinglePost/SinglePost";
 import supabase from "../../utils/supabase";
 import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
 import IPost from "../../interfaces/IPost";
+import MainButton from "../../components/MainButton/MainButton";
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [fetchLimit, setFetchLimit] = useState<number>(5)
 
   // fetch posts
   const fetchPostsData = async () => {
     try {
-      const { data } = await supabase.from("posts").select("*").order('created_at', { ascending: false });
+      const { data } = await supabase.from("posts").select("*").limit(fetchLimit).order('created_at', { ascending: false });
       // Fallback-Logik für alte Daten
       const postsWithFallback = (data as any[])
         .map((post) => {
@@ -40,7 +42,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchPostsData();
-  }, []);
+  }, [fetchLimit]);
 
   return (
     <>
@@ -77,6 +79,7 @@ const Home = () => {
             </div>
           );
         })}
+        <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 5)}/>
       </section>
     </>
   );
