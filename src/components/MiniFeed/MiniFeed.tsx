@@ -38,22 +38,23 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
             }
         } 
         fetchData()
-    }, [])
+    }, [profile.id])
     // console.log(profilePosts)
 
     if(profilePosts === null) {
         return (
             <article className="mb-20">
                 <div className="grid grid-cols-3 justify-items-center gap-3 mb-5">
-                <div className="flex gap-2">
-                    <img className="h-5 object-fill" src="/public/svg/feed-filled.svg" alt="four rectangles" />
-                    <p>Feeds</p>
+                    <div className="flex gap-2">
+                        <img className="h-5 object-fill" src="/svg/feed-filled.svg" alt="four rectangles" />
+                        <p>Feeds</p>
+                    </div>
                 </div>
-            </div>
-            <h2 className="text-center">Loading posts...</h2>
-        </article>
+                <h2 className="text-center">Loading posts...</h2>
+            </article>
         )
-    } else {
+    } 
+    if(profilePosts) {
         return (  
             <article className="mb-20">
                 <div className="flex gap-5 justify-center mb-5 h-5">
@@ -72,7 +73,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
                     {profilePosts.length > 0 ? profilePosts.map((post) => (
                         // je nach zustand des timelineFeed states wird entweder die grid- oder timelineansicht angzeigt
                         timelineFeed ? 
-                            <SinglePost post={post} key={post.id} /> 
+                            <SinglePost post={post} key={crypto.randomUUID()} /> 
                         :
                         // onClick mit Funktion, Modalfenster status wird dann angezeigt, Componente anzeigen lassen, wenn geglickt
 
@@ -81,7 +82,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
                                 onClick={() => showPostDetails(post.id)}
                                 src={post.post_media_url} 
                                 alt="Miniature Post" 
-                                key={post.id} />
+                                key={crypto.randomUUID()} />
                     )) : <p className="col-span-3 text-center">No posts yet!</p>}
                 </div>
     

@@ -54,9 +54,9 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 
 				{/* Menu Items */}
 				<div className="space-y-1 mb-5">
-					{menuItems.map((item, index) => (
+					{menuItems.map((item) => (
 						<button
-							key={index}
+							key={crypto.randomUUID()}
 							className="w-full flex items-center space-x-4 p-3 hover:bg-gray-100 rounded-lg transition-colors"
 						>
 							<img
@@ -74,7 +74,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 					<MainButton
 						textContent="Logout"
 						type="button"
-						action={handleLogout}
+						onClick={handleLogout}
 					/>
 				</div>
 			</div>

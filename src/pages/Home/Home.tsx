@@ -72,7 +72,7 @@ const Home = () => {
       <section className="flex flex-col gap-11">
         {posts?.map((post: IPost) => {
           return (
-            <div key={post.id}>
+            <div key={crypto.randomUUID()}>
               <SinglePost post={post} />
             </div>
           );

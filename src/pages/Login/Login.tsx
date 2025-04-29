@@ -39,12 +39,12 @@ const Login = () => {
     }
   };
 
-  // Hilfsfunktion zum Konvertieren von Benutzername zu E-Mail
-  const convertUsernameToEmail = async (username: string) => {
-    // Hier müsste die Logik implementiert werden, um den Benutzernamen in eine E-Mail umzuwandeln
-    // Zum Beispiel durch Abfrage der Datenbank oder eines Benutzerprofils
-    throw new Error("Anmeldung mit Benutzername noch nicht implementiert");
-  };
+  // // Hilfsfunktion zum Konvertieren von Benutzername zu E-Mail
+  // const convertUsernameToEmail = async (username: string) => {
+  //   // Hier müsste die Logik implementiert werden, um den Benutzernamen in eine E-Mail umzuwandeln
+  //   // Zum Beispiel durch Abfrage der Datenbank oder eines Benutzerprofils
+  //   throw new Error("Anmeldung mit Benutzername noch nicht implementiert");
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
