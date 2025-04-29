@@ -39,22 +39,27 @@ const NavBar = () => {
             <NavLink 
                 linkname="Home" 
                 path="home" 
-                img="home"/>
+                img="home"
+                action={closePostDetails}
+            />
             <NavLink 
                 linkname="Search" 
                 path="search" 
                 img="search"
-                action={() => setAllSearchedProfiles(null)}/>
+                action={() => {setAllSearchedProfiles(null); closePostDetails()}}
+            />
             <NavLink 
                 linkname="Upload" 
                 path="newpost" 
-                img="upload"/>
+                img="upload"
+                action={closePostDetails}
+            />
             <NavLink
                 linkname="Profile" 
                 path="profile" 
                 img="profile"
                 action={closePostDetails}
-                />
+            />
         </nav>
     );
 }

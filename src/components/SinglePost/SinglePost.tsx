@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../../context/MainProvider";
+import { useContext, useEffect, useState } from "react";
+import { mainContext, useAuth } from "../../context/MainProvider";
 import supabase from "../../utils/supabase";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -190,10 +190,11 @@ const SinglePost = ({ post }: IPostProps) => {
     );
     return enriched;
   };
+  const {openModal} = useContext(mainContext)
 
   return (
     <article className="flex flex-col gap-4">
-      {userInfo && (
+      {userInfo && !openModal && (
         <ProfilePreviewCard profile={userInfo} geoTag={post.location} />
       )}
       <div>
@@ -203,6 +204,8 @@ const SinglePost = ({ post }: IPostProps) => {
             alt={post.post_desc}
             aspect="square"
             maxSize={1200}
+            geoTag={post.location}
+            time ={post.created_at.slice(0,10).split("-").join(".")}
           />
         ) : post.media_type === "video" ? (
           <video
