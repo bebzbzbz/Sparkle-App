@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import { useAuth } from "../../context/MainProvider";
 import IComment from "../../interfaces/IComment";
+import supabase from "../../utils/supabase";
+import { useState } from "react";
 
 interface CommentsModalProps {
   allComments: IComment[],
@@ -8,15 +10,30 @@ interface CommentsModalProps {
   handleCommentSubmit: (e: React.FormEvent) => Promise<void>,
   commentInput: string,
   setCommentInput: (commentInput: string) => void,
-  commentLoading: boolean
+  commentLoading: boolean,
+  fetchComments: () => Promise<void>
 }
 
-const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, commentInput, commentLoading, setCommentInput} : CommentsModalProps) => {
+const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
     const { user } = useAuth();
+
+    const [areYouSure, setAreYouSure] = useState<boolean>(false)
+
+    const handleDelete = async (comment_id: string) => {
+      // Lösche den Comment aus der Datenbank
+      if(!areYouSure) {
+        setAreYouSure(true)
+      }
+      if(areYouSure) {
+        await supabase.from("comments").delete().eq("id", comment_id);
+        setAreYouSure(false)
+      }
+      fetchComments()
+    };
   
     return (  
-        <div className="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full relative flex flex-col gap-5">
+      <div className="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 mx-3 max-w-md w-full relative flex flex-col gap-5">
             <button
               onClick={() => setShowCommentModal(false)}
               className="absolute top-4 right-4 text-gray-500 hover:text-black">✕</button>
@@ -40,7 +57,7 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
               </button>
           </form>
           )}
-          <div className="max-h-64 overflow-y-auto flex flex-col gap-3">
+          <div className="max-h-100 overflow-y-auto flex flex-col gap-3">
             {allComments.length === 0 && (
               <p className="text-gray-500">No comments yet. Be the first!</p>
             )}
@@ -52,9 +69,21 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
                     {c.username || c.user_id}{" "}
                   </span>
                   {c.text_content} 
-                  <span className="text-xs text-gray-500 block">
-                    {dayjs(c.created_at).fromNow()}
-                  </span>
+                  <div>
+                    <span className="text-xs text-gray-500 block">
+                      {dayjs(c.created_at).fromNow()}
+                    </span>
+                    {user && user.id === c.user_id && (
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => handleDelete(c.id)}
+                        className="text-xs text-red-500 hover:underline"
+                      >
+                        {!areYouSure ? "Delete" : "Are you sure to delete?"}
+                      </button>
+                    </div>
+                  )}
+                  </div>
                 </div>
               </div>
             ))}

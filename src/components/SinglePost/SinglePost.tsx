@@ -80,7 +80,7 @@ const SinglePost = ({ post }: IPostProps) => {
     fetchLikes();
     fetchCommentsCount();
     fetchUserInfo();
-  }, [post.id]);
+  }, [post.id, comments]);
 
   useEffect(() => {
     if(!!showCommentModal){
@@ -266,7 +266,7 @@ const SinglePost = ({ post }: IPostProps) => {
         
         {/* Modal für alle Kommentare */}
         {showCommentModal && (
-          <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading}/>
+          <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
         )}
         </article>
   );
