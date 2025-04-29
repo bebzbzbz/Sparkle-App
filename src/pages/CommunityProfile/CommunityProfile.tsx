@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MainButton from "../../components/MainButton/MainButton";
 import MiniFeed from "../../components/MiniFeed/MiniFeed";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
@@ -6,7 +6,8 @@ import IUser from "../../interfaces/IUser";
 import Header from "../../components/Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import supabase from "../../utils/supabase";
-import { useAuth } from "../../context/MainProvider";
+import { mainContext, useAuth } from "../../context/MainProvider";
+import PostDetails from "../../components/PostDetails/PostDetails";
 
 const CommunityProfile = () => {
   const { userParam } = useParams();
@@ -15,6 +16,8 @@ const CommunityProfile = () => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [loadingFollow, setLoadingFollow] = useState<boolean>(false);
   const [refreshProfileInfo, setRefreshProfileInfo] = useState(false);
+
+  const {openModal} = useContext(mainContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +79,8 @@ const CommunityProfile = () => {
 
   const navigate = useNavigate();
 
+
+
   if (communityProfile === null) {
     return (
       <section>
@@ -102,6 +107,7 @@ const CommunityProfile = () => {
           />
         )}
         <MiniFeed profile={communityProfile} />
+        {openModal && <PostDetails/>}
       </section>
     );
   }

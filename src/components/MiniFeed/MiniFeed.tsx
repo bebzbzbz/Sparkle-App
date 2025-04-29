@@ -19,8 +19,8 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
     const showPostDetails = (id: string) => {
         setModalId(id)
         setOpenModal(true)
-        console.log("wurde geklickt")
-        console.log(openModal)
+        // console.log("wurde geklickt")
+        // console.log(openModal)
     }
 
     useEffect(() => {
