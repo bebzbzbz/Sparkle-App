@@ -99,7 +99,7 @@ const PostDetails = () => {
                     <p>{postDetails?.location}</p>
                 </div>}
                 {/* Date */}
-                <p>{postDetails?.created_at.slice(0,10).replaceAll("-",".")}</p>
+                {/* <p>{postDetails?.created_at.slice(0,10).replaceAll("-",".")}</p> */}
             </div>
         </div>
         <div className="w-[85%] flex items-center justify-start gap-5 mb-5">
