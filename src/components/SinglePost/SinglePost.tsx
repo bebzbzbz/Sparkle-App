@@ -7,6 +7,8 @@ import FeedImage from "../FeedImage/FeedImage";
 import IPost from "../../interfaces/IPost";
 import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
 import IUser from "../../interfaces/IUser";
+import CommentsModal from "../CommentsModal/CommentsModal";
+import IComment from "../../interfaces/IComment";
 dayjs.extend(relativeTime);
 
 interface IPostProps {
@@ -18,12 +20,11 @@ const SinglePost = ({ post }: IPostProps) => {
   const [likesCount, setLikesCount] = useState(0);
   const [likedByMe, setLikedByMe] = useState(false);
   const [commentsCount, setCommentsCount] = useState(0);
-  const [comments, setComments] = useState<any[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [userInfo, setUserInfo] = useState<IUser | null>(null);
-  const [showAllComments, setShowAllComments] = useState(false);
-  const [allComments, setAllComments] = useState<any[]>([]);
-  // const [commentInput, setCommentInput] = useState("");
-  // const [commentLoading, setCommentLoading] = useState(false);
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [commentInput, setCommentInput] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
   // Hilfsfunktion: Usernamen zu user_id cachen
   const [userCache, setUserCache] = useState<{ [key: string]: string }>({});
 
@@ -45,33 +46,28 @@ const SinglePost = ({ post }: IPostProps) => {
     }
   };
 
-  // Kommentare laden
-  const fetchComments = async () => {
+  // Kommentaranzahl laden
+  const fetchCommentsCount = async () => {    
     const { count } = await supabase
       .from("comments")
       .select("*", { count: "exact", head: true })
       .eq("post_id", post.id);
     setCommentsCount(count || 0);
+  };
+
+  // Alle Kommentare für Modal laden
+  const fetchComments = async () => {
     const { data: commentData } = await supabase
       .from("comments")
       .select("*")
       .eq("post_id", post.id)
       .order("created_at", { ascending: false })
       .limit(2);
-    const enriched = await enrichCommentsWithUsernames(commentData || []);
-    setComments(enriched);
-  };
-
-  // Alle Kommentare für Modal laden
-  const fetchAllComments = async () => {
-    const { data: all } = await supabase
-      .from("comments")
-      .select("*")
-      .eq("post_id", post.id)
-      .order("created_at", { ascending: false });
-    const enriched = await enrichCommentsWithUsernames(all || []);
-    setAllComments(enriched);
-  };
+      if(commentData) {
+        const enriched = await enrichCommentsWithUsernames(commentData || []);
+        setComments(enriched);
+      }
+  }
 
   // User-Infos laden
   const fetchUserInfo = async () => {
@@ -85,10 +81,15 @@ const SinglePost = ({ post }: IPostProps) => {
 
   useEffect(() => {
     fetchLikes();
-    fetchComments();
+    fetchCommentsCount();
     fetchUserInfo();
-    // eslint-disable-next-line
   }, [post.id]);
+
+  useEffect(() => {
+    if(!!showCommentModal){
+      fetchComments();
+    }
+  }, [showCommentModal]);
 
   const handleLike = async () => {
     if (!user) return;
@@ -106,15 +107,6 @@ const SinglePost = ({ post }: IPostProps) => {
     fetchLikes();
   };
 
-  const handleShowAllComments = async () => {
-    await fetchAllComments();
-    setShowAllComments(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowAllComments(false);
-  };
-
   const handleEdit = () => {
     // Navigiere zur Edit-Seite oder öffne ein Edit-Modal
     // Beispiel: navigate(`/editpost/${post.id}`)
@@ -126,42 +118,45 @@ const SinglePost = ({ post }: IPostProps) => {
   };
 
   // Kommentar absenden
-  // const handleCommentSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!user || !commentInput.trim()) return;
-  //   setCommentLoading(true);
-  //   try {
-  //     await supabase.from("comments").insert({
-  //       post_id: post.id,
-  //       user_id: user.id,
-  //       text_content: commentInput.trim(),
-  //       created_at: new Date().toISOString(),
-  //       updated_at: new Date().toISOString(),
-  //     });
-  //     setCommentInput("");
-  //     fetchComments();
-  //     if (showAllComments) fetchAllComments();
-  //   } catch (err) {
-  //     // Fehlerbehandlung (optional)
-  //   } finally {
-  //     setCommentLoading(false);
-  //   }
-  // };
+  const handleCommentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user || !commentInput.trim()) return;
+    setCommentLoading(true);
+    try {
+      await supabase.from("comments").insert({
+        post_id: post.id,
+        user_id: user.id,
+        text_content: commentInput.trim(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+      setCommentInput("");
+      fetchComments();
+      if (showCommentModal) fetchComments();
+    } catch (err) {
+      // Fehlerbehandlung (optional)
+    } finally {
+      setCommentLoading(false);
+    }
+  };
 
   // Hilfsfunktion: Usernamen zu user_id cachen
-  const getUsername = async (userId: string) => {
+  const getCommenterData = async (userId: string) => {
     if (userCache[userId]) return userCache[userId];
     const { data } = await supabase
       .from("profiles")
-      .select("username")
+      .select("*")
       .eq("id", userId)
       .single();
-    if (data?.username) {
-      setUserCache((prev) => ({ ...prev, [userId]: data.username }));
-      return data.username;
+    if (data) {
+      setUserCache((prev) => ({ ...prev, [userId]: data.username, "profileImg": data.profile_image_url || "" }));
+      console.log(data.data)
+      return data;
     }
     return userId;
   };
+
+  console.log(userCache)
 
   // Kommentare mit Usernamen anreichern
   const enrichCommentsWithUsernames = async (comments: any[]) => {
@@ -169,7 +164,7 @@ const SinglePost = ({ post }: IPostProps) => {
       comments.map(async (c) => {
         let username = userCache[c.user_id];
         if (!username) {
-          username = await getUsername(c.user_id);
+          username = await getCommenterData(c.user_id);
         }
         return { ...c, username };
       })
@@ -206,13 +201,13 @@ const SinglePost = ({ post }: IPostProps) => {
             onClick={handleEdit}
             className="text-xs text-blue-500 hover:underline"
           >
-            Bearbeiten
+            Edit
           </button>
           <button
             onClick={handleDelete}
             className="text-xs text-red-500 hover:underline"
           >
-            Löschen
+            Delete
           </button>
         </div>
       )}
@@ -238,6 +233,7 @@ const SinglePost = ({ post }: IPostProps) => {
               className="h-6 object-fill"
               src="/svg/comment.svg"
               alt="speechbubble"
+              onClick={() => {setShowCommentModal(true)}}
             />
             <p>{commentsCount}</p>
           </div>
@@ -247,77 +243,13 @@ const SinglePost = ({ post }: IPostProps) => {
         <span className="text-xs text-gray-500 ml-2">
           {dayjs(post.created_at).fromNow()}
         </span>
-        </div>
-        {/* Kommentar-Vorschau */}
-        {/* {comments.length > 0 && (
-          <div className="mt-2 text-sm text-gray-700">
-            {comments.map((c) => (
-              <div key={c.id} className="mb-1">
-                <span className="font-semibold">
-                  {c.username || c.user_id}:
-                </span>{" "}
-                {c.text_content}
-              </div>
-            ))}
-            {commentsCount > 2 && (
-              <button
-                onClick={handleShowAllComments}
-                className="text-xs text-blue-500 hover:underline mt-1"
-              >
-                Alle Kommentare anzeigen
-              </button>
-            )}
-          </div>
-        )} */}
+      </div>
+        
         {/* Modal für alle Kommentare */}
-        {/* {showAllComments && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
-              <button
-                onClick={handleCloseModal}
-                className="absolute top-2 right-2 text-gray-500 hover:text-black"
-              >
-                ✕
-              </button>
-              <h2 className="text-lg font-semibold mb-4">Alle Kommentare</h2>
-              <div className="max-h-64 overflow-y-auto">
-                {allComments.length === 0 && (
-                  <p className="text-gray-500">Noch keine Kommentare.</p>
-                )}
-                {allComments.map((c) => (
-                  <div key={c.id} className="mb-2 border-b pb-1">
-                    <span className="font-semibold">
-                      {c.username || c.user_id}:
-                    </span>{" "}
-                    {c.text_content}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )} */}
-        {/* Kommentar-Formular */}
-        {/* {user && (
-          <form onSubmit={handleCommentSubmit} className="flex gap-2 mt-2">
-            <input
-              type="text"
-              value={commentInput}
-              onChange={(e) => setCommentInput(e.target.value)}
-              placeholder="Kommentieren..."
-              className="flex-1 border border-gray-200 rounded-md px-2 py-1 text-sm focus:outline-none"
-              disabled={commentLoading}
-            />
-            <button
-              type="submit"
-              disabled={commentLoading || !commentInput.trim()}
-              className="bg-main text-white px-3 py-1 rounded-md text-sm font-semibold disabled:opacity-50"
-            >
-              Posten
-            </button>
-          </form>
-        )} */}
-      {/* </div> */}
-    </article>
+        {showCommentModal && (
+          <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading}/>
+        )}
+        </article>
   );
 };
 
