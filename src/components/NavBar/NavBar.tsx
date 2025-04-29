@@ -20,18 +20,22 @@ export const NavLink = ({ linkname, path, img, action }: NavLinkProps) => {
 			<img
 				// falls die location mit dem linkpath übereinstimmt, wird das filled icon eingesetzt um den active zustand darzustellen
 				src={`/svg/${img}${location.pathname === "/" + path ? `-filled` : ""}.svg`}
-				className="h-8 w-1/2" />
+				className="h-5 w-1/2" />
 			{linkname}
 		</Link>
 	)
 }
 
 const NavBar = () => {
-    const {setAllSearchedProfiles} = useContext(mainContext)
+    const {setAllSearchedProfiles, setOpenModal} = useContext(mainContext)
+
+    const closePostDetails = (()=> {
+        setOpenModal(false)
+    })
 
     return (  
         <nav 
-            className="flex w-screen justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-10 fixed bottom-0 bg-white">
+            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-10 fixed bottom-0 bg-white">
             <NavLink 
                 linkname="Home" 
                 path="home" 
@@ -45,10 +49,12 @@ const NavBar = () => {
                 linkname="Upload" 
                 path="newpost" 
                 img="upload"/>
-            <NavLink 
+            <NavLink
                 linkname="Profile" 
                 path="profile" 
-                img="profile"/>
+                img="profile"
+                action={closePostDetails}
+                />
         </nav>
     );
 }
