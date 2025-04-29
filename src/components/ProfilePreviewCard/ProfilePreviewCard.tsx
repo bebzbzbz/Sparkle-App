@@ -29,7 +29,7 @@ const ProfilePreviewCard = ({profile, geoTag} : ProfilePreviewCardProps) => {
                 </div>
             </Link>   
             }
-            {geoTag && <span className={`flex ${profilePage && "flex-row-reverse "}text-sm text-gray-500 gap-2 items-center`}>
+            {geoTag && <span className={`flex ${profilePage && "flex-row-reverse" || communityProfilePage && "flex-row-reverse"} text-sm text-gray-500 gap-2 items-center`}>
                 <p className="text-wrap">{geoTag}</p>
                 <img src="/svg/geotag.svg" alt="GeoTag" className="h-4"/>
             </span>

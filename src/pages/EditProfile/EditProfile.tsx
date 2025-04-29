@@ -192,7 +192,6 @@ export default function EditProfile() {
 						name="gender"
 						value={updatedUser.gender || ""}
 						onChange={handleInputChange}
-						required
 					>
 						{!updatedUser.gender && (
 							<option value="" disabled hidden>
@@ -201,7 +200,7 @@ export default function EditProfile() {
 						)}
 						<option value="Female">Female</option>
 						<option value="Male">Male</option>
-						<option value="None">Divers</option>
+						<option value="Genderqueer">Genderqueer</option>
 					</select>
 
 
