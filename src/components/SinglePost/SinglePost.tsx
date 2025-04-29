@@ -25,8 +25,6 @@ const SinglePost = ({ post }: IPostProps) => {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
-  // Hilfsfunktion: Usernamen zu user_id cachen
-  const [userCache, setUserCache] = useState<{ [key: string]: string }>({});
 
   // Likes und Like-Status laden
   const fetchLikes = async () => {
@@ -62,9 +60,8 @@ const SinglePost = ({ post }: IPostProps) => {
       .select("*")
       .eq("post_id", post.id)
       .order("created_at", { ascending: false })
-      .limit(2);
       if(commentData) {
-        const enriched = await enrichCommentsWithUsernames(commentData || []);
+        const enriched = await enrichCommentsWithCommenterDetails(commentData || []);
         setComments(enriched);
       }
   }
@@ -132,6 +129,7 @@ const SinglePost = ({ post }: IPostProps) => {
       });
       setCommentInput("");
       fetchComments();
+      fetchCommentsCount();
       if (showCommentModal) fetchComments();
     } catch (err) {
       // Fehlerbehandlung (optional)
@@ -142,32 +140,53 @@ const SinglePost = ({ post }: IPostProps) => {
 
   // Hilfsfunktion: Usernamen zu user_id cachen
   const getCommenterData = async (userId: string) => {
-    if (userCache[userId]) return userCache[userId];
-    const { data } = await supabase
+    // Prüfen, ob Benutzerdaten bereits im Cache sind
+    
+    // Benutzerdaten aus der Datenbank abrufen
+    const { data, error } = await supabase
       .from("profiles")
-      .select("*")
+      .select("username, profile_image_url")
       .eq("id", userId)
       .single();
+      
     if (data) {
-      setUserCache((prev) => ({ ...prev, [userId]: data.username, "profileImg": data.profile_image_url || "" }));
-      console.log(data.data)
-      return data;
+      // Benutzerdaten im Cache speichern
+      const userData = {
+        username: data.username || "anonymous user",
+        profile_image_url: data.profile_image_url || "/svg/pic-empty.svg"
+      };
+      if(error) {
+        console.error(error)
+      }
+      
+      return userData;
     }
-    return userId;
+    
+    // Fallback, wenn keine Daten gefunden wurden
+    return { username: "", profile_image_url: ""};
   };
 
-  console.log(userCache)
-
   // Kommentare mit Usernamen anreichern
-  const enrichCommentsWithUsernames = async (comments: any[]) => {
+  const enrichCommentsWithCommenterDetails = async (comments: IComment[]) => {
     const enriched = await Promise.all(
       comments.map(async (c) => {
-        let username = userCache[c.user_id];
-        if (!username) {
-          username = await getCommenterData(c.user_id);
-        }
-        return { ...c, username };
+        const data = await getCommenterData(c.user_id);
+
+        let username = data?.username;
+        let profile_image_url = data?.profile_image_url;
+
+        return { ...c, username, profile_image_url };
       })
+
+      /*
+      comments.map(async (comment) => {
+        const userData = await getCommenterData(comment.user_id);
+        return {
+          ...comment,
+          username: userData.username
+        };
+      })
+      */
     );
     return enriched;
   };

@@ -5,7 +5,8 @@ interface IComment {
     text_content: string,
     created_at: string,
     updated_at: string,
-    username?: string
+    username?: string,
+    profile_image_url?: string
 }
 
 export default IComment;
