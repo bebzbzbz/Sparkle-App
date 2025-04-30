@@ -9,6 +9,7 @@ import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
 import IUser from "../../interfaces/IUser";
 import CommentsModal from "../CommentsModal/CommentsModal";
 import IComment from "../../interfaces/IComment";
+import PostSettingModal from "../PostSettingModal/PostSettingModal";
 dayjs.extend(relativeTime);
 
 interface IPostProps {
@@ -23,6 +24,7 @@ const SinglePost = ({ post }: IPostProps) => {
   const [comments, setComments] = useState<IComment[]>([]);
   const [userInfo, setUserInfo] = useState<IUser | null>(null);
   const [showCommentModal, setShowCommentModal] = useState(false);
+  const [showPostSettingModal, setShowPostSettingModal] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
 
@@ -102,16 +104,6 @@ const SinglePost = ({ post }: IPostProps) => {
         .insert({ post_id: post.id, user_id: user.id });
     }
     fetchLikes();
-  };
-
-  const handleEdit = () => {
-    // Navigiere zur Edit-Seite oder öffne ein Edit-Modal
-    // Beispiel: navigate(`/editpost/${post.id}`)
-  };
-  const handleDelete = async () => {
-    // Lösche den Post aus der Datenbank
-    await supabase.from("posts").delete().eq("id", post.id);
-    // Optional: Seite neu laden oder Post aus dem State entfernen
   };
 
   // Kommentar absenden
@@ -216,26 +208,7 @@ const SinglePost = ({ post }: IPostProps) => {
         ) : null}
       </div>
 
-      {post.post_desc && <p>{post.post_desc}</p>}
-
-      {user && user.id === post.user_id && (
-        <div className="flex gap-3">
-          <button
-            onClick={handleEdit}
-            className="text-xs text-blue-500 hover:underline"
-          >
-            Edit
-          </button>
-          <button
-            onClick={handleDelete}
-            className="text-xs text-red-500 hover:underline"
-          >
-            Delete
-          </button>
-        </div>
-      )}
-
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-2">
         <div className="flex gap-4">
           <div className="flex items-center gap-2">
             <button
@@ -262,15 +235,39 @@ const SinglePost = ({ post }: IPostProps) => {
           </div>
 
           <img src="/svg/message.svg" alt="" />
+
         </div>
-        <span className="text-xs text-gray-500 ml-2">
+
+        {openModal && user
+        ? <div className="flex items-center justify-end gap-2">
+          <img
+            className=" h-5 object-fill"
+            src="/svg/settings.svg"
+            alt="gear"
+            onClick={() => {setShowPostSettingModal(true)}}
+            />
+          </div>
+        : <span className="text-xs text-gray-500 ml-2">
           {dayjs(post.created_at).fromNow()}
-        </span>
+          </span>
+        }
+
+        <div>
+          {/* Modal für Einstellungen */}
+          {showPostSettingModal && 
+          <PostSettingModal post={post} setShowPostSettingModal={setShowPostSettingModal}/>}
+        </div>
+        
       </div>        
         {/* Modal für alle Kommentare */}
         {showCommentModal && (
           <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
         )}
+
+        {/* description */}
+        {openModal && post.post_desc
+        ? <p className="px-2">{post.post_desc}</p> 
+        : ""}
         </article>
   );
 };
