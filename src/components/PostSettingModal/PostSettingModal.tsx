@@ -5,11 +5,16 @@ import IPost from "../../interfaces/IPost";
 
 interface IPostSettingModalProps{
     post: IPost,
+    setShowPostSettingModal: (value: boolean) => void,
 }
 
-const PostSettingModal = ({post}:IPostSettingModalProps) => {
+const PostSettingModal = ({post,setShowPostSettingModal}:IPostSettingModalProps) => {
     
     const {user} = useContext(mainContext)
+
+    const closeModule = (()=> {
+        setShowPostSettingModal(false)
+    })
 
     const handleEdit = () => {
         // Navigiere zur Edit-Seite oder öffne ein Edit-Modal
@@ -22,34 +27,28 @@ const PostSettingModal = ({post}:IPostSettingModalProps) => {
       };
 
     return ( 
-       <section className="inset-0 fixed bg-white/50">
+       <section 
+       className="inset-0 fixed bg-white/50 shadow-2xl"
+       onClick={closeModule}>
 
-        <div className=" flex items-start justify-center p-5 rounded-4xl absolute w-1/2 h-1/4 top-40 left-[25%] bg-white/90 ">
-        <h1>Edit Post</h1>
-        {user && user.id === post.user_id }
+        <div className=" flex flex-col gap-8 items-center justify-start p-5 rounded-4xl absolute w-1/2 h-1/6 top-40 left-[25%] bg-white/90 ">
+        <h1 className="text-xl font-bold">Post Settings</h1>
+        {user && user.id === post.user_id &&(
+            <div className="flex items-center justify-around gap-5">
+                <div>
+                <button
+                className=" text-xl cursor-pointer transition ease-in-out hover:font-bold"
+                onClick={handleEdit}>edit</button>
+                </div>
 
+                <div>
+                    <button
+                    className=" text-xl cursor-pointer transition ease-in-out hover:font-bold hover:text-red-500"
+                    onClick={handleDelete}>delete</button>
+                </div>
+            </div>
+        )}
         </div>
-
-
-
-
-
-        {/* {user && user.id === post.user_id && (
-                    <div className="flex gap-3">
-                    <button
-                        onClick={handleEdit}
-                        className="text-xs text-blue-500 hover:underline"
-                    >
-                        Edit
-                    </button>
-                    <button
-                        onClick={handleDelete}
-                        className="text-xs text-red-500 hover:underline"
-                    >
-                        Delete
-                    </button>
-                    </div>
-                )} */}
        </section>
      ); 
 }

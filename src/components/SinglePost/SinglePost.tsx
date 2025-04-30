@@ -236,10 +236,10 @@ const SinglePost = ({ post }: IPostProps) => {
 
           <img src="/svg/message.svg" alt="" />
 
-          
         </div>
+
         {openModal && user
-        ? <div className="flex items-center gap-2">
+        ? <div className="flex items-center justify-end gap-2">
           <img
             className=" h-5 object-fill"
             src="/svg/settings.svg"
@@ -253,8 +253,9 @@ const SinglePost = ({ post }: IPostProps) => {
         }
 
         <div>
+          {/* Modal für Einstellungen */}
           {showPostSettingModal && 
-          <PostSettingModal post={post}/>}
+          <PostSettingModal post={post} setShowPostSettingModal={setShowPostSettingModal}/>}
         </div>
         
       </div>        
