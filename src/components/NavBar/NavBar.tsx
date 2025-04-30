@@ -35,7 +35,7 @@ const NavBar = () => {
 
     return (  
         <nav 
-            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-10 fixed bottom-0 bg-white">
+            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-8 fixed bottom-0 bg-white text-sm">
             <NavLink 
                 linkname="Home" 
                 path="home" 
@@ -43,9 +43,9 @@ const NavBar = () => {
                 action={closePostDetails}
             />
             <NavLink 
-                linkname="Search" 
-                path="search" 
-                img="search"
+                linkname="Explore" 
+                path="explore" 
+                img="explore"
                 action={() => {setAllSearchedProfiles(null); closePostDetails()}}
             />
             <NavLink 
@@ -53,6 +53,12 @@ const NavBar = () => {
                 path="newpost" 
                 img="upload"
                 action={closePostDetails}
+            />
+            <NavLink 
+                linkname="Search" 
+                path="search" 
+                img="search"
+                action={() => {setAllSearchedProfiles(null); closePostDetails()}}
             />
             <NavLink
                 linkname="Profile" 

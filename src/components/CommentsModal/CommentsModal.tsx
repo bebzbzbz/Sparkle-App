@@ -16,7 +16,6 @@ interface CommentsModalProps {
 
 const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
     const { user } = useAuth();
-
     const [areYouSure, setAreYouSure] = useState<string | null>(null)
 
     const handleDelete = async (comment_id: string) => {
@@ -68,12 +67,12 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
             )}
             {allComments.map((c) => (
               <div key={crypto.randomUUID()} className="flex gap-2">
-                <img src={c.profile_image_url} alt="" className="object-cover rounded-full h-8 w-8" />
+                <img src={c.profiles?.profile_image_url} alt="" className="object-cover rounded-full h-8 w-8" />
 
                 <div className="w-full">
 
                   <span className="font-semibold">
-                    {c.username || c.user_id}{" "}
+                    {c.profiles?.username}{" "}
                   </span>
 
                   {c.text_content} 
@@ -91,7 +90,6 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
                     </button>
                     )}
                   </div>
-
                 </div>
               </div>
             ))}
