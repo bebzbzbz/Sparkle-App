@@ -247,7 +247,7 @@ const NewPost = () => {
       sessionStorage.removeItem("editPost");
 
       // Navigiere zur Home-Seite und lade sie neu
-      window.location.href = "/home";
+      window.location.href = "/profile";
     } catch (err: any) {
       console.error("Fehler beim Upload:", err);
       setError(err.message || "Beim Hochladen ist ein Fehler aufgetreten.");
