@@ -28,6 +28,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            // fetch für miniFeed auf der favoriten Page
             if(favPage) {
                 try {
                     // fetch der profile, die mit der id des users/des params übereinstimmen
@@ -41,6 +42,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
                     console.log(error)
                 }
             } else {
+                // fetch für miniFeed auf den profilen
                 try {
                     // fetch der profile, die mit der id des users/des params übereinstimmen
                     const {data: posts} = await supabase.from("posts").select("*").eq("user_id", profileId).order("created_at", { ascending: false })
@@ -57,6 +59,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
         fetchData()
     }, [profileId])
 
+    // je nachdem, ob wir uns auf der fav oder profil page befinden, wird der loading platzhalter dargestellt
     if(profilePosts === null && !favPage || likedPosts === null && favPage) {
         return (
             <article className="mb-20">
@@ -123,7 +126,6 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
                                 key={crypto.randomUUID()} />
                     )) : <p className="col-span-3 text-center">No liked posts yet!</p>}
                 </div>
-    
             </article>
         );
     }

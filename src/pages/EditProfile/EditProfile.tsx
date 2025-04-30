@@ -103,11 +103,11 @@ export default function EditProfile() {
 			.eq("id", updatedUser.id);
 
 		if (error) {
-			console.error("Fehler beim Aktualisieren:", error.message);
+			console.error("Error while updating:", error.message);
 		} else {
-			console.log("Profil erfolgreich aktualisiert!");
+			console.log("Profile updated successfully!");
 			setLoggedInUser({ ...updatedUser, profile_image_url: newImgUrl });
-			setSuccessMessage("Profil wurde erfolgreich aktualisiert!");
+			setSuccessMessage("Profile updated successfully!");
 			setTimeout(() => {
 				setSuccessMessage("");
 				navigate("/profile"); // Zurück zur vorherigen Seite

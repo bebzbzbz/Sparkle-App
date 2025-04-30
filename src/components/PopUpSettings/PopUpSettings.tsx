@@ -16,7 +16,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 			await signOut();
 			navigate('/login');
 		} catch (error) {
-			console.error('Logout fehlgeschlagen:', error);
+			console.error('Logout failed:', error);
 		}
 	};
 

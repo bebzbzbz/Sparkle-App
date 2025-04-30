@@ -21,11 +21,11 @@ const ProfileInfo = ({ profile, refresh }: ProfileInfoProps) => {
           .eq("user_id", profile.id);
         const { data: followers } = await supabase
           .from("follows")
-          .select("*")
+          .select("*", { count: "exact", head: true })
           .eq("following_id", profile.id);
         const { data: following } = await supabase
           .from("follows")
-          .select("*")
+          .select("*", { count: "exact", head: true })
           .eq("follower_id", profile.id);
 
         if (posts) {

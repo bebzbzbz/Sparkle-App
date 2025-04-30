@@ -1,4 +1,4 @@
-# Noch kein guter Titel Community
+# "WhoCares" Social Media Platform
 
 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
     <img style="width: 30%; height: auto; object-fit: contain" src="./public/images/Home.png">
@@ -6,9 +6,9 @@
     <img style="width: 30%; height: auto; object-fit: contain"  src="./public/images/Detail.png">
 </div>
 
-The .MOV project provides an interactive film platform that allows you to view films, search for them and retrieve detailed information about each film. The application uses a public [API](https://developer.themoviedb.org/reference/intro/getting-started) to display films and includes features such as a slider for current trending films, a search bar and a detailed view of each film. Users can also navigate between different genres and view a list of films categorised by genre.
+The .MOV project provides an interactive film platform that allows you to view films, search for them and retrieve detailed information about each film. The application uses a public [API](https://developer.themoviedb.org/reference/intro/getting-started) to display films and includes features such as a slider for current trending films, a search bar and a detailed view of each film. Users can also navigate between different genres and view a list of films categorized by genre.
 
-The application was developed as a team effort using React and utilises a user-friendly navigation. It includes a responsive design that adapts to different screen sizes and a clearly structured user interface.
+The application was developed as a team effort using React and utilizes a user-friendly navigation. It includes a responsive design that adapts to different screen sizes and a clearly structured user interface.
 
 ## Table of Contents 
 
@@ -49,7 +49,7 @@ Navigation:
 - Back button on the detailed view and on the trailer
 
 ### Teamwork
-This project was carried out as a team effort. We communicated regularly via Discord to distribute tasks, discuss progress and coordinate development progress. In addition, we used FigJam to visualise our tasks and distribute them. Using Git as a version control tool, we made sure that all changes were merged, pushed and pulled to ensure a smooth process.
+This project was carried out as a team effort. We communicated regularly via Discord to distribute tasks, discuss progress and coordinate development progress. In addition, we used FigJam to visualize our tasks and distribute them. Using Git as a version control tool, we made sure that all changes were merged, pushed and pulled to ensure a smooth process.
 
 ## Tech Stack
 
@@ -59,7 +59,6 @@ This project was carried out as a team effort. We communicated regularly via Dis
 **Styling:**  
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) 
-![DaisyUI](https://img.shields.io/badge/daisyUI-%233B82F6.svg?style=for-the-badge&logo=daisyui&logoColor=white)  
 
 **JS Library:**  
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)  
@@ -83,7 +82,7 @@ Here is a guide on how to set up and run the Pokémon API project on your local 
 
 ### Prerequisites
 
-You should have the following programmes installed:
+You should have the following programs installed:
 
 - [Git](https://git-scm.com/)
 - [VS Code](https://code.visualstudio.com/download)
@@ -102,13 +101,13 @@ You should have the following programmes installed:
    npm run dev
    ```
 
-3. **Open your local host and have fun looking for your next evening watch! 📺** 
+3. **Open your local host and have fun posting! 📸** 
 
 ## Design
 
-The design of the project is based on a Figma template, which serves as the basis for the layout and colour palette to ensure a consistent and appealing user interface. The design was developed with a mobile-first approach and implemented using TailwindCSS to ensure that the application works optimally on mobile devices. At the same time, the project was designed to be fully responsive so that it adapts to different screen sizes and provides a user-friendly interface on all devices.
+The design of the project is based on a Figma template, which serves as the basis for the layout and color palette to ensure a consistent and appealing user interface. The design was developed with a mobile-first approach and implemented using TailwindCSS to ensure that the application works optimally on mobile devices. At the same time, the project was designed to be fully responsive so that it adapts to different screen sizes and provides a user-friendly interface on all devices.
 
 ## Deployment
 
 Click here to go directly to the website
-- [.MOV Team Projekt](https://mov-react-project.vercel.app/)
+- [WhoCares Community](https://who-cares-community.vercel.app/)

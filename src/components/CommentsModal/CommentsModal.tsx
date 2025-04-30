@@ -54,6 +54,7 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
               />
               <button
                 type="submit"
+                // button ist nicht klickbar wenn nicht eingegeben wurde oder der kommentar gerade lädt
                 disabled={commentLoading || !commentInput.trim()}
                 className="bg-main text-white px-3 py-1 rounded-md text-sm font-semibold disabled:opacity-50"
               >
