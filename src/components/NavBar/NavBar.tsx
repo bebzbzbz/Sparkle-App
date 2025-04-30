@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { mainContext } from "../../context/MainProvider";
 
 interface NavLinkProps {
-	linkname: string,
+	linkname?: string,
 	path: string,
 	img: string,
     action?: () => void
@@ -35,7 +35,7 @@ const NavBar = () => {
 
     return (  
         <nav 
-            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-8 fixed bottom-0 bg-white text-sm">
+            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 pt-5 pb-7 px-6 fixed bottom-0 bg-white text-sm">
             <NavLink 
                 linkname="Home" 
                 path="home" 

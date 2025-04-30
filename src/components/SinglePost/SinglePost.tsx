@@ -14,7 +14,7 @@ dayjs.extend(relativeTime);
 
 interface IPostProps {
   post: IPost;
-  userInfo: IUser
+  userInfo?: IUser
 }
 
 const SinglePost = ({ post, userInfo }: IPostProps) => {
@@ -23,11 +23,10 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
   const [likedByMe, setLikedByMe] = useState(false);
   const [commentsCount, setCommentsCount] = useState(0);
   const [comments, setComments] = useState<IComment[]>([]);
-  const [showCommentModal, setShowCommentModal] = useState(false);
   const [showPostSettingModal, setShowPostSettingModal] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
-  const {openModal} = useContext(mainContext)
+  const {openModal, showCommentsModal, setShowCommentsModal} = useContext(mainContext)
 
   // Likes und Like-Status laden
   const fetchLikes = async () => {
@@ -64,7 +63,6 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
       .eq("post_id", post.id)
       .order("created_at", { ascending: false })
       if(commentData) {
-        console.log(commentData)
         setComments(commentData);
       }
   }
@@ -75,10 +73,10 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
   }, [post.id, comments]);
 
   useEffect(() => {
-    if(!!showCommentModal){
+    if(!!showCommentsModal){
       fetchComments();
     }
-  }, [showCommentModal]);
+  }, [showCommentsModal]);
 
   const handleLike = async () => {
     if (!user) return;
@@ -112,7 +110,7 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
       setCommentInput("");
       fetchComments();
       fetchCommentsCount();
-      if (showCommentModal) fetchComments();
+      if (showCommentsModal) fetchComments();
     } catch (err) {
       // Fehlerbehandlung (optional)
     } finally {
@@ -165,13 +163,10 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
               className="h-6 object-fill"
               src="/svg/comment.svg"
               alt="speechbubble"
-              onClick={() => {setShowCommentModal(true)}}
+              onClick={() => {setShowCommentsModal(true)}}
             />
             <p>{commentsCount}</p>
           </div>
-
-          <img src="/svg/message.svg" alt="" />
-
         </div>
         {/* bearbeiten wird nur angezeigt, wenn der post auch von dem eingeloggten user ist */}
         {openModal && user?.id === post.user_id 
@@ -193,8 +188,8 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
         
       </div>        
       {/* Modal für alle Kommentare */}
-      {showCommentModal && (
-        <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
+      {showCommentsModal && (
+        <CommentsModal allComments={comments} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
       )}
 
       {/* description */}

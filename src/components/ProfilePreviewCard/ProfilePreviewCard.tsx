@@ -3,7 +3,7 @@ import IUser from "../../interfaces/IUser";
 import { useAuth } from "../../context/MainProvider";
 
 interface ProfilePreviewCardProps {
-    profile: IUser,
+    profile?: IUser,
     geoTag?: string | null;
 }
 

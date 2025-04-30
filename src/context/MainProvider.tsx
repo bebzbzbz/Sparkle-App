@@ -21,6 +21,8 @@ interface AuthContextType {
 	setOpenModal: (openModal: boolean) => void,
 	modalId: string,
 	setModalId: (modalId : string) => void,
+	showCommentsModal: boolean,
+	setShowCommentsModal:(showCommentsModal: boolean) => void
 }
 
 // Context erstellen mit einem initialen Defaultwert
@@ -41,6 +43,8 @@ export const mainContext = createContext<AuthContextType>({
 	setOpenModal: () => {},
 	modalId: "",
 	setModalId: () => {},
+	showCommentsModal: false,
+	setShowCommentsModal: () => {},
 });
 
 // Hilfsfunktion zum Abrufen des Contexts
@@ -57,6 +61,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [openModal,setOpenModal] = useState<boolean>(false)
+	const [showCommentsModal,setShowCommentsModal] = useState<boolean>(false)
 	const [modalId, setModalId] = useState<string>("")
 
 	// Aktuelle Session abrufen und auf Änderungen hören
@@ -219,7 +224,9 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		setModalId,
 		modalId,
 		setOpenModal,
-		openModal
+		openModal,
+		showCommentsModal,
+		setShowCommentsModal
 	};
 
 	return (

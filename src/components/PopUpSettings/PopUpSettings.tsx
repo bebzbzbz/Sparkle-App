@@ -23,7 +23,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 	const menuItems = [
 		{ title: 'About Our App', icon: 'information', action: () => navigate("/about-the-app")},
 		{ title: 'Favorites', icon: 'heart', action: () => navigate("/favorites") },
-		{ title: 'Dark Mode', icon: 'options' }
+		{ title: 'Dark Mode', icon: 'moon' }
 	];
 
 	if (!isOpen) return null;

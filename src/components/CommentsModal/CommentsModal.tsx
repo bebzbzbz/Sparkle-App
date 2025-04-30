@@ -1,12 +1,11 @@
 import dayjs from "dayjs";
-import { useAuth } from "../../context/MainProvider";
+import { mainContext, useAuth } from "../../context/MainProvider";
 import IComment from "../../interfaces/IComment";
 import supabase from "../../utils/supabase";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 interface CommentsModalProps {
   allComments: IComment[],
-  setShowCommentModal: (showCommentModal: boolean) => void,
   handleCommentSubmit: (e: React.FormEvent) => Promise<void>,
   commentInput: string,
   setCommentInput: (commentInput: string) => void,
@@ -14,8 +13,9 @@ interface CommentsModalProps {
   fetchComments: () => Promise<void>
 }
 
-const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
+const CommentsModal = ({allComments, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
     const { user } = useAuth();
+    const {setShowCommentsModal} = useContext(mainContext)
     const [areYouSure, setAreYouSure] = useState<string | null>(null)
 
     const handleDelete = async (comment_id: string) => {
@@ -31,7 +31,7 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
 
     const handleCloseModal = () => {
       setAreYouSure(null)
-      setShowCommentModal(false)
+      setShowCommentsModal(false)
     }
   
     return (  
@@ -42,20 +42,19 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
               className="absolute top-4 right-4 text-gray-500 hover:text-black">✕</button>
             <h2 className="text-lg font-semibold">Comments</h2>
             {user && (
-            <form onSubmit={handleCommentSubmit} className="flex gap-2">
-              <input
-                type="text"
+            <form onSubmit={handleCommentSubmit} className="relative">
+              <textarea
                 value={commentInput}
                 onChange={(e) => setCommentInput(e.target.value)}
                 placeholder="Share your thoughts..."
-                className="flex-1 border border-gray-200 rounded-md px-2 py-1 text-sm focus:outline-none"
+                className="flex-1 border border-gray-200 text-sm focus:outline-none"
                 disabled={commentLoading}
               />
               <button
                 type="submit"
                 // button ist nicht klickbar wenn nicht eingegeben wurde oder der kommentar gerade lädt
                 disabled={commentLoading || !commentInput.trim()}
-                className="bg-main text-white px-3 py-1 rounded-md text-sm font-semibold disabled:opacity-50"
+                className="bg-main text-white px-2 py-1 rounded-md text-sm font-semibold disabled:opacity-50 absolute top-5 right-3"
               >
                 Post
               </button>
