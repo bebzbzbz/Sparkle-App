@@ -5,12 +5,11 @@ import Home from "./pages/Home/Home"
 import CommunityProfile from "./pages/CommunityProfile/CommunityProfile"
 import SearchAll from "./pages/SearchAll/SearchAll"
 import UserProfile from "./pages/UserProfile/UserProfile"
-import NewPostImg from "./pages/NewPostImg/NewPostImg"
-import NewPostUpload from "./pages/NewPostUpload/NewPostUpload"
 import EditProfile from "./pages/EditProfile/EditProfile"
 import Login from "./pages/Login/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Favorites from "./pages/Favorites/Favorites"
+import NewPost from "./pages/NewPost/NewPost"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -25,8 +24,7 @@ function App() {
           <Route path="profile/edit" element={<EditProfile/>}/>
           <Route path="users/:userParam" element={<CommunityProfile/>}/>
           <Route path="search" element={<SearchAll/>}/>
-          <Route path="newpost" element={<NewPostImg/>}/>
-          <Route path="newpost/upload" element={<NewPostUpload/>}/>
+          <Route path="newpost" element={<NewPost/>}/>
           <Route path="favorites" element={<Favorites/>}/>
         </Route>
       </Route>
