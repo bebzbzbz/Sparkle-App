@@ -66,7 +66,7 @@ Eine ironische Plattform für die moderne Sehnsucht nach Aufmerksamkeit und Best
 
 Weil wir wissen, dass du es brauchst. Weil wir verstehen, dass dein Leben zu wichtig ist, um es nicht zu teilen. Weil wir wissen, dass du denkst "Das muss die Welt sehen!" (Spoiler: Muss sie nicht, aber wir unterstützen dich trotzdem). Weil wir wissen, dass du den Moment lieber einfängst als erlebst. Weil wir wissen, dass du Aufmerksamkeit brauchst wie die Luft zum Atmen. Weil wir wissen, dass du dein Leben lieber dokumentierst als lebst.
 
-[📱 Jetzt herunterladen!](#)
+[📱 Jetzt herunterladen!](https://who-cares-community.vercel.app/)
 
 Disclaimer: Diese App ist mit einer gesunden Portion Ironie zu genießen. Wir lieben dich trotzdem, auch wenn du zu viel postest. ❤️
 
