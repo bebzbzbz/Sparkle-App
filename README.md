@@ -1,18 +1,18 @@
-# "WhoCares" Social Media Platform
+# "WhoCares" Social Media Application
+
+Hier ein Video
 
 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
-    <img style="width: 30%; height: auto; object-fit: contain" src="./public/images/Home.png">
-    <img style="width: 30%; height: auto; object-fit: contain"  src="./public/images/List.png">
-    <img style="width: 30%; height: auto; object-fit: contain"  src="./public/images/Detail.png">
+    <img style="width: 30%; height: auto; object-fit: contain" src="./public/img/screenshot-home.png">
 </div>
 
-The .MOV project provides an interactive film platform that allows you to view films, search for them and retrieve detailed information about each film. The application uses a public [API](https://developer.themoviedb.org/reference/intro/getting-started) to display films and includes features such as a slider for current trending films, a search bar and a detailed view of each film. Users can also navigate between different genres and view a list of films categorized by genre.
+The WhoCares Application presents a social media platform that allows its users to create personalized profiles and share photos and their thoughts connected to them. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
 
-The application was developed as a team effort using React and utilizes a user-friendly navigation. It includes a responsive design that adapts to different screen sizes and a clearly structured user interface.
+The application was created as a group effort of four at the final of our 6-month long Frontend Web Development Bootcamp, using React in the Front- and Supabase in the Backend.  
 
 ## Table of Contents 
 
-- [About the Project](about-the-project)
+- [About the Project](#about-the-project)
   - [Features](#features)
   - [Teamwork](#teamwork)
 - [Tech Stack](#tech-stack)
@@ -26,30 +26,45 @@ The application was developed as a team effort using React and utilizes a user-f
 
 ### Features
 
-Intro page:
-- Shows an overview of the structure of the website and introduces the user to the main functions
+Login & SignUp:
+- Create a new profile with a username, email and password. After successful registration you are automatically signed in.
+- Login with your password and either your username or email
 
-Homepage:
-- Trending Movies Slider: A slider on the homepage shows the currently most popular films
-- If the user clicks on a film, they are redirected to the detailed view
+Home:
+- View the most recently added posts in the community chronologically
+- Load more posts if desired
+- Links to the respective user profiles via their names in the post above the photo
 
-Search bar on homepage and list view: 
-- Allows the user to search directly for film titles
+Posts on all pages:
+- Option to like and unlike posts
+- Open a comment modal window by tapping the speech bubble
+- - View all comments, post a comment and option to delete after posting
+- Relative timestamp of upload
 
-Film list by genre: 
-- Shows 20 films per page with basic details (e.g. title, release date and rating) according to genre. title, year of release and rating)
-- Users can navigate to the next page with 20 more films
+Profiles:
+- Info display about the user
+- Counters for the numbers of uploaded posts, followers and other profiles the user follows
+- Posts can be displayed as miniatures in a grid or in a larger format underneath each other
+- Tap on a miniature image to open it in a larger view window including its details
+- Your profile:
+- - In your own profile, tap on the pencil icon to update your profile image and data in
+- - Edit or delete your posts in the large view window
+- Other's profiles:
+- - Follow and unfollow users
 
-Film detail view:
-- Shows detailed information about a film, including a description that can be expanded or collapsed depending on the length of the text
-- Watch Trailer button takes the user directly to the film's trailer
+Post a New Photo:
+- Use the camera to take a photo or upload an image from your device
+- Add an optional photo description and location info
 
-Navigation:
-- An always visible navigation bar at the bottom of the screen with a home button that takes the user to the homepage at any time.
-- Back button on the detailed view and on the trailer
+Search:
+- Browse through users by username
+- Visit their profile by the link in their name and profile picture
+
+Settings:
+- Option to Log Out
 
 ### Teamwork
-This project was carried out as a team effort. We communicated regularly via Discord to distribute tasks, discuss progress and coordinate development progress. In addition, we used FigJam to visualize our tasks and distribute them. Using Git as a version control tool, we made sure that all changes were merged, pushed and pulled to ensure a smooth process.
+This project was carried out as a team effort of four. We communicated regularly via Discord to coordinate development progress. In addition, we used Figma as a tool to visualize our tasks and progress. Using Git as a version control tool, we made sure that all changes were merged, pushed and pulled to ensure a smooth process.
 
 ## Tech Stack
 
@@ -62,6 +77,9 @@ This project was carried out as a team effort. We communicated regularly via Dis
 
 **JS Library:**  
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)  
+
+**Backend Database:**  
+![Supabase](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white)  
 
 **Programming Language:**  
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)  
@@ -78,7 +96,7 @@ This project was carried out as a team effort. We communicated regularly via Dis
 
 ## Getting Started
 
-Here is a guide on how to set up and run the Pokémon API project on your local computer:
+Here is a guide on how to set up and run the WhoCares Social Media project on your local computer:
 
 ### Prerequisites
 
@@ -92,7 +110,7 @@ You should have the following programs installed:
 
 1. **Clone das "Repository":**
    ```bash
-   git clone https://github.com/bebzbzbz/Project-Pokemon-API
+   git clone https://github.com/bebzbzbz/TokTok
    ```
 
 2. **Install dependencies & run the development server:**
@@ -105,9 +123,9 @@ You should have the following programs installed:
 
 ## Design
 
-The design of the project is based on a Figma template, which serves as the basis for the layout and color palette to ensure a consistent and appealing user interface. The design was developed with a mobile-first approach and implemented using TailwindCSS to ensure that the application works optimally on mobile devices. At the same time, the project was designed to be fully responsive so that it adapts to different screen sizes and provides a user-friendly interface on all devices.
+The design of the project is based on a Figma template, which serves as the basis for the layout and color palette to ensure a consistent and appealing user interface. The design was developed with a mobile-first approach and provides a user-friendly interface for smartphones.
 
 ## Deployment
 
-Click here to go directly to the website
+Click here to go directly to the project's deployment website
 - [WhoCares Community](https://who-cares-community.vercel.app/)
