@@ -148,7 +148,7 @@ export default function EditProfile() {
 							<img
 								src="/svg/edit-filled.svg"
 								alt="Edit Icon"
-								className="absolute bottom-0 right-2 cursor-pointer"
+								className="absolute bottom-0 right-0 cursor-pointer bg-white rounded-lg"
 							/>
 						</label>
 					</div>

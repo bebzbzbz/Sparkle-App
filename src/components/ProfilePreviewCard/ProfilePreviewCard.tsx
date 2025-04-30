@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import MainButton from "../MainButton/MainButton";
 import IUser from "../../interfaces/IUser";
+import { useContext } from "react";
+import { mainContext } from "../../context/MainProvider";
 
 interface ProfilePreviewCardProps {
     profile: IUser,
@@ -12,11 +14,12 @@ const ProfilePreviewCard = ({profile, geoTag} : ProfilePreviewCardProps) => {
     const location = useLocation()
     const profilePage = location.pathname === "/profile"
     const communityProfilePage = location.pathname.includes("/users")
+    const {loggedInUser} = useContext(mainContext)
 
     return (  
         <article className="w-full flex justify-between items-center">
             {!profilePage && !communityProfilePage &&
-            <Link to={`/users/${profile?.id}` || ""}>
+            <Link to={profile?.id === loggedInUser?.id ? `/profile` : `/users/${profile?.id}`}>
                 <div className="flex items-center gap-5">
                     <img 
                         className="h-10 aspect-square object-cover rounded-full transition ease-in-out hover:drop-shadow-xl hover:opacity-90" 
