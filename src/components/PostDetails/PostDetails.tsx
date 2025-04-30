@@ -24,7 +24,7 @@ const PostDetails = () => {
     const getPost = async () => {
         try {
             const {data: postData} = await supabase.from("posts").select("*").eq("id", modalId).single()
-        console.log(postData)
+        // console.log(postData)
         setPostDetails(postData)
         } catch (error) {
             console.warn("postdetail fetch nope", error)

@@ -1,47 +1,63 @@
 import { useContext, useEffect, useState } from "react";
 import supabase from "../../utils/supabase";
 import IPost from "../../interfaces/IPost";
-import IUser from "../../interfaces/IUser";
 import SinglePost from "../SinglePost/SinglePost";
 import { mainContext } from "../../context/MainProvider";
+import { useLocation } from "react-router-dom";
+import ILikedPost from "../../interfaces/ILikedPost";
 
 interface MiniFeedProps {
-    profile: IUser,
+    profileId: string | undefined,
 }
 
-const MiniFeed = ({profile} : MiniFeedProps) => {
+const MiniFeed = ({profileId} : MiniFeedProps) => {
     const [profilePosts, setProfilePosts] = useState<IPost[] | null>(null)
+    const [likedPosts, setLikedPosts] = useState<ILikedPost[] | null>(null)
     const [timelineFeed, setTimelineFeed] = useState<boolean>(false)
     
     const {setModalId, setOpenModal} = useContext(mainContext)
+
+    const location = useLocation()
+    const favPage = location.pathname === "/favorites"
 
     // funktion für das modalfenster
     const showPostDetails = (id: string) => {
         setModalId(id)
         setOpenModal(true)
-        // console.log("wurde geklickt")
-        // console.log(openModal)
     }
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                // fetch der profile, die mit der id des users/des params übereinstimmen
-                const {data: posts} = await supabase.from("posts").select("*").eq("user_id", profile.id).order("created_at", { ascending: false })
-
-                if(posts) {
-                    // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
-                    setProfilePosts(posts)
+            if(favPage) {
+                try {
+                    // fetch der profile, die mit der id des users/des params übereinstimmen
+                    const {data: likedPosts} = await supabase.from("likes").select("*, posts(*)").eq("user_id", profileId).order("created_at", { ascending: false })
+    
+                    if(likedPosts) {
+                        // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
+                        setLikedPosts(likedPosts)
+                    }
+                } catch (error) {
+                    console.log(error)
                 }
-            } catch (error) {
-                console.log(error)
+            } else {
+                try {
+                    // fetch der profile, die mit der id des users/des params übereinstimmen
+                    const {data: posts} = await supabase.from("posts").select("*").eq("user_id", profileId).order("created_at", { ascending: false })
+    
+                    if(posts) {
+                        // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
+                        setProfilePosts(posts)
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
             }
         } 
         fetchData()
-    }, [profile.id])
-    // console.log(profilePosts)
+    }, [profileId])
 
-    if(profilePosts === null) {
+    if(profilePosts === null && !favPage || likedPosts === null && favPage) {
         return (
             <article className="mb-20">
                 <div className="grid grid-cols-3 justify-items-center gap-3 mb-5">
@@ -54,7 +70,7 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
             </article>
         )
     } 
-    if(profilePosts) {
+    if(profilePosts && !favPage) {
         return (  
             <article className="mb-20">
                 <div className="flex gap-5 justify-center mb-5 h-5">
@@ -89,7 +105,28 @@ const MiniFeed = ({profile} : MiniFeedProps) => {
             </article>
         );
     }
+    if(likedPosts && favPage) {
+        return (  
+            <article className="mb-20">
+                <div className="grid grid-cols-3 gap-2">
+                    {/* sollte der user keine posts haben, wird stattdessen ein text angezeigt */}
+                    {likedPosts.length > 0 ? likedPosts.map((post) => (
+                        // je nach zustand des timelineFeed states wird entweder die grid- oder timelineansicht angzeigt
+                        
+                        // onClick mit Funktion, Modalfenster status wird dann angezeigt, Componente anzeigen lassen, wenn geglickt
 
+                            <img 
+                                className="w-full aspect-square object-cover rounded-2xl transition ease-in-out hover:opacity-80" 
+                                onClick={() => showPostDetails(post.posts.id)}
+                                src={post.posts.post_media_url} 
+                                alt="Miniature Post" 
+                                key={crypto.randomUUID()} />
+                    )) : <p className="col-span-3 text-center">No liked posts yet!</p>}
+                </div>
+    
+            </article>
+        );
+    }
 }
 
 export default MiniFeed;

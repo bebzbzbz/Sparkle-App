@@ -10,6 +10,7 @@ import NewPostUpload from "./pages/NewPostUpload/NewPostUpload"
 import EditProfile from "./pages/EditProfile/EditProfile"
 import Login from "./pages/Login/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
+import Favorites from "./pages/Favorites/Favorites"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -26,6 +27,7 @@ function App() {
           <Route path="search" element={<SearchAll/>}/>
           <Route path="newpost" element={<NewPostImg/>}/>
           <Route path="newpost/upload" element={<NewPostUpload/>}/>
+          <Route path="favorites" element={<Favorites/>}/>
         </Route>
       </Route>
     </>

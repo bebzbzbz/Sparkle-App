@@ -52,7 +52,7 @@ const Home = () => {
         iconsRight={[
           {
             name: "heart",
-            onClick: () => (window.location.pathname = "/profile/edit"),
+            onClick: () => (window.location.pathname = "/favorites"),
             alt: "Edit",
           },
           {

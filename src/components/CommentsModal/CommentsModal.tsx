@@ -23,7 +23,6 @@ const CommentsModal = ({allComments, setShowCommentModal, handleCommentSubmit, c
       // Lösche den Comment aus der Datenbank
       if(areYouSure !== comment_id) {
         setAreYouSure(comment_id)
-        console.log(areYouSure)
       } else {
         await supabase.from("comments").delete().eq("id", comment_id);
         setAreYouSure(null)
