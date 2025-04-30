@@ -7,7 +7,7 @@ interface FeedImageProps {
   aspect?: "square" | "portrait" | "landscape";
   maxSize?: number; // px
   className?: string;
-  geoTag?: string;
+  geoTag?: string | null;
   time?: string;
 }
 

@@ -237,26 +237,23 @@ const SinglePost = ({ post }: IPostProps) => {
           <img src="/svg/message.svg" alt="" />
 
         </div>
-
-        {openModal && user
-        ? <div className="flex items-center justify-end gap-2">
-          <img
+        {/* bearbeiten wird nur angezeigt, wenn der post auch von dem eingeloggten user ist */}
+        {openModal && user?.id === post.user_id 
+        ? <img
             className=" h-5 object-fill"
             src="/svg/settings.svg"
             alt="gear"
             onClick={() => {setShowPostSettingModal(true)}}
             />
-          </div>
         : <span className="text-xs text-gray-500 ml-2">
           {dayjs(post.created_at).fromNow()}
           </span>
         }
 
-        <div>
           {/* Modal für Einstellungen */}
           {showPostSettingModal && 
           <PostSettingModal post={post} setShowPostSettingModal={setShowPostSettingModal}/>}
-        </div>
+        
         
       </div>        
         {/* Modal für alle Kommentare */}
