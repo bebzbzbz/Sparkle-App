@@ -106,7 +106,7 @@ const CommunityProfile = () => {
             disabled={loadingFollow}
           />
         )}
-        <MiniFeed profile={communityProfile} />
+        <MiniFeed profileId={communityProfile.id} />
         {openModal && <PostDetails/>}
       </section>
     );
