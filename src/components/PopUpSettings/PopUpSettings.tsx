@@ -21,7 +21,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 	};
 
 	const menuItems = [
-		{ title: 'About Our App', icon: 'information', action: () => navigate("/about-the-app")},
+		{ title: 'About Sparkle & Team', icon: 'information', action: () => navigate("/about-sparkle")},
 		{ title: 'Favorites', icon: 'heart', action: () => navigate("/favorites") },
 		{ title: 'Dark Mode', icon: 'moon' }
 	];

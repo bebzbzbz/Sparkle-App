@@ -6,6 +6,9 @@
 }
 
 @import "tailwindcss";
+@plugin "daisyui" {
+	themes: [] ;
+}
 
 @theme {
 	--color-main: #ef7272;

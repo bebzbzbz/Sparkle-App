@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import Accordion from "../../components/Accordion/Accordion";
 import Header from "../../components/Header/Header";
+import Collapse from "../../components/Collapse/Collapse";
 
-const AboutTheApp = () => {
+const AboutSparkle = () => {
     const navigate = useNavigate()
 
     const whatIsSparkle : string[] = [
@@ -11,7 +11,6 @@ const AboutTheApp = () => {
     ]
     const aboutTheCreators : string[] = [
         "test test",
-        "hallo",
         "we're a team of four:",
         "kiwi",
         "bea",
@@ -22,11 +21,11 @@ const AboutTheApp = () => {
     return (  
         <>
         {/* Accordions! */}
-            <Header headerTitle="About the App" imgLeft="arrow-back" leftAction={() => navigate(-1)}/>
-            <Accordion title="What is Sparkle?" hiddenContent={whatIsSparkle}/>
-            <Accordion title="About the Creators!" hiddenContent={aboutTheCreators}/>
+            <Header headerTitle="About Sparkle & Team" imgLeft="arrow-back" leftAction={() => navigate(-1)}/>
+            <Collapse title="What is Sparkle?" hiddenContent={whatIsSparkle} icon="moon"/>
+            <Collapse title="Who made it?" hiddenContent={aboutTheCreators} icon="heart"/>
         </>
     );
 }
 
-export default AboutTheApp;
+export default AboutSparkle;

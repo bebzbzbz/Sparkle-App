@@ -10,8 +10,8 @@ import Login from "./pages/Login/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Favorites from "./pages/Favorites/Favorites"
 import NewPost from "./pages/NewPost/NewPost"
-import AboutTheApp from "./pages/AboutTheApp/AboutTheApp"
 import Explore from "./pages/Explore/Explore"
+import AboutSparkle from "./pages/AboutSparkle/AboutSparkle"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -29,7 +29,7 @@ function App() {
           <Route path="search" element={<SearchAll/>}/>
           <Route path="newpost" element={<NewPost/>}/>
           <Route path="favorites" element={<Favorites/>}/>
-          <Route path="about-the-app" element={<AboutTheApp/>}/>
+          <Route path="about-sparkle" element={<AboutSparkle/>}/>
         </Route>
       </Route>
     </>
