@@ -1,3 +1,5 @@
+import IUser from "./IUser";
+
 export default interface IPost {
   id: string;
   user_id: string;
@@ -15,4 +17,5 @@ export default interface IPost {
     tumblr: boolean;
     bluesky: boolean;
   };
+  profiles: IUser
 }

@@ -7,7 +7,7 @@ import IPost from "../../interfaces/IPost";
 import MainButton from "../../components/MainButton/MainButton";
 import { useAuth } from "../../context/MainProvider";
 
-const Home = () => {
+const Explore = () => {
   const [posts, setPosts] = useState<IPost[]>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [fetchLimit, setFetchLimit] = useState<number>(5)
@@ -16,27 +16,12 @@ const Home = () => {
   // fetch posts
   const fetchPostsData = async () => {
     try {
-      // zuerst fetch für alle user, denen wir folgen
-      const { data: followedUsers } = await supabase.from("follows").select("following_id").eq("follower_id", user?.id);
-
-      if(followedUsers) {
-        // map macht aus dem objekt array einen einfachen array mit nur den ids
-        const followingIds = followedUsers.map((f) => f.following_id);
-        // eigene id hineinpushen, damit wir auch auf der home page erscheinen
-        followingIds.push(user?.id)
-
-        // fetch der posts mithilfe der ids (.in für arrays)
-        const { data: followedPosts, error } = await supabase
-          .from("posts")
-          .select("*, profiles(*)") // include post authors' profile info
-          .in("user_id", followingIds)
-          .limit(fetchLimit).order('created_at', { ascending: false });
-
-          if(error) {
-            console.error(error)
-          } else {
-            setPosts(followedPosts)
-          }
+      const { data: allPosts, error } = await supabase.from("posts").select("*, profiles(*)").neq("user_id", user?.id).limit(fetchLimit).order('created_at', { ascending: false });
+      
+      if(error) {
+        console.error(error)
+      } else {
+        setPosts(allPosts)
       }
     } catch (error) {
       console.error(error)
@@ -88,4 +73,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Explore;

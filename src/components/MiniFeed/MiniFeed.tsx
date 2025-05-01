@@ -32,7 +32,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
             if(favPage) {
                 try {
                     // fetch der profile, die mit der id des users/des params übereinstimmen
-                    const {data: likedPosts} = await supabase.from("likes").select("*, posts(*)").eq("user_id", profileId).order("created_at", { ascending: false })
+                    const {data: likedPosts} = await supabase.from("likes").select("*, posts(*, profiles(username, profile_image_url, id))").eq("user_id", profileId).order("created_at", { ascending: false })
     
                     if(likedPosts) {
                         // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
@@ -63,12 +63,6 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
     if(profilePosts === null && !favPage || likedPosts === null && favPage) {
         return (
             <article className="mb-20">
-                <div className="grid grid-cols-3 justify-items-center gap-3 mb-5">
-                    <div className="flex gap-2">
-                        <img className="h-5 object-fill" src="/svg/feed-filled.svg" alt="four rectangles" />
-                        <p>Feeds</p>
-                    </div>
-                </div>
                 <h2 className="text-center">Loading posts...</h2>
             </article>
         )
@@ -92,7 +86,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
                     {profilePosts.length > 0 ? profilePosts.map((post) => (
                         // je nach zustand des timelineFeed states wird entweder die grid- oder timelineansicht angzeigt
                         timelineFeed ? 
-                            <SinglePost post={post} key={crypto.randomUUID()} /> 
+                            <SinglePost post={post} key={crypto.randomUUID()} userInfo={post.profiles}/>
                         :
                         // onClick mit Funktion, Modalfenster status wird dann angezeigt, Componente anzeigen lassen, wenn geglickt
 

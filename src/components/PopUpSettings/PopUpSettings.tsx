@@ -21,14 +21,9 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 	};
 
 	const menuItems = [
-		{ title: 'Settings', icon: 'options' },
-		{ title: 'Archive', icon: 'archive' },
-		{ title: 'Your Activity', icon: 'activity' },
-		{ title: 'QR Code', icon: 'qr-code' },
-		{ title: 'Saved', icon: 'saved' },
-		{ title: 'Close Friends', icon: 'friends' },
-		{ title: 'Favorites', icon: 'heart' },
-		{ title: 'Information Center', icon: 'information' }
+		{ title: 'About Sparkle & Team', icon: 'information', action: () => navigate("/about-sparkle")},
+		{ title: 'Favorites', icon: 'heart', action: () => navigate("/favorites") },
+		{ title: 'Dark Mode', icon: 'moon' }
 	];
 
 	if (!isOpen) return null;
@@ -58,6 +53,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 						<button
 							key={crypto.randomUUID()}
 							className="w-full flex items-center space-x-4 p-3 hover:bg-gray-100 rounded-lg transition-colors"
+							onClick={item.action ? item.action : undefined}
 						>
 							<img
 								src={`/svg/${item.icon}.svg`}

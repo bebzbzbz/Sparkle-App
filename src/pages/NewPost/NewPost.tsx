@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth, mainContext } from "../../context/MainProvider";
+import { useAuth } from "../../context/MainProvider";
 import Header from "../../components/Header/Header";
 import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
 import IPost from "../../interfaces/IPost";
@@ -31,7 +31,7 @@ const NewPost = () => {
   });
 
   const { user, supabase } = useAuth();
-  const { loggedInUser } = useContext(mainContext);
+  // const { loggedInUser } = useContext(mainContext);
   const navigate = useNavigate();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -257,26 +257,19 @@ const NewPost = () => {
   };
 
   // Sharing-Optionen ändern
-  const toggleSharingOption = (platform: keyof typeof sharingOptions) => {
-    setSharingOptions((prev) => ({
-      ...prev,
-      [platform]: !prev[platform],
-    }));
-  };
+  // const toggleSharingOption = (platform: keyof typeof sharingOptions) => {
+  //   setSharingOptions((prev) => ({
+  //     ...prev,
+  //     [platform]: !prev[platform],
+  //   }));
+  // };
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header
-        headerTitle={isEditing ? "Post bearbeiten" : "Post erstellen"}
+        headerTitle={isEditing ? "Edit Post" : "Create Post"}
         imgLeft="arrow-back"
         leftAction={() => navigate(-1)}
-        iconsRight={[
-          {
-            name: "options",
-            onClick: () => setIsSettingsOpen(true),
-            alt: "Optionen",
-          },
-        ]}
       />
       <PopUpSettings
         isOpen={isSettingsOpen}
@@ -290,11 +283,11 @@ const NewPost = () => {
         )}
         {success && (
           <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
-            Dein Post wurde erfolgreich hochgeladen!
+            Posted successfully!
           </div>
         )}
         <div className="flex justify-center">
-          <div className="bg-gray-100 max-h-[300px] max-w-[300px] rounded-xl overflow-hidden aspect-square flex items-center justify-center relative">
+          <div className="bg-gray-100 w-full rounded-xl overflow-hidden aspect-square flex items-center justify-center relative">
             {cameraActive ? (
               <video
                 ref={videoRef}
@@ -319,7 +312,7 @@ const NewPost = () => {
               ) : null
             ) : (
               <div className="text-center p-4 text-gray-400">
-                Kein Medium ausgewählt
+                Choose a medium
               </div>
             )}
             <canvas ref={canvasRef} className="hidden" />
@@ -399,22 +392,22 @@ const NewPost = () => {
         {
           <>
             <div className="flex mb-6 items-center gap-4">
-              <div className="w-12 h-12 rounded-full overflow-hidden">
+              {/* <div className="w-12 h-12 rounded-full overflow-hidden">
                 <img
                   src={loggedInUser?.profile_image_url || "/svg/pic-empty.svg"}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </div> */}
               <textarea
-                placeholder="Bildbeschreibung..."
+                placeholder="Share your thoughts..."
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
                 className="flex-1 h-16 p-2 border border-gray-200 rounded-md resize-none focus:outline-none focus:ring-1 focus:ring-main"
                 disabled={loading}
               />
             </div>
-            <div className="flex items-center gap-3 mb-4 border-b border-gray-200 pb-4">
+            <div className="flex items-center gap-3 mb-4 border-b border-gray-200 pb-2">
               <svg
                 className="h-6 w-6 text-gray-500"
                 fill="none"
@@ -437,15 +430,15 @@ const NewPost = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Standort hinzufügen"
+                placeholder="Add a location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="flex-1 p-2 focus:outline-none"
                 disabled={loading}
               />
             </div>
-            <div className="mb-2">
-              <p className="text-gray-700 font-medium mb-3">Auch posten auf</p>
+            {/* <div className="mb-2">
+              <p className="text-gray-700 font-medium mb-3">Also share on</p>
               <div className="space-y-2">
                 {Object.keys(sharingOptions).map((platform) => (
                   <div
@@ -479,7 +472,7 @@ const NewPost = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
             <div className="pt-0 mt-0">
               <button
                 onClick={handleUpload}
@@ -489,10 +482,10 @@ const NewPost = () => {
                 }`}
               >
                 {loading
-                  ? "Wird gespeichert..."
+                  ? "Saving..."
                   : isEditing
-                  ? "edit"
-                  : "post it"}
+                  ? "Edit"
+                  : "Post"}
               </button>
             </div>
           </>

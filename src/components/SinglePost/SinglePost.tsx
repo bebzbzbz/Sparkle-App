@@ -6,27 +6,27 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import FeedImage from "../FeedImage/FeedImage";
 import IPost from "../../interfaces/IPost";
 import ProfilePreviewCard from "../ProfilePreviewCard/ProfilePreviewCard";
-import IUser from "../../interfaces/IUser";
 import CommentsModal from "../CommentsModal/CommentsModal";
 import IComment from "../../interfaces/IComment";
 import PostSettingModal from "../PostSettingModal/PostSettingModal";
+import IUser from "../../interfaces/IUser";
 dayjs.extend(relativeTime);
 
 interface IPostProps {
   post: IPost;
+  userInfo?: IUser
 }
 
-const SinglePost = ({ post }: IPostProps) => {
+const SinglePost = ({ post, userInfo }: IPostProps) => {
   const { user } = useAuth();
   const [likesCount, setLikesCount] = useState(0);
   const [likedByMe, setLikedByMe] = useState(false);
   const [commentsCount, setCommentsCount] = useState(0);
   const [comments, setComments] = useState<IComment[]>([]);
-  const [userInfo, setUserInfo] = useState<IUser | null>(null);
-  const [showCommentModal, setShowCommentModal] = useState(false);
   const [showPostSettingModal, setShowPostSettingModal] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
+  const {openModal, showCommentsModal, setShowCommentsModal} = useContext(mainContext)
 
   // Likes und Like-Status laden
   const fetchLikes = async () => {
@@ -59,36 +59,24 @@ const SinglePost = ({ post }: IPostProps) => {
   const fetchComments = async () => {
     const { data: commentData } = await supabase
       .from("comments")
-      .select("*")
+      .select("*, profiles(id, profile_image_url, username)")
       .eq("post_id", post.id)
       .order("created_at", { ascending: false })
       if(commentData) {
-        const enriched = await enrichCommentsWithCommenterDetails(commentData || []);
-        setComments(enriched);
+        setComments(commentData);
       }
   }
-
-  // User-Infos laden
-  const fetchUserInfo = async () => {
-    const { data } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", post.user_id)
-      .single();
-    setUserInfo(data);
-  };
 
   useEffect(() => {
     fetchLikes();
     fetchCommentsCount();
-    fetchUserInfo();
   }, [post.id, comments]);
 
   useEffect(() => {
-    if(!!showCommentModal){
+    if(!!showCommentsModal){
       fetchComments();
     }
-  }, [showCommentModal]);
+  }, [showCommentsModal]);
 
   const handleLike = async () => {
     if (!user) return;
@@ -122,7 +110,7 @@ const SinglePost = ({ post }: IPostProps) => {
       setCommentInput("");
       fetchComments();
       fetchCommentsCount();
-      if (showCommentModal) fetchComments();
+      if (showCommentsModal) fetchComments();
     } catch (err) {
       // Fehlerbehandlung (optional)
     } finally {
@@ -130,63 +118,9 @@ const SinglePost = ({ post }: IPostProps) => {
     }
   };
 
-  // Hilfsfunktion: Usernamen zu user_id cachen
-  const getCommenterData = async (userId: string) => {
-    // Prüfen, ob Benutzerdaten bereits im Cache sind
-    
-    // Benutzerdaten aus der Datenbank abrufen
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("username, profile_image_url")
-      .eq("id", userId)
-      .single();
-      
-    if (data) {
-      // Benutzerdaten im Cache speichern
-      const userData = {
-        username: data.username || "anonymous user",
-        profile_image_url: data.profile_image_url || "/svg/pic-empty.svg"
-      };
-      if(error) {
-        console.error(error)
-      }
-      
-      return userData;
-    }
-    
-    // Fallback, wenn keine Daten gefunden wurden
-    return { username: "", profile_image_url: ""};
-  };
-
-  // Kommentare mit Usernamen anreichern
-  const enrichCommentsWithCommenterDetails = async (comments: IComment[]) => {
-    const enriched = await Promise.all(
-      comments.map(async (c) => {
-        const data = await getCommenterData(c.user_id);
-
-        let username = data?.username;
-        let profile_image_url = data?.profile_image_url;
-
-        return { ...c, username, profile_image_url };
-      })
-
-      /*
-      comments.map(async (comment) => {
-        const userData = await getCommenterData(comment.user_id);
-        return {
-          ...comment,
-          username: userData.username
-        };
-      })
-      */
-    );
-    return enriched;
-  };
-  const {openModal} = useContext(mainContext)
-
   return (
     <article className="flex flex-col gap-4">
-      {userInfo && !openModal && (
+      {!openModal && (
         <ProfilePreviewCard profile={userInfo} geoTag={post.location} />
       )}
       <div>
@@ -229,13 +163,10 @@ const SinglePost = ({ post }: IPostProps) => {
               className="h-6 object-fill"
               src="/svg/comment.svg"
               alt="speechbubble"
-              onClick={() => {setShowCommentModal(true)}}
+              onClick={() => {setShowCommentsModal(true)}}
             />
             <p>{commentsCount}</p>
           </div>
-
-          <img src="/svg/message.svg" alt="" />
-
         </div>
         {/* bearbeiten wird nur angezeigt, wenn der post auch von dem eingeloggten user ist */}
         {openModal && user?.id === post.user_id 
@@ -256,16 +187,16 @@ const SinglePost = ({ post }: IPostProps) => {
         
         
       </div>        
-        {/* Modal für alle Kommentare */}
-        {showCommentModal && (
-          <CommentsModal allComments={comments} setShowCommentModal={setShowCommentModal} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
-        )}
+      {/* Modal für alle Kommentare */}
+      {showCommentsModal && (
+        <CommentsModal allComments={comments} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
+      )}
 
-        {/* description */}
-        {openModal && post.post_desc
-        ? <p className="px-2">{post.post_desc}</p> 
-        : ""}
-        </article>
+      {/* description */}
+      {post.post_desc
+      ? <p className="px-2">{post.post_desc}</p> 
+      : ""}
+    </article>
   );
 };
 

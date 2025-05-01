@@ -16,8 +16,8 @@ const CommunityProfile = () => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [loadingFollow, setLoadingFollow] = useState<boolean>(false);
   const [refreshProfileInfo, setRefreshProfileInfo] = useState(false);
-
   const {openModal} = useContext(mainContext)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,10 +76,6 @@ const CommunityProfile = () => {
     setLoadingFollow(false);
     setRefreshProfileInfo((r) => !r);
   };
-
-  const navigate = useNavigate();
-
-
 
   if (communityProfile === null) {
     return (
