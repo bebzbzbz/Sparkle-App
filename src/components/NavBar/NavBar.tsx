@@ -35,7 +35,7 @@ const NavBar = () => {
 
     return (  
         <nav 
-            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 px-6 pb-2 fixed bottom-0 bg-white text-sm items-center">
+            className="flex w-screen h-20 justify-between border-t-gray-300 border-t-1 px-6 pb-2 fixed bottom-0 bg-white text-sm items-center ">
             <NavLink 
                 // linkname="Home" 
                 path="home" 
