@@ -7,24 +7,30 @@
 
 @import "tailwindcss";
 @plugin "daisyui" {
-	themes: [] ;
+	themes: [];
 }
 
 @theme {
 	--color-main: #ef7272;
 	--color-text: #000000;
 	--color-white: #ffffff;
+	--bg-color: #1a1a1a;
+	--text-color: #ffffff;
+	--accent-color: #ef7272;
+	--popup-bg: #ffffff;
 }
 
 @layer global {
-	form:not(.searchAll) input, select, textarea {
-		@apply bg-gray-100 rounded-xl px-5 py-4 w-full
+	form:not(.searchAll) input,
+	select,
+	textarea {
+		@apply bg-gray-100 rounded-xl px-5 py-4 w-full;
 	}
 	form {
-		@apply w-full
+		@apply w-full;
 	}
 	textarea {
-		@apply pr-16 resize-none
+		@apply pr-16 resize-none;
 	}
 }
 
@@ -32,8 +38,30 @@
 	--color-main: #ef7272;
 	--color-black: #000000;
 	--color-white: #ffffff;
+	--bg-color: #1a1a1a;
+	--text-color: #ffffff;
+	--accent-color: #ef7272;
+	--popup-bg: #ffffff;
 }
 
-html{
+html {
 	font-family: "Urbanist", sans-serif;
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+body.theme-transition {
+	transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+}
+
+.dark-mode {
+	--text-color: #1a1a1a;
+	--bg-color: #ffffff;
+	--popup-bg: #2a2a2a;
 }
