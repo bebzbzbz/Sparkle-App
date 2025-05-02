@@ -4,6 +4,7 @@ import { useAuth } from "../../context/MainProvider";
 import Header from "../../components/Header/Header";
 import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
 import IPost from "../../interfaces/IPost";
+import Compressor from "compressorjs";
 
 const NewPost = () => {
   const [postMedia, setPostMedia] = useState<string | null>(null);
@@ -141,19 +142,48 @@ const NewPost = () => {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setPostMedia(event.target.result as string);
-        setMediaType(fileType as "image" | "video");
-      }
-    };
-    reader.onerror = () => {
-      setError("Fehler beim Lesen der Datei.");
-      setPostMedia(null);
-      setMediaType(null);
-    };
-    reader.readAsDataURL(file);
+    if (fileType === "image") {
+      new Compressor(file, {
+        quality: 0.8,
+        maxWidth: 1920,
+        maxHeight: 1920,
+        success(result) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            if (event.target?.result) {
+              setPostMedia(event.target.result as string);
+              setMediaType("image");
+            }
+          };
+          reader.onerror = () => {
+            setError("Fehler beim Lesen der Datei.");
+            setPostMedia(null);
+            setMediaType(null);
+          };
+          reader.readAsDataURL(result);
+        },
+        error(err) {
+          console.error("Fehler bei der Komprimierung:", err);
+          setError("Fehler bei der Bildkomprimierung.");
+          setPostMedia(null);
+          setMediaType(null);
+        },
+      });
+    } else {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setPostMedia(event.target.result as string);
+          setMediaType("video");
+        }
+      };
+      reader.onerror = () => {
+        setError("Fehler beim Lesen der Datei.");
+        setPostMedia(null);
+        setMediaType(null);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Post hochladen oder aktualisieren
@@ -481,11 +511,7 @@ const NewPost = () => {
                   loading ? "bg-main/60" : "bg-main"
                 }`}
               >
-                {loading
-                  ? "Saving..."
-                  : isEditing
-                  ? "Edit"
-                  : "Post"}
+                {loading ? "Saving..." : isEditing ? "Edit" : "Post"}
               </button>
             </div>
           </>
