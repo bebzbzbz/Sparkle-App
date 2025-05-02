@@ -6,6 +6,9 @@
 }
 
 @import "tailwindcss";
+@plugin "daisyui" {
+	themes: [] ;
+}
 
 @theme {
 	--color-main: #ef7272;
@@ -14,11 +17,14 @@
 }
 
 @layer global {
-	form:not(.searchAll) input, select {
+	form:not(.searchAll) input, select, textarea {
 		@apply bg-gray-100 rounded-xl px-5 py-4 w-full
 	}
 	form {
 		@apply w-full
+	}
+	textarea {
+		@apply pr-16 resize-none
 	}
 }
 

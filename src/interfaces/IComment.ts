@@ -7,6 +7,11 @@ interface IComment {
     updated_at: string,
     username?: string,
     profile_image_url?: string
+    profiles?: {
+        username: string,
+        id: string,
+        profile_image_url: string;
+    }
 }
 
 export default IComment;

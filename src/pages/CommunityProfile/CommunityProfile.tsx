@@ -16,8 +16,8 @@ const CommunityProfile = () => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [loadingFollow, setLoadingFollow] = useState<boolean>(false);
   const [refreshProfileInfo, setRefreshProfileInfo] = useState(false);
-
   const {openModal} = useContext(mainContext)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,10 +77,6 @@ const CommunityProfile = () => {
     setRefreshProfileInfo((r) => !r);
   };
 
-  const navigate = useNavigate();
-
-
-
   if (communityProfile === null) {
     return (
       <section>
@@ -106,7 +102,7 @@ const CommunityProfile = () => {
             disabled={loadingFollow}
           />
         )}
-        <MiniFeed profile={communityProfile} />
+        <MiniFeed profileId={communityProfile.id} />
         {openModal && <PostDetails/>}
       </section>
     );

@@ -35,7 +35,7 @@ const UserProfile = () => {
 			{loggedInUser && <>
 				<ProfileInfo 
                 profile={loggedInUser}/>
-				<MiniFeed profile={loggedInUser}/>
+				<MiniFeed profileId={loggedInUser.id}/>
 				{/* modalfenster hier */}
 			</>}
 			{/* wenn openModal true ist, dann zeig das Modalfenster an */}

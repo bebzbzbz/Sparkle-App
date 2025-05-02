@@ -7,7 +7,7 @@ interface FeedImageProps {
   aspect?: "square" | "portrait" | "landscape";
   maxSize?: number; // px
   className?: string;
-  geoTag?: string;
+  geoTag?: string | null;
   time?: string;
 }
 
@@ -26,8 +26,7 @@ const FeedImage = ({ src, alt, aspect = "square", maxSize = 600, className = "",
   if(!!openModal) {
     return (
       <div className="relative h-[60vh] w-full">
-
-         <img onClick={() => closeModal()} className="cursor-pointer opacity-80 h-8 z-30 absolute top-5 right-5 transition ease-initial" src="/svg/cancel.svg" alt="x symbole" />
+        <img onClick={() => closeModal()} className="cursor-pointer opacity-80 h-8 z-30 absolute top-5 right-5 transition ease-initial" src="/svg/cancel.svg" alt="x symbole" />
         <img
           src={src}
           alt={alt}
@@ -37,12 +36,12 @@ const FeedImage = ({ src, alt, aspect = "square", maxSize = 600, className = "",
         <div className="w-full px-5 absolute left-0 bottom-4 flex items-center justify-between">
           {geoTag &&
           <div className="flex gap-1 items-center">
-             <img className="h-5" src="/public/svg/geotag.svg" alt="logo of a geotag" />
-           <p>{geoTag}</p>
+            <img className="h-5" src="/public/svg/geotag.svg" alt="logo of a geotag" />
+            <p>{geoTag}</p>
           </div> }
           <p>{time}</p>
         </div>
-       
+      
       </div>
     );
   }

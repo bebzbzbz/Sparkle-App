@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhoCares - Die App für Über-Teiler</title>
+    <style>
+      :root {
+        --main-color: #ff6b6b;
+        --secondary-color: #4ecdc4;
+        --text-color: #2c3e50;
+        --background-color: #f7f9fc;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: var(--main-color);
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--secondary-color);
+      }
+
+      h3 {
+        color: var(--main-color);
+        font-size: 1.2rem;
+        margin: 1.5rem 0 1rem;
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 1rem;
+      }
+
+      li {
+        margin-bottom: 0.8rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      li:before {
+        content: "•";
+        color: var(--main-color);
+        position: absolute;
+        left: 0;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      .feature-section {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .cta-button {
+        display: block;
+        background: var(--main-color);
+        color: white;
+        text-align: center;
+        padding: 15px 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        margin: 30px auto;
+        max-width: 300px;
+        transition: transform 0.3s ease;
+      }
+
+      .cta-button:hover {
+        transform: scale(1.05);
+      }
+
+      .disclaimer {
+        font-style: italic;
+        text-align: center;
+        margin: 30px 0;
+        padding: 20px;
+        background: #fff3f3;
+        border-radius: 15px;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid var(--secondary-color);
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        h3 {
+          font-size: 1.1rem;
+        }
+
+        .feature-section {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        WhoCares - Die App für Menschen, die einfach nicht aufhören können zu
+        teilen! 📱💬
+      </h1>
+
+      <div class="feature-section">
+        <h2>🤔 Was ist WhoCares?</h2>
+        <p>
+          Eine ironische Plattform für die moderne Sehnsucht nach Aufmerksamkeit
+          und Bestätigung. Denn wer lebt schon wirklich im Moment, wenn er
+          ständig damit beschäftigt ist, diesen Moment für andere festzuhalten?
+          Dein Frühstück, deine Meinung über das Wetter und deine Gedanken über
+          die letzte Folge von "Tatort" sind nicht nur zu wichtig, um sie für
+          dich zu behalten - sie sind zu wichtig, um sie überhaupt zu erleben.
+        </p>
+      </div>
+
+      <h2>🎯 Hauptfunktionen</h2>
+
+      <div class="feature-section">
+        <h3>📸 Ungefiltertes Teilen</h3>
+        <ul>
+          <li>
+            Poste dein 15. Selfie des Tages (weil das erste 14 nicht perfekt
+            genug war)
+          </li>
+          <li>
+            Teile deine Meinung über Dinge, nach denen niemand gefragt hat (weil
+            deine Meinung natürlich die wichtigste ist)
+          </li>
+          <li>
+            Dokumentiere jede Mahlzeit in HD-Qualität (weil Essen nur dann
+            schmeckt, wenn es auf Instagram ist)
+          </li>
+          <li>
+            Live-Updates über deine Stimmungsschwankungen (weil deine Gefühle
+            natürlich die wichtigsten sind)
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3>🏆 Badges & Achievements</h3>
+        <ul>
+          <li>
+            "Meister der Übertreibung" - Für besonders dramatische Posts (weil
+            dein Leben natürlich das dramatischste ist)
+          </li>
+          <li>
+            "König der unnötigen Updates" - Für stündliche Status-Updates (weil
+            jeder wissen muss, was du gerade denkst)
+          </li>
+          <li>
+            "Champion des Über-Teilens" - Für die, die einfach nicht aufhören
+            können (weil Aufmerksamkeit wie eine Droge ist)
+          </li>
+          <li>
+            "Meister der Selbstinszenierung" - Für besonders gekonnte
+            Selbstdarstellung
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3>📊 Statistiken</h3>
+        <ul>
+          <li>
+            "Wie oft hast du heute schon gepostet?" (Spoiler: Zu oft, aber es
+            reicht nie)
+          </li>
+          <li>
+            "Wie viele Leute haben deine Posts wirklich gesehen?" (Spoiler:
+            Weniger als du denkst, aber Hauptsache du hast gepostet)
+          </li>
+          <li>
+            "Wie viel Zeit verbringst du mit Posten?" (Spoiler: Mehr als mit
+            Schlafen, Essen oder tatsächlichem Leben)
+          </li>
+          <li>
+            "Wie oft hast du einen Moment verpasst, weil du ihn festhalten
+            wolltest?" (Spoiler: Zu oft, aber das ist dir egal)
+          </li>
+        </ul>
+      </div>
+
+      <h2>🎨 Besondere Features</h2>
+
+      <div class="feature-section">
+        <h3>🎭 Dramatische Filter</h3>
+        <ul>
+          <li>
+            "Mein Leben ist ein Drama"-Filter (weil es ohne Drama ja langweilig
+            wäre)
+          </li>
+          <li>
+            "Alles ist so tiefgründig"-Effekt (weil du natürlich der/die
+            Tiefgründigste bist)
+          </li>
+          <li>
+            "Das muss die Welt sehen"-Verstärker (weil dein Leben natürlich das
+            interessanteste ist)
+          </li>
+          <li>
+            "Hier und Jetzt"-Filter (der ironischerweise das Hier und Jetzt
+            zerstört)
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3>🎵 Soundeffekte</h3>
+        <ul>
+          <li>
+            Dramatische Musik für deine Alltagsvideos (weil dein Alltag
+            natürlich der dramatischste ist)
+          </li>
+          <li>
+            Übertriebene Geräusche für maximale Aufmerksamkeit (weil
+            Aufmerksamkeit deine Währung ist)
+          </li>
+          <li>
+            "Das muss viral gehen"-Soundtrack (weil virales Potential wichtiger
+            ist als Authentizität)
+          </li>
+          <li>
+            "Moment-Zerstörer"-Soundtrack (weil der perfekte Post wichtiger ist
+            als der Moment selbst)
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h2>💰 Premium Features (Weil wir wissen, dass du es brauchst)</h2>
+        <ul>
+          <li>
+            Unbegrenzte Posts pro Stunde (weil du nie genug bekommen kannst)
+          </li>
+          <li>
+            Extra dramatische Filter (weil dein Leben noch dramatischer sein
+            muss)
+          </li>
+          <li>
+            Premium Hashtag-Vorschläge (weil #livingmybestlife nicht mehr
+            reicht)
+          </li>
+          <li>
+            "Teile dein Leben"-Abonnement (weil du dein Leben lieber teilst als
+            lebst)
+          </li>
+          <li>
+            "Moment-Zerstörer"-Pro (weil der perfekte Post wichtiger ist als der
+            Moment)
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h2>👥 Zielgruppe</h2>
+        <ul>
+          <li>Social Media Enthusiasten (die das echte Leben verpassen)</li>
+          <li>
+            Menschen, die denken, ihr Leben sei eine Reality-Show (weil
+            Authentizität überbewertet ist)
+          </li>
+          <li>Selbstdarsteller (die sich selbst nicht mehr kennen)</li>
+          <li>
+            Die, die ständig "Das muss ich posten!" sagen (und dabei den Moment
+            verpassen)
+          </li>
+          <li>
+            Alle, die mehr Zeit mit Posten als mit Schlafen verbringen (weil
+            Likes wichtiger sind als Schlaf)
+          </li>
+          <li>
+            Menschen, die das Hier und Jetzt gegen virtuelle Aufmerksamkeit
+            tauschen
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h2>🤣 Warum WhoCares?</h2>
+        <p>
+          Weil wir wissen, dass du es brauchst. Weil wir verstehen, dass dein
+          Leben zu wichtig ist, um es nicht zu teilen. Weil wir wissen, dass du
+          denkst "Das muss die Welt sehen!" (Spoiler: Muss sie nicht, aber wir
+          unterstützen dich trotzdem). Weil wir wissen, dass du den Moment
+          lieber einfängst als erlebst. Weil wir wissen, dass du Aufmerksamkeit
+          brauchst wie die Luft zum Atmen. Weil wir wissen, dass du dein Leben
+          lieber dokumentierst als lebst.
+        </p>
+      </div>
+
+      <a href="https://who-cares-community.vercel.app/" class="cta-button"
+        >📱 Jetzt herunterladen!</a
+      >
+
+      <div class="disclaimer">
+        <p>
+          Disclaimer: Diese App ist mit einer gesunden Portion Ironie zu
+          genießen. Wir lieben dich trotzdem, auch wenn du zu viel postest. ❤️
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>
+          <strong
+            >WhoCares - Weil dein Leben zu wichtig ist, um es für dich zu
+            behalten!</strong
+          >
+          🎉
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

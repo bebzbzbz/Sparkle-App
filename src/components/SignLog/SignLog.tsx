@@ -5,8 +5,8 @@ const SignLog = () => {
 		<>
 			<h1>SignUp und Login</h1>
 			<form action="">
-				<input type="text" name="" id="" placeholder="" />
-				<input type="password" name="" id="" placeholder="" />
+				<input type="text" placeholder="" />
+				<input type="password" placeholder="" />
 				<MainButton textContent="Sign up" type="button" />
 			</form>
 		</>

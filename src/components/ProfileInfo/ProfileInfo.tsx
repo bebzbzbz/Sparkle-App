@@ -19,23 +19,23 @@ const ProfileInfo = ({ profile, refresh }: ProfileInfoProps) => {
           .from("posts")
           .select("*")
           .eq("user_id", profile.id);
-        const { data: followers } = await supabase
+        const { count: followers } = await supabase
           .from("follows")
-          .select("*")
+          .select("*", { count: "exact", head: true })
           .eq("following_id", profile.id);
-        const { data: following } = await supabase
+        const { count: following } = await supabase
           .from("follows")
-          .select("*")
+          .select("*", { count: "exact", head: true })
           .eq("follower_id", profile.id);
 
         if (posts) {
           setNumberOfPosts(posts.length);
         }
         if (followers) {
-          setNumberOfFollowers(followers.length);
+          setNumberOfFollowers(followers || 0);
         }
         if (following) {
-          setNumberOfFollowing(following.length);
+          setNumberOfFollowing(following || 0);
         }
       } catch (error) {
         console.error(error);
