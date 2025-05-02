@@ -1,142 +1,208 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/MainProvider';
+import SuccessModal from '../../components/SuccessModal/SuccessModal';
 
 const SignUp = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	// Optional: Füge ein Feld für einen Benutzernamen hinzu, falls gewünscht
 	const [username, setUsername] = useState('');
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
-	const [message, setMessage] = useState<string | null>(null); // Für Erfolgsmeldungen (z.B. E-Mail-Bestätigung)
-
-	const { signUp } = useAuth();
+	const [showSuccessModal, setShowSuccessModal] = useState(false);
 	const navigate = useNavigate();
+
+	const { signUp, signInWithPassword } = useAuth();
 
 	const handleSignUp = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setError('');
-		setMessage('');
+		setError(null);
 		setLoading(true);
+		setShowSuccessModal(false);
 
 		try {
-			await signUp({ email, password, username });
-			setMessage('Registrierung erfolgreich! Sie werden zur Login-Seite weitergeleitet...');
-			setTimeout(() => {
-				navigate('/login');
-			}, 2000);
+			// 1. Registrierung
+			const result = await signUp({
+				email,
+				password,
+				username
+			});
+
+			if (!result || result.error) {
+				throw new Error(result?.error || 'Registration failed');
+			}
+
+			// 2. Registrierung erfolgreich - Modal anzeigen
+			setShowSuccessModal(true);
+
+			// 3. Automatische Anmeldung
+			const signInResult = await signInWithPassword({
+				email,
+				password
+			});
+
+			if (signInResult?.error) {
+				throw new Error(signInResult.error);
+			}
+
 		} catch (error: any) {
-			setError(error.message || 'Ein Fehler ist aufgetreten');
+			console.error('Registration process error:', error);
+			setError(error.message || 'Ein Fehler ist bei der Registrierung aufgetreten');
+			setShowSuccessModal(false);
 		} finally {
 			setLoading(false);
 		}
 	};
 
+	const handleModalClose = () => {
+		setShowSuccessModal(false);
+		navigate('/home');
+	};
+
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
-			<div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-				{/* Logo Placeholder */}
-				<div className="flex justify-center">
-					<div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center">
-						{/* Ersetze dies durch dein echtes Logo */}
-						<svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-					</div>
-				</div>
-
-				<h1 className="text-3xl font-bold text-center text-gray-800">Account erstellen</h1>
-
-				{error && (
-					<div className="p-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
-						{error}
-					</div>
-				)}
-				{message && (
-					<div className="p-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
-						{message}
-					</div>
-				)}
-
-				<form className="mt-8 space-y-6" onSubmit={handleSignUp}>
-					{/* Optional: Username Input */}
-
-					<div>
-						<input
-							id="username"
-							name="username"
-							type="text"
-							required
-							className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
-							placeholder="Username"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-							disabled={loading}
-						/>
+		<div className="relative min-h-screen">
+			<div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-2">
+				<div className="w-full max-w-md px-4 py-8 space-y-8 bg-white rounded-lg shadow-md">
+					<div className="flex justify-center">
+						<div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center">
+							<svg
+								className="w-12 h-12 text-white"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+								></path>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth="2"
+									d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+								></path>
+							</svg>
+						</div>
 					</div>
 
+					<h1 className="text-3xl font-bold text-center text-gray-800">
+						Register
+					</h1>
 
-					{/* Email Input */}
-					<div>
-						<input
-							id="email-address"
-							name="email"
-							type="email"
-							autoComplete="email"
-							required
-							className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
-							placeholder="Email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							disabled={loading}
-						/>
-					</div>
-
-					{/* Password Input */}
-					<div>
-						<input
-							id="password"
-							name="password"
-							type="password"
-							autoComplete="new-password" // Wichtig für Passwort-Manager
-							required
-							minLength={6} // Supabase erfordert standardmäßig mind. 6 Zeichen
-							className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
-							placeholder="Passwort (mind. 6 Zeichen)"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							disabled={loading}
-						/>
-					</div>
-
-					<div>
-						<button
-							type="submit"
-							disabled={loading}
-							className={`group relative flex justify-center w-full px-4 py-3 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+					{error && (
+						<div
+							className="p-4 text-sm text-red-700 bg-red-100 rounded-lg"
+							role="alert"
 						>
-							{loading ? (
-								<svg className="w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-								</svg>
-							) : (
-								'Registrieren'
-							)}
-						</button>
-					</div>
-				</form>
+							{error}
+						</div>
+					)}
 
-				<div className="text-sm text-center">
-					<p className="text-gray-600">
-						Bereits registriert?
-						<Link to="/login" className="ml-1 font-medium text-red-600 hover:text-red-500">
-							Anmelden
-						</Link>
-					</p>
+					<form onSubmit={handleSignUp} className="mt-8 space-y-2">
+						<div>
+							<input
+								id="username"
+								name="username"
+								type="text"
+								required
+								className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+								placeholder="Username"
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+								disabled={loading}
+								minLength={3}
+								maxLength={30}
+							/>
+						</div>
+
+						<div>
+							<input
+								id="email"
+								name="email"
+								type="email"
+								autoComplete="email"
+								required
+								className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+								placeholder="Email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								disabled={loading}
+							/>
+						</div>
+
+						<div>
+							<input
+								id="password"
+								name="password"
+								type="password"
+								autoComplete="new-password"
+								required
+								className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+								placeholder="Password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								disabled={loading}
+								minLength={6}
+							/>
+						</div>
+
+						<div>
+							<button
+								type="submit"
+								disabled={loading}
+								className={`group relative flex justify-center w-full px-4 py-3 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+							>
+								{loading ? (
+									<svg
+										className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+									>
+										<circle
+											className="opacity-25"
+											cx="12"
+											cy="12"
+											r="10"
+											stroke="currentColor"
+											strokeWidth="4"
+										></circle>
+										<path
+											className="opacity-75"
+											fill="currentColor"
+											d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+										></path>
+									</svg>
+								) : (
+									"Register"
+								)}
+							</button>
+						</div>
+					</form>
+
+					<div className="text-sm text-center">
+						<p className="text-gray-600">
+							Already have an account?
+							<Link
+								to="/login"
+								className="ml-1 font-medium text-red-600 hover:text-red-500"
+							>
+								Login
+							</Link>
+						</p>
+					</div>
 				</div>
 			</div>
+
+			<SuccessModal
+				isOpen={showSuccessModal}
+				onClose={handleModalClose}
+			/>
 		</div>
 	);
-}
+};
 
 export default SignUp;

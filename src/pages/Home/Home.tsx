@@ -43,9 +43,9 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    fetchPostsData();
-  }, [fetchLimit]);
+	useEffect(() => {
+		fetchPostsData();
+	}, []);
 
   return (
     <>
