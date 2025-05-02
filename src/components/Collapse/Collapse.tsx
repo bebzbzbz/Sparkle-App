@@ -1,7 +1,9 @@
+import { JSX } from "react";
+
 interface CollapseProps {
     title: string,
     hiddenContent: string[],
-    icon?: string,
+    icon?: JSX.Element,
 }
 
 const Collapse = ({title, hiddenContent, icon}:CollapseProps) => {
@@ -12,7 +14,9 @@ const Collapse = ({title, hiddenContent, icon}:CollapseProps) => {
                 className="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content flex justify-between items-center"
             >
                 {title}
-                <img src={`/svg/${icon}.svg`} alt={`${icon} icon`} className="h-5 -mr-7"/>
+                <div className="-mr-7">
+                    {icon}
+                </div>
             </div>
             <div
                 className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
