@@ -7,7 +7,8 @@ const AboutSparkle = () => {
 
     const whatIsSparkle : string[] = [
         "test test",
-        "hallo"
+        "hallo",
+        "Hallo und hhuhduifhdisufhdshfjkdhfkjdhfkd"
     ]
     const aboutTheCreators : string[] = [
         "test test",
@@ -21,7 +22,10 @@ const AboutSparkle = () => {
     return (  
         <>
         {/* Accordions! */}
-            <Header headerTitle="About Sparkle & Team" imgLeft="arrow-back" leftAction={() => navigate(-1)}/>
+            <Header 
+                headerTitle="About Sparkle & Team" 
+                imgLeft="arrow-back" 
+                leftAction={() => navigate(-1)}/>
             <Collapse title="What is Sparkle?" hiddenContent={whatIsSparkle} icon="moon"/>
             <Collapse title="Who made it?" hiddenContent={aboutTheCreators} icon="heart"/>
         </>

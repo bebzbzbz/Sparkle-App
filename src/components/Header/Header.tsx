@@ -1,14 +1,14 @@
+import { JSX } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface HeaderIcon {
-	name: string; // z.B. "heart", "newpost", "comment"
+	name:JSX.Element,
 	onClick?: () => void;
-	alt?: string;
 }
 
 interface HeaderProps {
 	headerTitle: string,
-	imgLeft: string,
+	imgLeft: JSX.Element,
 	leftLinkDestination?: string,
 	leftAction?: () => void,
 	iconsRight?: HeaderIcon[];
@@ -19,7 +19,7 @@ const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRi
 
 	return (
 		<header
-			className="absolute top-0 left-0 px-4 pt-5 pb-7 flex justify-between items-center w-full bg-[var(--text-color)]">
+			className="absolute top-0 left-0 px-4 pt-5 pb-7 flex justify-between items-center w-full bg-[var(--text-color)] text-icon">
 			<h1
 				className={`flex items-center gap-3 font-bold text-[var(--bg-color)] text-lg ${leftLinkDestination && "cursor-pointer"}`}
 				onClick={() => {
@@ -30,21 +30,18 @@ const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRi
 						leftAction()
 					}
 				}}>
-				<img
-					src={`/svg/${imgLeft}.svg`}
-					alt="Logo"
-					className="w-6" />
+				<div className="w-6">
+					{imgLeft}
+				</div>
 				{headerTitle}
 			</h1>
 			<div className="flex gap-5">
-				{iconsRight.map((icon, idx) => (
-					<img
-						key={icon.name + idx}
-						src={`/svg/${icon.name}.svg`}
-						alt={icon.alt || icon.name}
-						className={icon.onClick ? "cursor-pointer w-6 mix-blend-exclusion" : "w-6  mix-blend-exclusion"}
-						onClick={icon.onClick}
-					/>
+				{iconsRight.map((icon) => (
+					<div key= {crypto.randomUUID()}
+					className={icon.onClick ? "cursor-pointer w-6 mix-blend-exclusion" : "w-6  mix-blend-exclusion"}
+					onClick={icon.onClick}>
+						{icon.name}
+					</div>
 				))}
 			</div>
 		</header>
