@@ -47,9 +47,9 @@ const SearchAll = () => {
             </div>
             <div
                 className="flex flex-col items-center gap-4">
-                <img 
-                    src="/svg/profile-filled.svg" 
-                    alt="Profile Icon" />
+                <div>
+                <svg width="20" height="26" viewBox="0 0 20 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0433 10.8701C12.7689 10.8701 14.9784 8.66063 14.9784 5.93507C14.9784 3.2095 12.7689 1 10.0433 1C7.31778 1 5.10828 3.2095 5.10828 5.93507C5.10828 8.66063 7.31778 10.8701 10.0433 10.8701Z" fill="currentColor" stroke="currentColor" stroke-width="1.57576"/><path d="M10.3033 14.9398C12.8966 14.9398 15.2146 15.5322 16.8629 16.4593C18.5299 17.397 19.394 18.5976 19.3942 19.7874C19.3942 20.9774 18.5301 22.1787 16.8629 23.1165C15.2146 24.0437 12.8966 24.636 10.3033 24.6361C7.71012 24.6361 5.39209 24.0436 3.74377 23.1165C2.07644 22.1787 1.21252 20.9775 1.21252 19.7874C1.21274 18.5975 2.07665 17.3971 3.74377 16.4593C5.39209 15.5322 7.7101 14.9398 10.3033 14.9398Z" fill="currentColor" stroke="currentColor" stroke-width="1.21212"/></svg>
+                </div>
                 <div
                     className="h-1 bg-main w-full rounded-full"></div>
             </div>

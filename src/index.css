@@ -6,7 +6,6 @@
 @font-face {
 	font-family: "CuteFont";
 	src: url("/fonts/CuteFont-Regular.ttf")
-		
 }
 
 @import "tailwindcss";
@@ -15,12 +14,12 @@
 }
 
 @theme {
-	--color-main: #ef7272;
-	--color-text: #000000;
-	--color-white: #ffffff;
-	--bg-color: #1a1a1a;
-	--text-color: #ffffff;
-	--accent-color: #ef7272;
+	--color-main: #B3BE31;
+	--color-icon: #616161;
+	--color-white: #FFFDF9;
+	--bg-color: #FFFDF9;
+	--text-color: #212121;
+	--accent-color: #FEF4AA;
 	--popup-bg: #ffffff;
 }
 
@@ -36,12 +35,14 @@
 	textarea {
 		@apply pr-16 resize-none;
 	}
+	svg {
+		@apply h-full w-full
+	}
 }
 
 :root {
 	--color-main: #B3BE31;
-	/* --color-black: #212121; */
-	--color-icon: #616161
+	--color-icon: #616161;
 	--color-white: #FFFDF9;
 	--bg-color: #FFFDF9;
 	--text-color: #212121;
@@ -64,6 +65,11 @@ body {
 	background-color: var(--bg-color);
 	color: var(--text-color);
 }
+
+h1 {
+	font-family: "CuteFont", sans-serif;
+}
+
 /* 
 .dark-mode {
 	--text-color: #1a1a1a;
