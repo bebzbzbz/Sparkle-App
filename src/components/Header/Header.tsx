@@ -19,9 +19,9 @@ const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRi
 
 	return (
 		<header
-			className="absolute top-0 left-0 px-4 pt-5 pb-7 flex justify-between items-center w-full bg-[var(--text-color)] text-icon">
+			className="px-3 pt-5 pb-8 flex justify-between items-center w-full bg-white text-text">
 			<h1
-				className={`flex items-center gap-3 font-bold text-[var(--bg-color)] text-lg ${leftLinkDestination && "cursor-pointer"}`}
+				className={`flex items-center gap-2 text-text text-5xl ${leftLinkDestination && "cursor-pointer"}`}
 				onClick={() => {
 					// wenn eine aktion übergeben wurde, wird diese auslöst, ansonsten geschieht nichts
 					if (leftLinkDestination) {
@@ -30,15 +30,15 @@ const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRi
 						leftAction()
 					}
 				}}>
-				<div className="w-6">
+				<div className="w-8 text-icon">
 					{imgLeft}
 				</div>
 				{headerTitle}
 			</h1>
-			<div className="flex gap-5">
+			<div className="flex gap-4 items-center text-icon">
 				{iconsRight.map((icon) => (
 					<div key= {crypto.randomUUID()}
-					className={icon.onClick ? "cursor-pointer w-6 mix-blend-exclusion" : "w-6  mix-blend-exclusion"}
+					className={`${icon.onClick && "cursor-pointer"} w-7 h-9 mix-blend-exclusion`}
 					onClick={icon.onClick}>
 						{icon.name}
 					</div>

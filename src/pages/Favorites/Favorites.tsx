@@ -12,7 +12,10 @@ const Favorites = () => {
 
     return (  
         <>
-            <Header headerTitle="Favorites" imgLeft="arrow-back" leftAction={() => navigate(-1)}/>
+            <Header 
+            headerTitle="Favorites" 
+            imgLeft={<svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 1L1.24808 6.16795C0.654343 6.56377 0.654342 7.43623 1.24808 7.83205L9 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>} 
+            leftAction={() => navigate(-1)}/>
             <MiniFeed profileId={user?.id} />
             {openModal && <PostDetails/>}
         </>
