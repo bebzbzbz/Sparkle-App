@@ -17,11 +17,11 @@ const AboutSparkle = () => {
     return (  
         <>
         <Header 
-            headerTitle="About Sparkle & Team" 
+            headerTitle="about sparkle" 
             imgLeft={<svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 1L1.24808 6.16795C0.654343 6.56377 0.654342 7.43623 1.24808 7.83205L9 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>}
             imgLeftHeight="h-5"
             leftAction={() => navigate(-1)}/>
-            
+
         <div className="flex flex-col gap-65">
             <div className="mt-5">
             <Collapse 

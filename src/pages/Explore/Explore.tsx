@@ -57,6 +57,7 @@ const Explore = () => {
             onClick: () => setIsSettingsOpen(true),
           },
         ]}
+        iconsRightHeight="h-7"
       />
       <PopUpSettings
         isOpen={isSettingsOpen}

@@ -9,13 +9,14 @@ interface HeaderIcon {
 interface HeaderProps {
 	headerTitle: string,
 	imgLeft: JSX.Element,
-	imgLeftHeight: string,
+	imgLeftHeight?: string,
 	leftLinkDestination?: string,
 	leftAction?: () => void,
 	iconsRight?: HeaderIcon[];
+	iconsRightHeight?: string,
 }
 
-const Header = ({ headerTitle, imgLeft, imgLeftHeight, leftLinkDestination, leftAction, iconsRight = [] }: HeaderProps) => {
+const Header = ({ headerTitle, imgLeft, imgLeftHeight, leftLinkDestination, leftAction, iconsRight = [], iconsRightHeight}: HeaderProps) => {
 	const navigate = useNavigate();
 
 	return (
@@ -39,7 +40,7 @@ const Header = ({ headerTitle, imgLeft, imgLeftHeight, leftLinkDestination, left
 			<div className="flex gap-4 items-center text-icon">
 				{iconsRight.map((icon) => (
 					<div key= {crypto.randomUUID()}
-					className={`${icon.onClick && "cursor-pointer"} w-7 h-9 mix-blend-exclusion`}
+					className={`${icon.onClick && "cursor-pointer"} w-7 ${iconsRightHeight} mix-blend-exclusion`}
 					onClick={icon.onClick}>
 						{icon.name}
 					</div>

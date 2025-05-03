@@ -53,8 +53,8 @@ const PostSettingModal = ({
     className="inset-0 z-10 fixed bg-white/50">
     </div>
 
-    <div className="z-20 flex flex-col gap-5 items-center justify-start p-5 rounded-4xl absolute w-1/2 h-1/5 top-40 left-[25%] bg-white/90 ">
-        <h1 className="text-xl font-bold">Post Settings</h1>
+    <div className="z-20 flex flex-col gap-5 items-center justify-start p-5 rounded-4xl absolute w-50 h-1/5 top-40 left-20 bg-white/90 ">
+        <h1 className="text-4xl font-bold">Post Settings</h1>
         {user && user.id === post.user_id && (
           <div className="flex items-center justify-around gap-5">
             <div>
