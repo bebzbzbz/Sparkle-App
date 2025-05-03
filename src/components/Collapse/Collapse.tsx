@@ -14,7 +14,7 @@ const Collapse = ({title, hiddenContent, icon}:CollapseProps) => {
                 className="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content flex justify-between items-center"
             >
                 {title}
-                <div className="-mr-7">
+                <div className="-mr-7 h-8">
                     {icon}
                 </div>
             </div>

@@ -9,12 +9,13 @@ interface HeaderIcon {
 interface HeaderProps {
 	headerTitle: string,
 	imgLeft: JSX.Element,
+	imgLeftHeight: string,
 	leftLinkDestination?: string,
 	leftAction?: () => void,
 	iconsRight?: HeaderIcon[];
 }
 
-const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRight = [] }: HeaderProps) => {
+const Header = ({ headerTitle, imgLeft, imgLeftHeight, leftLinkDestination, leftAction, iconsRight = [] }: HeaderProps) => {
 	const navigate = useNavigate();
 
 	return (
@@ -30,7 +31,7 @@ const Header = ({ headerTitle, imgLeft, leftLinkDestination, leftAction, iconsRi
 						leftAction()
 					}
 				}}>
-				<div className="w-8 text-icon">
+				<div className={`${imgLeftHeight} text-icon`}>
 					{imgLeft}
 				</div>
 				{headerTitle}
