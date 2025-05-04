@@ -13,15 +13,30 @@ const Explore = () => {
   const [fetchLimit, setFetchLimit] = useState<number>(5)
   const {user} = useAuth()
 
-  // fetch posts
+  // fetch posts der user, denen wir nicht folgen
   const fetchPostsData = async () => {
     try {
-      const { data: allPosts, error } = await supabase.from("posts").select("*, profiles(*)").neq("user_id", user?.id).limit(fetchLimit).order('created_at', { ascending: false });
-      
-      if(error) {
-        console.error(error)
-      } else {
-        setPosts(allPosts)
+      // fetch die ids aller user, denen wir folgen
+      const { data: followedUsers } = await supabase.from("follows").select("following_id").eq("follower_id", user?.id);
+
+      if(followedUsers) {
+        // map macht aus dem objekt array einen einfachen array mit nur den ids
+        const followingIds = followedUsers.map((f) => f.following_id);
+        // eigene id hineinpushen, damit unsere eigenen posts auch nicht auf explore erscheinen
+        followingIds.push(user?.id)
+
+        // fetch alle posts von profilen, zu denen die followingIds NICHT passen
+        const { data: notFollowedPosts, error } = await supabase
+          .from("posts")
+          .select("*, profiles(*)") // profile der postenden user
+          .not("user_id", "in", `(${followingIds.join(",")})`)
+          .limit(fetchLimit).order('created_at', { ascending: false });
+
+          if(error) {
+            console.error(error)
+          } else {
+            setPosts(notFollowedPosts)
+          }
       }
     } catch (error) {
       console.error(error)
@@ -39,6 +54,7 @@ const Explore = () => {
         imgLeft={<svg width="35" className="text-main" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18.398 1.36936C18.946 0.167986 20.7501 0.609407 20.6815 1.92809L20.2672 9.89533C20.2214 10.7767 21.113 11.4027 21.9264 11.0602L27.3101 8.79343C28.4459 8.31518 29.4757 9.65902 28.7184 10.6314L25.0488 15.3435C24.5623 15.9682 24.8058 16.8846 25.5381 17.1855L33.2776 20.3651C34.457 20.8497 34.1615 22.5969 32.8884 22.6667L25.8285 23.0536C24.9878 23.0997 24.4564 23.9766 24.8045 24.7432L27.9686 31.7097C28.5049 32.8903 27.0426 33.9613 26.0788 33.0939L19.1903 26.8942C18.7283 26.4784 18.0249 26.4856 17.5715 26.9107L11.2095 32.8751C10.3933 33.6402 9.06713 32.9666 9.2035 31.8563L10.1168 24.42C10.2013 23.7326 9.68625 23.1173 8.99472 23.0794L1.46516 22.6667C0.192041 22.5969 -0.103435 20.8497 1.07594 20.3651L8.87839 17.1596C9.59116 16.8668 9.84533 15.9864 9.3983 15.3587L3.51779 7.10208C2.77252 6.05567 3.97553 4.73017 5.08908 5.37081L13.0458 9.9484C13.6571 10.3001 14.4384 10.0495 14.7311 9.40785L18.398 1.36936Z" fill="currentColor"/>
           </svg>}
+          imgLeftColor="text-main"
         iconsRight={[
           {
             name: <svg width="16" height="27" viewBox="0 0 16 27" fill="none" xmlns="http://www.w3.org/2000/svg">

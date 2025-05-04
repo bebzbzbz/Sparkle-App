@@ -27,7 +27,7 @@ const PostDetails = () => {
     // console.log(postDetails)
 
     return ( 
-    <section className="fixed overflow-auto top-0 left-0 flex flex-col items-center justify-start w-screen h-screen bg-white/90 p-5">
+    <section className="fixed overflow-auto top-0 left-0 flex flex-col items-center justify-start w-screen h-screen bg-light/90 p-5">
         {postDetails && <SinglePost post={postDetails}/>}
     </section> );
 }

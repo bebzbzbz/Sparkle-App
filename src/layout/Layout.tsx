@@ -9,7 +9,7 @@ const Layout = () => {
 	return (
 		<>
 			<main
-				className={`px-4 ${!editProfilePage ? "pb-10" : "pb-5"} pb-10 mb-30 ${searchPage && "pt-7"}`}>
+				className={`px-4 ${!editProfilePage ? "pb-10" : "pb-5"} pb-30 ${searchPage && "pt-7"} bg-light text-dark min-h-screen`}>
 				<Outlet />
 			</main>
 			{

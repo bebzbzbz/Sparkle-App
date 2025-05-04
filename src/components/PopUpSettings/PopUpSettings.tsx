@@ -40,18 +40,15 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 		<>
 			{/* Overlay */}
 			<div
-				className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+				className="fixed inset-0 bg-light/60 z-40 transition-opacity duration-300"
 				onClick={onClose}
 			/>
 
 			{/* Popup */}
 			<div
-				className="fixed bottom-0 left-0 right-0 rounded-t-3xl p-6 z-50 transform transition-transform duration-300"
+				className="fixed -bottom-1 -left-1 -right-1 rounded-t-3xl p-6 z-50 transform transition-transform duration-300 bg-light border-1"
 				style={{
-					color: 'var(--text-color)',
-					backgroundColor: 'var(--popup-bg)',
 					transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
-					boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1)'
 				}}
 			>
 				{/* Handle */}
@@ -62,22 +59,22 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 					{menuItems.map((item) => (
 						<button
 							key={crypto.randomUUID()}
-							className="w-full flex items-center space-x-4 p-3 bg-[--bg-color] hover:bg-[var(--text-color)] hover:text-[var(--text-color)] rounded-lg transition-colors cursor-pointer"
+							className="w-full flex items-center space-x-4 p-3 bg-light hover:bg-dark hover:text-light rounded-lg transition-colors cursor-pointer"
 							onClick={item.action}
 						>
-							<div className="h-6">
+							<div className="h-7 w-6 text-center">
 								{item.icon}
 							</div>
-							<span className="text-[var(--bg-color)]">{item.title}</span>
+							<span>{item.title}</span>
 						</button>
 					))}
 
 					{/* Dark Mode Toggle */}
 					<button
-						className="w-full flex items-center space-x-4 p-3 hover:bg-[var(--text-color)] rounded-lg transition-colors"
+						className="w-full flex items-center space-x-4 p-3 hover:bg-dark hover:text-light rounded-lg transition-colors"
 						onClick={() => setIsDark(!isDark)}
 					>
-						<div className="h-6">
+						<div className="h-7 w-6">
 						{
 							isDark ? (
 								<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 21V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M22 12L21 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 12L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M19.0708 4.92969L18.678 5.32252" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5.32178 18.6777L4.92894 19.0706" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M19.0708 19.0703L18.678 18.6775" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5.32178 5.32227L4.92894 4.92943" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6.34141 10C6.12031 10.6256 6 11.2987 6 12C6 15.3137 8.68629 18 12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C11.2987 6 10.6256 6.12031 10 6.34141" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -86,14 +83,14 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 							)
 						}
 						</div>
-						<span className="text-[var(--bg-color)]">
+						<span>
 							{isDark ? "Light Mode" : "Dark Mode"}
 						</span>
 					</button>
 				</div>
 
 				{/* Logout Button */}
-				<div className="border-t border-gray-200 pt-4">
+				<div className="border-t border-gray-200 pt-4 flex flex-col">
 					<MainButton
 						textContent="Logout"
 						type="button"
