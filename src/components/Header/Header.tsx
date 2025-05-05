@@ -22,9 +22,9 @@ const Header = ({ headerTitle, imgLeft, imgLeftHeight, imgLeftColor, leftLinkDes
 
 	return (
 		<header
-			className="px-3 pt-5 pb-8 flex justify-between items-center w-full text-text">
+			className=" pt-5 pb-8 flex justify-between items-center w-full text-text">
 			<h1
-				className={`flex items-center gap-2 text-5xl ${leftLinkDestination && "cursor-pointer"}`}
+				className={`lowercase flex items-center gap-2 text-5xl ${leftLinkDestination && "cursor-pointer"}`}
 				onClick={() => {
 					// wenn eine aktion übergeben wurde, wird diese auslöst, ansonsten geschieht nichts
 					if (leftLinkDestination) {
