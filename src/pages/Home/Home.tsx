@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [fetchLimit, setFetchLimit] = useState<number>(5)
+  const [fetchLimit, setFetchLimit] = useState<number>(7)
   const {user} = useAuth()
 
   // fetch posts
@@ -91,7 +91,7 @@ const Home = () => {
             </div>
           );
         })}
-        <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 5)}/>
+        <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 7)}/>
       </>}
       </section>
     </>
