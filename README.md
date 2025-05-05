@@ -2,11 +2,7 @@
 
 Hier ein Video
 
-<div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
-  <img style="width: 30%; height: auto; object-fit: contain" src="./public/img/screenshot-home.png">
-</div>
-
-The Sparkle Application presents a social media platform that allows its users to create personalized profiles and share photos and their thoughts connected to them. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
+The Sparkle Application presents a social media platform that allows its users to create personalized profiles to share their photos and thoughts connected to happy or mindful moments. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
 
 The application was created as a group effort of four at the final of our 6-month long Frontend Web Development Bootcamp, using React in the Front- and Supabase in the Backend.  
 
@@ -30,15 +26,17 @@ Login & SignUp:
 - Create a new profile with a username, email and password. After successful registration you are automatically signed in.
 - Login with your password and either your username or email
 
-Home:
-- View the most recently added posts in the community chronologically
+Home & Explore:
+- Home: View posts of people you follow
+- Explore: View posts of people you don't follow yet 
 - Load more posts if desired
 - Links to the respective user profiles via their names in the post above the photo
 
 Posts on all pages:
+- Chronological order by most recently added to the community
 - Option to like and unlike posts
 - Open a comment modal window by tapping the speech bubble
-- - View all comments, post a comment and option to delete after posting
+  - View all comments, post a comment and option to delete after posting
 - Relative timestamp of upload
 
 Profiles:
@@ -46,11 +44,11 @@ Profiles:
 - Counters for the numbers of uploaded posts, followers and other profiles the user follows
 - Posts can be displayed as miniatures in a grid or in a larger format underneath each other
 - Tap on a miniature image to open it in a larger view window including its details
-- Your profile:
-- - In your own profile, tap on the pencil icon to update your profile image and data in
-- - Edit or delete your posts in the large view window
-- Other's profiles:
-- - Follow and unfollow users
+- Your own profile:
+  - Tap on the pencil icon to update your profile image and data
+  - Edit or delete your posts in the large view window
+- Other people's profiles:
+  - Follow and unfollow users
 
 Post a New Photo:
 - Use the camera to take a photo or upload an image from your device
@@ -61,7 +59,11 @@ Search:
 - Visit their profile by the link in their name and profile picture
 
 Settings:
+- Switch to Dark-Light Mode
 - Option to Log Out
+
+About Sparkle & Team
+- Information about the App and links to its creators
 
 ### Teamwork
 This project was carried out as a team effort of four. We communicated regularly via Discord to coordinate development progress. In addition, we used Figma as a tool to visualize our tasks and progress. Using Git as a version control tool, we made sure that all changes were merged, pushed and pulled to ensure a smooth process.
@@ -123,7 +125,7 @@ You should have the following programs installed:
 
 ## Design
 
-The design of the project is based on a Figma template, which serves as the basis for the layout and color palette to ensure a consistent and appealing user interface. The design was developed with a mobile-first approach and provides a user-friendly interface for smartphones.
+The design of the project is based on a Figma template, which serves as the basis for the layout and color palette to ensure a consistent and appealing user interface. The design was developed with a mobile-first approach and provides a user-friendly interface for smartphones. The user is also able to choose to display the app in a dark or light color scheme according to their preference.
 
 ## Deployment
 
