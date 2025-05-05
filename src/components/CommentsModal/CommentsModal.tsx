@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
-import { mainContext, useAuth } from "../../context/MainProvider";
+import { useAuth } from "../../context/MainProvider";
 import IComment from "../../interfaces/IComment";
 import supabase from "../../utils/supabase";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 interface CommentsModalProps {
+  setShowCommentsModal: (showCommentsModal: boolean) => void;
   allComments: IComment[],
   handleCommentSubmit: (e: React.FormEvent) => Promise<void>,
   commentInput: string,
@@ -13,9 +14,8 @@ interface CommentsModalProps {
   fetchComments: () => Promise<void>
 }
 
-const CommentsModal = ({allComments, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
+const CommentsModal = ({setShowCommentsModal, allComments, handleCommentSubmit, commentInput, commentLoading, setCommentInput, fetchComments} : CommentsModalProps) => {
     const { user } = useAuth();
-    const {setShowCommentsModal} = useContext(mainContext)
     const [areYouSure, setAreYouSure] = useState<string | null>(null)
 
     const handleDelete = async (comment_id: string) => {
@@ -35,11 +35,11 @@ const CommentsModal = ({allComments, handleCommentSubmit, commentInput, commentL
     }
   
     return (  
-      <div className="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-6 mx-3 max-w-md w-full relative flex flex-col gap-5">
+      <div className="fixed inset-0 bg-light/60 bg-opacity-40 flex items-center justify-center z-50">
+        <div className="bg-light rounded-lg p-6 mx-3 max-w-md w-full relative flex flex-col gap-5 border-1">
             <button
               onClick={handleCloseModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-black">✕</button>
+              className="absolute top-4 right-4">✕</button>
             <h2 className="text-lg font-semibold">Comments</h2>
             {user && (
             <form onSubmit={handleCommentSubmit} className="relative">
@@ -47,14 +47,14 @@ const CommentsModal = ({allComments, handleCommentSubmit, commentInput, commentL
                 value={commentInput}
                 onChange={(e) => setCommentInput(e.target.value)}
                 placeholder="Share your thoughts..."
-                className="flex-1 border border-gray-200 text-sm focus:outline-none"
+                className="flex-1 border border-main text-sm focus:outline-none bg-light"
                 disabled={commentLoading}
               />
               <button
                 type="submit"
                 // button ist nicht klickbar wenn nicht eingegeben wurde oder der kommentar gerade lädt
                 disabled={commentLoading || !commentInput.trim()}
-                className="bg-main text-white px-2 py-1 rounded-md text-sm font-semibold disabled:opacity-50 absolute top-5 right-3"
+                className="bg-main text-light px-2 py-1 rounded-md text-sm font-semibold disabled:opacity-50 absolute top-5 right-3"
               >
                 Post
               </button>

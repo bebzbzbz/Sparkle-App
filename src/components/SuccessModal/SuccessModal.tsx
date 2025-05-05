@@ -21,7 +21,7 @@ const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center">
-			<div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300"></div>
+			<div className="fixed inset-0 bg-dark bg-opacity-50 transition-opacity duration-300"></div>
 			<div
 				className={`relative bg-green-100 text-green-700 p-6 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
 					}`}

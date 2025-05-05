@@ -47,16 +47,16 @@ const PostSettingModal = ({
 
 
   return (
-    <>
-    <div
-    onClick={closeModule}
-    className="inset-0 z-10 fixed bg-white/50">
-    </div>
+    <div className="flex justify-center items-center w-screen h-screen fixed top-0 left-0">
+      <div
+      onClick={closeModule}
+      className="inset-0 z-10 fixed bg-light/70">
+      </div>
 
-    <div className="z-20 flex flex-col gap-5 items-center justify-start p-5 rounded-4xl absolute w-50 h-1/5 top-40 left-20 bg-white/90 ">
-        <h1 className="text-4xl font-bold">Post Settings</h1>
+      <div className="z-20 flex flex-col gap-5 items-center px-6 py-5 rounded-4xl w-60 bg-light/90 border-1 text-center">
+        <h2 className="text-4xl font-bold">post settings</h2>
         {user && user.id === post.user_id && (
-          <div className="flex items-center justify-around gap-5">
+          <div className="grid grid-cols-2 items-center">
             <div>
               <button
                 className=" text-xl p-5 cursor-pointer transition ease-in-out hover:font-bold"
@@ -72,14 +72,14 @@ const PostSettingModal = ({
                 onClick={handleDelete}
               >
                 {security 
-                ? "really delete?"
+                ? "sure to delete?"
                 : "delete"}
               </button>
             </div>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 export default PostSettingModal;

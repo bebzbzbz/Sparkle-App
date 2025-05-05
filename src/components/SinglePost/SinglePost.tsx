@@ -26,7 +26,8 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
   const [showPostSettingModal, setShowPostSettingModal] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
-  const {openModal, showCommentsModal, setShowCommentsModal} = useContext(mainContext)
+  const [showCommentsModal,setShowCommentsModal] = useState<boolean>(false)
+  const {openModal} = useContext(mainContext)
 
   // Likes und Like-Status laden
   const fetchLikes = async () => {
@@ -64,16 +65,18 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
       .order("created_at", { ascending: false })
       if(commentData) {
         setComments(commentData);
+        console.log(commentData)
+        console.log(post.id)
       }
   }
 
   useEffect(() => {
     fetchLikes();
     fetchCommentsCount();
-  }, [post.id, comments]);
+  }, [post.id]);
 
   useEffect(() => {
-    if(!!showCommentsModal){
+    if(showCommentsModal){
       fetchComments();
     }
   }, [showCommentsModal]);
@@ -177,16 +180,13 @@ const SinglePost = ({ post, userInfo }: IPostProps) => {
           {dayjs(post.created_at).fromNow()}
           </span>
         }
-
           {/* Modal für Einstellungen */}
           {showPostSettingModal && 
           <PostSettingModal post={post} setShowPostSettingModal={setShowPostSettingModal}/>}
-        
-        
       </div>        
       {/* Modal für alle Kommentare */}
       {showCommentsModal && (
-        <CommentsModal allComments={comments} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
+        <CommentsModal setShowCommentsModal={setShowCommentsModal}allComments={comments} handleCommentSubmit={handleCommentSubmit} commentInput={commentInput} setCommentInput={setCommentInput} commentLoading={commentLoading} fetchComments={fetchComments}/>
       )}
 
       {/* description */}

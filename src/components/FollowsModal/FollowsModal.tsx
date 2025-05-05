@@ -5,5 +5,5 @@ const FollowsModal = () => {
         </>
     );
 }
- 
+
 export default FollowsModal;

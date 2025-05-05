@@ -1,11 +1,10 @@
 @font-face {
-	font-family: "Archivo";
-	src: url("/fonts/Archivo-VariableFont_wdth,wght.ttf")
-		
-}
-@font-face {
 	font-family: "CuteFont";
 	src: url("/fonts/CuteFont-Regular.ttf")
+}
+@font-face {
+	font-family: "Urbanist";
+	src: url("/fonts/Urbanist-VariableFont_wght.ttf")
 }
 
 @import "tailwindcss";
@@ -16,18 +15,16 @@
 @theme {
 	--color-main: #B3BE31;
 	--color-icon: #616161;
-	--color-white: #FFFDF9;
-	--bg-color: #FFFDF9;
-	--text-color: #212121;
-	--accent-color: #FEF4AA;
-	--popup-bg: #ffffff;
+	--color-light: #FFFDF9;
+	--color-dark: #212121;
+	--color-accent: #FEF4AA;
 }
 
 @layer global {
 	form:not(.searchAll) input,
 	select,
 	textarea {
-		@apply bg-gray-100 rounded-xl px-5 py-4 w-full;
+		@apply bg-light rounded-xl px-5 py-4 w-full;
 	}
 	form {
 		@apply w-full;
@@ -38,22 +35,22 @@
 	svg {
 		@apply h-full w-full
 	}
+	.dark-mode {
+		--color-light: #111111;
+		--color-dark: #FFFDF9;
+	}
 }
 
 :root {
 	--color-main: #B3BE31;
 	--color-icon: #616161;
-	--color-white: #FFFDF9;
-	--bg-color: #FFFDF9;
-	--text-color: #212121;
-	--accent-color: #FEF4AA;
-	--popup-bg: #ffffff;
+	--color-light: #FFFDF9;
+	--color-dark: #212121;
+	--color-accent: #FEF4AA;
 }
 
 html {
-	font-family: "Archivo", sans-serif;
-	background-color: var(--bg-color);
-	color: var(--text-color);
+	font-family: "Urbanist", sans-serif;
 	transition: background-color 0.6s ease, color 0.6s ease;
 }
 
@@ -61,18 +58,17 @@ body.theme-transition {
 	transition: background-color 0.6s ease, color 0.6s ease;
 }
 
-body {
-	background-color: var(--bg-color);
-	color: var(--text-color);
+h1, h2, h3 {
+	font-family: "CuteFont", sans-serif;
 }
 
-h1 {
-	font-family: "CuteFont", sans-serif;
+input, textarea, select {
+	font-family: "Urbanist", sans-serif;
 }
 
 /* 
 .dark-mode {
-	--text-color: #1a1a1a;
+	--text: #1a1a1a;
 	--bg-color: #ffffff;
 	--popup-bg: #2a2a2a;
 } */

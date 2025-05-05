@@ -85,25 +85,28 @@ const CommunityProfile = () => {
     );
   } else {
     return (
-      <section className="flex flex-col gap-5">
+      <>
         <Header
           headerTitle={communityProfile?.username || ""}
           imgLeft={<svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 1L1.24808 6.16795C0.654343 6.56377 0.654342 7.43623 1.24808 7.83205L9 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>}
           leftAction={() => navigate(-1)}
+          imgLeftColor="text-main"
         />
-        <ProfileInfo profile={communityProfile} refresh={refreshProfileInfo} />
-        {loggedInUser && loggedInUser.id !== communityProfile.id && (
-          <MainButton
-            textContent={isFollowing ? "Unfollow" : "Follow"}
-            type="button"
-            icon={isFollowing ? "unfollow" : "follow"}
-            onClick={handleFollow}
-            disabled={loadingFollow}
-          />
-        )}
-        <MiniFeed profileId={communityProfile.id} />
-        {openModal && <PostDetails/>}
-      </section>
+        <section className="flex flex-col gap-5">
+          <ProfileInfo profile={communityProfile} refresh={refreshProfileInfo} />
+          {loggedInUser && loggedInUser.id !== communityProfile.id && (
+            <MainButton
+              textContent={isFollowing ? "Unfollow" : "Follow"}
+              type="button"
+              icon={isFollowing ? "unfollow" : "follow"}
+              onClick={handleFollow}
+              disabled={loadingFollow}
+            />
+          )}
+          <MiniFeed profileId={communityProfile.id} />
+          {openModal && <PostDetails/>}
+        </section>
+      </>
     );
   }
 };
