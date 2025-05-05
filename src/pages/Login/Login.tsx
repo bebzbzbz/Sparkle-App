@@ -40,130 +40,96 @@ const Login = () => {
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-2">
-			<div className="w-full max-w-md px-4 py-8 space-y-8 bg-white rounded-lg shadow-md">
-				<div className="flex justify-center">
-					<div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center">
-						<svg
-							className="w-12 h-12 text-white"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-							></path>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-							></path>
-						</svg>
-					</div>
+		<div className="flex flex-col items-center justify-center min-h-screen bg-light px-7 gap-6">
+			<div className="relative flex items-center justify-center">
+				<div className="h-30 text-main">
+					<svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.398 1.36936C18.946 0.167986 20.7501 0.609407 20.6815 1.92809L20.2672 9.89533C20.2214 10.7767 21.113 11.4027 21.9264 11.0602L27.3101 8.79343C28.4459 8.31518 29.4757 9.65902 28.7184 10.6314L25.0488 15.3435C24.5623 15.9682 24.8058 16.8846 25.5381 17.1855L33.2776 20.3651C34.457 20.8497 34.1615 22.5969 32.8884 22.6667L25.8285 23.0536C24.9878 23.0997 24.4564 23.9766 24.8045 24.7432L27.9686 31.7097C28.5049 32.8903 27.0426 33.9613 26.0788 33.0939L19.1903 26.8942C18.7283 26.4784 18.0249 26.4856 17.5715 26.9107L11.2095 32.8751C10.3933 33.6402 9.06713 32.9666 9.2035 31.8563L10.1168 24.42C10.2013 23.7326 9.68625 23.1173 8.99472 23.0794L1.46516 22.6667C0.192041 22.5969 -0.103435 20.8497 1.07594 20.3651L8.87839 17.1596C9.59116 16.8668 9.84533 15.9864 9.3983 15.3587L3.51779 7.10208C2.77252 6.05567 3.97553 4.73017 5.08908 5.37081L13.0458 9.9484C13.6571 10.3001 14.4384 10.0495 14.7311 9.40785L18.398 1.36936Z" fill="currentColor"/></svg>
 				</div>
+				<h1 className="text-5xl absolute mt-1">sparkle</h1>
+			</div>
 
-				<h1 className="text-3xl font-bold text-center text-gray-800">
+			<form onSubmit={handleLogin} className="space-y-6">
+				<h1 className="text-4xl text-center">
 					Login
 				</h1>
 
 				{error && (
 					<div
-						className="p-4 text-sm text-red-700 bg-red-100 rounded-lg"
+						className="p-4 text-sm text-center text-red-700 bg-red-100 rounded-lg"
 						role="alert"
 					>
 						{error}
 					</div>
 				)}
 
-				<form onSubmit={handleLogin} className="mt-8 space-y-6">
-					<div>
-						<input
-							id="login-identifier"
-							name="loginIdentifier"
-							type="text"
-							autoComplete="username"
-							required
-							className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
-							placeholder="Email or username"
-							value={loginIdentifier}
-							onChange={(e) => setLoginIdentifier(e.target.value)}
-							disabled={loading}
-						/>
-					</div>
+					<input
+						id="login-identifier"
+						name="loginIdentifier"
+						type="text"
+						autoComplete="username"
+						required
+						className="border border-main focus:outline-none focus:ring-main focus:border-main"
+						placeholder="Email or username"
+						value={loginIdentifier}
+						onChange={(e) => setLoginIdentifier(e.target.value)}
+						disabled={loading}
+					/>
+				
+					<input
+						id="password"
+						name="password"
+						type="password"
+						autoComplete="current-password"
+						required
+						className="border border-main focus:outline-none focus:border-main focus:ring-main"
+						placeholder="Password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						disabled={loading}
+					/>
 
-					<div>
-						<input
-							id="password"
-							name="password"
-							type="password"
-							autoComplete="current-password"
-							required
-							className="block w-full px-3 py-3 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
-							placeholder="Password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							disabled={loading}
-						/>
-					</div>
-
-					<div className="text-sm text-right">
-						<a href="#" className="font-medium text-red-600 hover:text-red-500">
-							Forgot password?
-						</a>
-					</div>
-
-					<div>
-						<button
-							type="submit"
-							disabled={loading}
-							className={`group relative flex justify-center w-full px-4 py-3 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ${loading ? "opacity-50 cursor-not-allowed" : ""
-								}`}
-						>
-							{loading ? (
-								<svg
-									className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-								>
-									<circle
-										className="opacity-25"
-										cx="12"
-										cy="12"
-										r="10"
-										stroke="currentColor"
-										strokeWidth="4"
-									></circle>
-									<path
-										className="opacity-75"
-										fill="currentColor"
-										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-									></path>
-								</svg>
-							) : (
-								"Login"
-							)}
-						</button>
-					</div>
-				</form>
-
-				<div className="text-sm text-center">
-					<p className="text-gray-600 mb-4">
-						No account yet?
-					</p>
-					<Link
-						to="/signup"
-						className="group relative flex justify-center w-full px-4 py-3 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+					<button
+						type="submit"
+						disabled={loading}
+						className={`flex justify-center w-full items-center h-12 py-3 font-medium text-white bg-main rounded-md hover:bg-main/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main ${loading ? "opacity-50 cursor-not-allowed" : ""
+							}`}
 					>
-						Register
-					</Link>
-				</div>
-			</div>
+						{loading ? (
+							<svg
+								className="text-white animate-spin"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									className="opacity-25"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									strokeWidth="4"
+								></circle>
+								<path
+									className="opacity-75"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+								></path>
+							</svg>
+						) : (
+							"Login"
+						)}
+					</button>
+			</form>
+
+			<p className="text-sm text-center">
+				No account yet?
+				<Link
+					to="/signup"
+					className="text-main ml-1 font-medium"
+				>
+					Register
+				</Link>
+			</p>
 		</div>
 	);
 };

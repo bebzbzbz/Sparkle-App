@@ -46,7 +46,7 @@ const PopUpSettings = ({ isOpen, onClose }: PopUpSettingsProps) => {
 
 			{/* Popup */}
 			<div
-				className="fixed -bottom-1 -left-1 -right-1 rounded-t-3xl p-6 z-50 transform transition-transform duration-300 bg-light border-1"
+				className="fixed -bottom-1 -left-1 -right-1 rounded-t-3xl p-6 z-50 transform transition-transform duration-300 bg-light border border-main"
 				style={{
 					transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
 				}}

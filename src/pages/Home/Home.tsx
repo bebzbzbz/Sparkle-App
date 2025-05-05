@@ -6,6 +6,7 @@ import PopUpSettings from "../../components/PopUpSettings/PopUpSettings";
 import IPost from "../../interfaces/IPost";
 import MainButton from "../../components/MainButton/MainButton";
 import { useAuth } from "../../context/MainProvider";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [posts, setPosts] = useState<IPost[]>();
@@ -80,6 +81,9 @@ const Home = () => {
         onClose={() => setIsSettingsOpen(false)}
       />
       <section className="flex flex-col gap-11">
+        {posts?.length === 0 
+        ? <p className="text-center text-lg mt-[48%]">Welcome! You're not following anyone yet. <Link to="/explore" className="font-bold text-main">Explore</Link> and find profiles that spark your interest!</p>
+        : <>
         {posts?.map((post: IPost) => {
           return (
             <div key={crypto.randomUUID()}>
@@ -88,6 +92,7 @@ const Home = () => {
           );
         })}
         <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 5)}/>
+      </>}
       </section>
     </>
   );
