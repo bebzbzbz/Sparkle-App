@@ -1,12 +1,12 @@
-# "WhoCares" Social Media Application
+# Sparkle Social Media Application
 
 Hier ein Video
 
 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
-    <img style="width: 30%; height: auto; object-fit: contain" src="./public/img/screenshot-home.png">
+  <img style="width: 30%; height: auto; object-fit: contain" src="./public/img/screenshot-home.png">
 </div>
 
-The WhoCares Application presents a social media platform that allows its users to create personalized profiles and share photos and their thoughts connected to them. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
+The Sparkle Application presents a social media platform that allows its users to create personalized profiles and share photos and their thoughts connected to them. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
 
 The application was created as a group effort of four at the final of our 6-month long Frontend Web Development Bootcamp, using React in the Front- and Supabase in the Backend.  
 
@@ -110,7 +110,7 @@ You should have the following programs installed:
 
 1. **Clone das "Repository":**
    ```bash
-   git clone https://github.com/bebzbzbz/TokTok
+   git clone https://github.com/bebzbzbz/Sparkle-App
    ```
 
 2. **Install dependencies & run the development server:**
@@ -128,4 +128,4 @@ The design of the project is based on a Figma template, which serves as the basi
 ## Deployment
 
 Click here to go directly to the project's deployment website
-- [WhoCares Community](https://who-cares-community.vercel.app/)
+- [Sparkle Community](https://sparkle-community.vercel.app/)
