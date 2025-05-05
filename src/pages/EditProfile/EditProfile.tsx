@@ -166,7 +166,7 @@ export default function EditProfile() {
 					<input
 						type="text"
 						name="profession"
-						placeholder="Profession"
+						placeholder="status"
 						value={updatedUser.profession}
 						onChange={handleInputChange}
 					/>
