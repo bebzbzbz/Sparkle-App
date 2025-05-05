@@ -53,7 +53,7 @@ const PostSettingModal = ({
       className="inset-0 z-10 fixed bg-light/70">
       </div>
 
-      <div className="z-20 flex flex-col gap-5 items-center px-6 py-5 rounded-4xl w-60 bg-light/90 border-1 text-center">
+      <div className="z-20 flex flex-col gap-5 items-center px-6 py-5 rounded-4xl w-60 bg-light/90 border border-main text-center">
         <h2 className="text-4xl font-bold">post settings</h2>
         {user && user.id === post.user_id && (
           <div className="grid grid-cols-2 items-center">

@@ -36,11 +36,11 @@ const CommentsModal = ({setShowCommentsModal, allComments, handleCommentSubmit, 
   
     return (  
       <div className="fixed inset-0 bg-light/60 bg-opacity-40 flex items-center justify-center z-50">
-        <div className="bg-light rounded-lg p-6 mx-3 max-w-md w-full relative flex flex-col gap-5 border-1">
+        <div className="bg-light rounded-lg p-6 mx-3 max-w-md w-full relative flex flex-col gap-5 border border-main">
             <button
               onClick={handleCloseModal}
               className="absolute top-4 right-4">✕</button>
-            <h2 className="text-lg font-semibold">Comments</h2>
+            <h2 className="text-3xl font-semibold">Comments</h2>
             {user && (
             <form onSubmit={handleCommentSubmit} className="relative">
               <textarea
