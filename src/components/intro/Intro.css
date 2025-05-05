@@ -1,0 +1,76 @@
+.intro-container {
+	height: 100dvh;
+	position: relative;
+	overflow: visible;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.intro-container .sparkle-wrapper {
+	position: relative;
+}
+
+/* Text-Intro-Seite */
+.intro-container .sparkle-wrapper .sparkle-text {
+	width: 50vw;
+	height: auto;
+	position: relative;
+	animation: showText 2s ease-in-out forwards;
+	animation-delay: 0.2s;
+	opacity: 0;
+	z-index: 1;
+}
+
+@keyframes showText {
+	0% {
+		opacity: 0;
+		transform: translateY(70px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.intro-container .sparkle-wrapper .star-medium,
+.intro-container .sparkle-wrapper .star-large,
+.intro-container .sparkle-wrapper .star-small {
+	position: absolute;
+	transform: scale(0);
+	opacity: 0;
+	animation: showStar 3.5s ease-in-out forwards;
+}
+
+.intro-container .sparkle-wrapper .star-medium {
+	width: 32%;
+	top: -12vh;
+	left: -8vw;
+	animation-delay: 0.25s;
+}
+
+.intro-container .sparkle-wrapper .star-large {
+	width: 50%;
+	bottom: -100%;
+	right: -10vw;
+	animation-delay: 0.5s;
+}
+
+.intro-container .sparkle-wrapper .star-small {
+	width: 22%;
+	bottom: -170%;
+	left: 4vw;
+	animation-delay: 0.75s;
+}
+
+@keyframes showStar {
+	0% {
+		opacity: 0;
+		transform: scale(0);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
