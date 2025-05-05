@@ -45,61 +45,35 @@ const AboutSparkle = () => {
                     <path d="M10.3737 5.85225C10.0656 5.88648 9.75376 6.05888 9.46246 6.15598" stroke="currentColor" stroke-width="1.32164" stroke-linecap="round"/>
                     <path d="M1.56542 5.85233C1.64158 4.63376 5.35824 5.5486 2.17288 5.5486C0.877724 5.5486 2.38458 4.88359 2.15601 5.68359C2.05867 6.02428 0.740075 5.85233 2.17288 5.85233" stroke="currentColor" stroke-width="1.32164" stroke-linecap="round"/>
                     </svg>}
-                    extraElement= {<div className="px-5 grid grid-cols-2 gap-x-10 gap-y-7 justify-center">
+                    extraElement= {<div className=" grid grid-cols-2 gap-x-10 gap-5 justify-center">
                     <Socials 
                         text="Bea"
-                        linkL="https://www.linkedin.com/in/beatrice-balzer/"
                         linkG="https://github.com/bebzbzbz"
+                        linkL="https://www.linkedin.com/in/beatrice-balzer/"
                         
                     />
                     <Socials 
                         text="Kiwi"
-                        linkL="https://www.linkedin.com/in/kiwi-b-3380bb352/"
                         linkG="https://github.com/KiBohr"
+                        linkL="https://www.linkedin.com/in/kiwi-b-3380bb352/"
                         
                     />
                     <Socials 
                         text="Peter"
-                        linkL="https://www.linkedin.com/in/beatrice-balzer/"
-                        linkG="https://github.com/bebzbzbz"
+                        linkG="https://github.com/PeterWolf242"
+                        linkL="https://www.linkedin.com/in/peter-knappe-5323ab355/"
                         
                     />
                     <Socials 
                         text="Patrick"
+                        linkG="https://github.com/PatrickZantz"
                         linkL="https://www.linkedin.com/in/beatrice-balzer/"
-                        linkG="https://github.com/bebzbzbz"
                         
                     />
                 </div>}
                 />
             </div>
 
-            {/* <div className="px-5 grid grid-cols-2 gap-x-10 gap-y-7 justify-center">
-                <Socials 
-                    text="Bea"
-                    linkL="https://www.linkedin.com/in/beatrice-balzer/"
-                    linkG="https://github.com/bebzbzbz"
-                    
-                />
-                <Socials 
-                    text="Kiwi"
-                    linkL="https://www.linkedin.com/in/kiwi-b-3380bb352/"
-                    linkG="https://github.com/KiBohr"
-                    
-                />
-                <Socials 
-                    text="Peter"
-                    linkL="https://www.linkedin.com/in/beatrice-balzer/"
-                    linkG="https://github.com/bebzbzbz"
-                    
-                />
-                <Socials 
-                    text="Patrick"
-                    linkL="https://www.linkedin.com/in/beatrice-balzer/"
-                    linkG="https://github.com/bebzbzbz"
-                    
-                />
-            </div> */}
     </div>
     </>
     );

@@ -20,7 +20,7 @@ const Collapse = ({title, hiddenContent, icon, extraElement}:CollapseProps) => {
                 </div>
             </div>
             <div
-                className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
+                className="flex flex-col items-center justify-evenly gap-10 collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content"
             >{hiddenContent.map((paragraph: string) => <p key={crypto.randomUUID()}>{paragraph}</p>
             )}
             {extraElement}</div>
