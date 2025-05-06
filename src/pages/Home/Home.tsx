@@ -12,6 +12,7 @@ const Home = () => {
   const [posts, setPosts] = useState<IPost[]>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [fetchLimit, setFetchLimit] = useState<number>(7)
+  const [allPostsCount, setAllPostsCount] = useState<number>(0)
   const {user} = useAuth()
 
   // fetch posts
@@ -37,6 +38,16 @@ const Home = () => {
             console.error(error)
           } else {
             setPosts(followedPosts)
+          }
+
+          // Anzahl der gesamten Posts in der Datenbank um den fetch abzugleichen (siehe button)
+        const {count: totalPosts} = await supabase
+          .from("posts")
+          .select("*, profiles(*)", { count: "exact", head: true })
+          .in("user_id", followingIds)
+
+          if(totalPosts) {
+            setAllPostsCount(totalPosts || 0)
           }
       }
     } catch (error) {
@@ -91,7 +102,7 @@ const Home = () => {
             </div>
           );
         })}
-        <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 7)}/>
+        {posts?.length !== allPostsCount && <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 7)}/>}
       </>}
       </section>
     </>
