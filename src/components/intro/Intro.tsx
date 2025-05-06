@@ -8,13 +8,13 @@ export default function Intro() {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			navigate("/login")
-		}, 8000)
+		}, 5000)
 
 		return () => clearTimeout(timer)
 	}, [navigate])
 
 	return (
-		<div className="intro-container mt-0">
+		<div className="intro-container mt-0 h-screen">
 			<div className="sparkle-wrapper">
 				<img className="star-medium" src="/svg/star-medium.svg" alt="Star-Medium" />
 
