@@ -8,7 +8,7 @@ const AboutSparkle = () => {
 
     const whatIsSparkle : string[] = [
 
-        "Sparkle was created to be a second home for anyone who likes using social media but doesn't feel so cozy around the established ones.","On here you can share moments of joy and positivity to spread your spark with others around you. The goal of sparkle is to connect with other people and yourself and create a mindfulness for the little things, that make you happy everyday."
+        "Sparkle was created to be a second home for anyone who likes using social media but doesn't feel so cozy around the established ones.","On here you can share moments of joy and positivity to spread your spark with others around you. The goal of sparkle is to connect with other people and yourself and create mindfulness for the little things, that make you happy everyday."
     ]
     const aboutTheCreators : string[] = [
         "This App was created as the final project in a frontend bootcamp. We put lots of sparks into this so feel free to check us out below.",
