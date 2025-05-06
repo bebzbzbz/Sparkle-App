@@ -32,7 +32,7 @@ const MainButton = ({
   return (
     <button
       type={type}
-      className={`bg-main px-5 py-2 rounded-full text-light font-semibold tracking-[2px] cursor-pointer flex gap-3 justify-center ${
+      className={`bg-main px-5 py-2 rounded-full text-light font-semibold tracking-[2px] cursor-pointer flex gap-3 justify-center items-center ${
         disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-opacity-80"
       }`}
       onClick={handleClick}

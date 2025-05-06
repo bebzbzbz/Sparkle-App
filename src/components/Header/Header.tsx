@@ -22,7 +22,7 @@ const Header = ({ headerTitle, imgLeft, imgLeftHeight, imgLeftColor, leftLinkDes
 
 	return (
 		<header
-			className=" pt-5 pb-8 flex justify-between items-center w-full text-text">
+			className="pt-3 pb-8 flex justify-between items-center w-full text-text">
 			<h1
 				className={`lowercase flex items-center gap-2 text-5xl ${leftLinkDestination && "cursor-pointer"}`}
 				onClick={() => {

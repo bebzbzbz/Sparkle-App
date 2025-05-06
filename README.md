@@ -55,6 +55,7 @@ Profiles:
 Post a New Photo:
 - Use the camera to take a photo or upload an image from your device
 - Add an optional photo description and location info
+- The image is compressed before it is inserted into the database
 
 Search:
 - Browse through users by username
@@ -65,6 +66,15 @@ Settings:
 
 ### Teamwork
 This project was carried out as a team effort of four. We communicated regularly via Discord to coordinate development progress. In addition, we used Figma as a tool to visualize our tasks and progress. Using Git as a version control tool, we made sure that all changes were merged, pushed and pulled to ensure a smooth process.
+
+### Future Features
+- Modal info windows displaying a list of
+  - users who liked/sparked a post
+  - followers of a user
+  - followed profiles of a user
+- Interactive comment function for users to react and comment under previous comments
+- Possibility to upload videos
+- Option to upload multiple files in one post and navigate through them with a slider
 
 ## Tech Stack
 
