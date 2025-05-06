@@ -5,6 +5,7 @@ import SinglePost from "../SinglePost/SinglePost";
 import { mainContext } from "../../context/MainProvider";
 import { useLocation } from "react-router-dom";
 import ILikedPost from "../../interfaces/ILikedPost";
+import MainButton from "../MainButton/MainButton";
 
 interface MiniFeedProps {
     profileId: string | undefined,
@@ -13,6 +14,9 @@ interface MiniFeedProps {
 const MiniFeed = ({profileId} : MiniFeedProps) => {
     const [profilePosts, setProfilePosts] = useState<IPost[] | null>(null)
     const [likedPosts, setLikedPosts] = useState<ILikedPost[] | null>(null)
+    const [fetchLimit, setFetchLimit] = useState<number>(12)
+    const [allPostsCount, setAllPostsCount] = useState<number>(0)
+    const [allFavsCount, setAllFavsCount] = useState<number>(0)
     
     const {setModalId, setOpenModal, timelineFeed} = useContext(mainContext)
 
@@ -31,11 +35,21 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
             if(favPage) {
                 try {
                     // fetch der profile, die mit der id des users/des params übereinstimmen
-                    const {data: likedPosts} = await supabase.from("likes").select("*, posts(*, profiles(username, profile_image_url, id))").eq("user_id", profileId).order("created_at", { ascending: false })
+                    const {data: likedPosts} = await supabase.from("likes").select("*, posts(*, profiles(username, profile_image_url, id))").eq("user_id", profileId).limit(fetchLimit).order("created_at", { ascending: false })
     
                     if(likedPosts) {
                         // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
                         setLikedPosts(likedPosts)
+                    }
+
+                     // Anzahl der gesamten gelikedten Posts in der Datenbank um den fetch abzugleichen (siehe button)
+                    const {count: totalPosts} = await supabase
+                    .from("likes")
+                    .select("*, posts(*, profiles(username, profile_image_url, id))", { count: "exact", head: true })
+                    .eq("user_id", profileId)
+
+                    if(totalPosts) {
+                        setAllFavsCount(totalPosts || 0)
                     }
                 } catch (error) {
                     console.log(error)
@@ -44,11 +58,21 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
                 // fetch für miniFeed auf den profilen
                 try {
                     // fetch der profile, die mit der id des users/des params übereinstimmen
-                    const {data: posts} = await supabase.from("posts").select("*").eq("user_id", profileId).order("created_at", { ascending: false })
+                    const {data: posts} = await supabase.from("posts").select("*").eq("user_id", profileId).limit(fetchLimit).order("created_at", { ascending: false })
     
                     if(posts) {
                         // der fetch gibt einen array zurück, deshalb müssen wir das erste objekt selektieren
                         setProfilePosts(posts)
+                    }
+
+                    // Anzahl der gesamten Posts in der Datenbank um den fetch abzugleichen (siehe button)
+                    const {count: totalPosts} = await supabase
+                    .from("posts")
+                    .select("*", { count: "exact", head: true })
+                    .eq("user_id", profileId)
+
+                    if(totalPosts) {
+                        setAllPostsCount(totalPosts || 0)
                     }
                 } catch (error) {
                     console.log(error)
@@ -56,7 +80,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
             }
         } 
         fetchData()
-    }, [profileId])
+    }, [profileId, fetchLimit])
 
     // je nachdem, ob wir uns auf der fav oder profil page befinden, wird der loading platzhalter dargestellt
     if(profilePosts === null && !favPage || likedPosts === null && favPage) {
@@ -68,7 +92,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
     } 
     if(profilePosts && !favPage) {
         return (  
-            <article className="mb-20">
+            <article className="mb-20 flex flex-col items-center gap-5">
                 <div className={`grid ${timelineFeed ? "grid-cols-1 gap-11" : "grid-cols-3 gap-2"}`}>
                     {/* sollte der user keine posts haben, wird stattdessen ein text angezeigt */}
                     {profilePosts.length > 0 ? profilePosts.map((post) => (
@@ -86,13 +110,13 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
                                 key={crypto.randomUUID()} />
                     )) : <p className="col-span-3 text-center">No posts yet!</p>}
                 </div>
-    
+                {profilePosts?.length !== allPostsCount && <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 9)}/>}
             </article>
         );
     }
     if(likedPosts && favPage) {
         return (  
-            <article className="mb-20">
+            <article className="mb-20 flex flex-col gap-6 items-center">
                 <div className="grid grid-cols-3 gap-2">
                     {/* sollte der user keine posts haben, wird stattdessen ein text angezeigt */}
                     {likedPosts.length > 0 ? likedPosts.map((post) => (
@@ -108,6 +132,7 @@ const MiniFeed = ({profileId} : MiniFeedProps) => {
                                 key={crypto.randomUUID()} />
                     )) : <p className="col-span-3 text-center">No liked posts yet!</p>}
                 </div>
+                {likedPosts?.length !== allFavsCount && <MainButton textContent="Load more posts" type="button" onClick={() => setFetchLimit((prev) => prev + 9)}/>}
             </article>
         );
     }
