@@ -1,6 +1,10 @@
 # Sparkle Social Media Application
 
-Hier ein Video
+[screenrecord_sparkle.webm](https://github.com/user-attachments/assets/69f55872-a618-4a67-b083-dd4e10383079)
+
+![screenshot_Login](https://github.com/user-attachments/assets/a9564b2b-5b3b-4034-b154-42a4b8048a68)
+
+![Screenshot_profile app](https://github.com/user-attachments/assets/8fb5be51-011c-4687-9f4b-8bc5471871be)
 
 The Sparkle Application presents a social media platform that allows its users to create personalized profiles to share their photos and thoughts connected to happy or mindful moments. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
 
