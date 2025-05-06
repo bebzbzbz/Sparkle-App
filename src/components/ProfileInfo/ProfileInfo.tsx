@@ -70,11 +70,7 @@ const ProfileInfo = ({ profile, refresh }: ProfileInfoProps) => {
           )}
           {profile?.website && (
             <a
-<<<<<<< HEAD
               className="cursor-pointer text-main font-bold h-5 w-5 mt-1"
-=======
-              className="cursor-pointer text-sm text-main font-bold"
->>>>>>> 41bb4b8bcefb12cb8dca3752fdebad1d6bec8577
               href={profile?.website}
               target="_blank"
             >
