@@ -133,7 +133,7 @@ export default function EditProfile() {
 				>
 					<div className="relative">
 						<img
-							src={previewUrl || "/svg/pic-empty.svg"}
+							src={previewUrl || "/img/pic-empty.png"}
 							alt={`Profilbild ${updatedUser.username}`}
 							className="w-20 h-20 object-cover rounded-full"
 						/>

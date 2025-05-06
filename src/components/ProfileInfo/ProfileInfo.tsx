@@ -53,12 +53,12 @@ const ProfileInfo = ({ profile, refresh }: ProfileInfoProps) => {
       <div className="grid grid-cols-[1fr_2fr] items-center gap-5 mb-2">
         <img
           className="w-full aspect-square object-cover rounded-xl transition ease-in-out hover:drop-shadow-xl hover:opacity-90"
-          src={profile?.profile_image_url || `/svg/pic-empty.svg`}
+          src={profile?.profile_image_url || `/img/pic-empty.png`}
           alt={profile?.username}
         />
         <div className="flex flex-col">
           <p className="text-2xl font-bold">
-            {profile?.profile_name || "Anonymous"}
+            {profile?.profile_name || "No name"}
           </p>
           {profile?.profession && (
             <p className="text-lg font-light">{profile?.profession}</p>
@@ -83,7 +83,7 @@ const ProfileInfo = ({ profile, refresh }: ProfileInfoProps) => {
         <div className="flex gap-4 h-5 justify-center items-center  text-main">
           {/* mit den icons wird die ansicht der beiträge an- und abgewählt */}
           <div
-          className="h-full" 
+          className="h-full aspect-square" 
           onClick={() => setTimelineFeed(false)}>
               {!timelineFeed 
               ? <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +93,7 @@ const ProfileInfo = ({ profile, refresh }: ProfileInfoProps) => {
               }
           </div>
         <div           
-        className="h-full" 
+        className="h-full aspect-square" 
         onClick={() => setTimelineFeed(true)}>
             {timelineFeed 
             ? <svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
