@@ -36,8 +36,9 @@
 		@apply h-full w-full
 	}
 	.dark-mode {
-		--color-light: #111111;
+		--color-light: #1f1f1f;
 		--color-dark: #FFFDF9;
+		--color-icon: #FEF4AA;
 	}
 }
 
