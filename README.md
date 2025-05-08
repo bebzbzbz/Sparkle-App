@@ -3,8 +3,8 @@
 [screenrecord_sparkle.webm](https://github.com/user-attachments/assets/69f55872-a618-4a67-b083-dd4e10383079)
 
 <div style="display: flex">
-<img src="/img/screenshot_login.png" alt="Screenshot of the Login Page" style="width: 49%"/>
-<img src="/img/screenshot_profile.png" alt="Screenshot of the Profile Page" style="width: 49%"/>
+<img src="/public/img/screenshot_login.png" alt="Screenshot of the Login Page" style="width: 49%"/>
+<img src="/public/img/screenshot_profile.png" alt="Screenshot of the Profile Page" style="width: 49%"/>
 </div>
 
 The Sparkle Application presents a social media platform that allows its users to create personalized profiles to share their photos and thoughts connected to happy or mindful moments. Users are able to engage in the community by following each other, liking and commenting on other people's posts, as well as revisiting the posts they liked by viewing them in the favorites page.
