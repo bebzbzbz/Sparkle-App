@@ -66,7 +66,7 @@ const CommentsModal = ({setShowCommentsModal, allComments, handleCommentSubmit, 
             )}
             {allComments.map((c) => (
               <div key={crypto.randomUUID()} className="flex gap-2">
-                <img src={c.profiles?.profile_image_url} alt="" className="object-cover rounded-full h-8 w-8" />
+                <img src={c.profiles?.profile_image_url || "/img/pic-empty.png"} alt="" className="object-cover rounded-full h-8 w-8" />
 
                 <div className="w-full">
 
